@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output
+build/
+.react-router/
+
+# Planning docs — local only, deliberately NOT published to GitHub.
+# (Renamed from doc/ so the name doesn't collide with the build output `build/client`.)
+plans/
+
+# Environment — never commit real values.
+# `.env.example` is the documented template and IS committed.
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+
+# plans
+/plans/*
+
+# AI-Helper
+/AI-Base/*

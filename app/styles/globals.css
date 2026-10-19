@@ -1,0 +1,313 @@
+@import "tailwindcss";
+
+/* ===========================================================================
+   Creaova design tokens
+   The single source of truth for colour, type, layout and motion.
+   Reference: plans/MULTIPAGE_UI_PLAN.md §5
+
+   RULES
+   1. Components must reference a token, never a raw hex value.
+   2. The palette mirrors plans/design-options/option-1-creaova-original.html.
+      - orange fill            -> --color-primary      (#F97316)
+      - orange hover           -> --color-primary-hover (#EA580C)
+      - text ON an orange fill -> --color-on-primary   (#FFFFFF)
+   3. No coloured glow. Separation comes from hairlines and space.
+   =========================================================================== */
+
+@theme static {
+  /* --- Surfaces ---------------------------------------------------------- */
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-ink: #111111;
+  --color-muted: #52525b;
+  --color-line: #e5e7eb;
+
+  /* --- Brand (orange = fill only) --------------------------------------- */
+  --color-primary: #f97316;
+  --color-primary-hover: #ea580c;
+  --color-on-primary: #ffffff;
+  --color-primary-text: #f97316;
+
+  /* --- Dark sections (portfolio band, CTA band, footer) ------------------ */
+  --color-dark: #111111;
+  --color-dark-surface: #18181b;
+  --color-dark-line: #27272a;
+  --color-on-dark: #ffffff;
+  --color-on-dark-muted: #a1a1aa;
+
+  /* --- Status (form feedback only) -------------------------------------- */
+  --color-success: #15803d;
+  --color-error: #b91c1c;
+
+  /* --- Type families ---------------------------------------------------- */
+  --font-display: "Manrope", Arial, Helvetica, sans-serif;
+  --font-sans: "Manrope", Arial, Helvetica, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* --- Type scale (5 steps; tight beats sprawling) ----------------------- */
+  --text-display: clamp(2.5rem, 5vw, 3.75rem);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.035em;
+
+  --text-h2: clamp(2rem, 4vw, 3rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.02em;
+
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.01em;
+
+  --text-lede: 1.125rem;
+  --text-lede--line-height: 1.6;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.5;
+
+  /* --- Layout ------------------------------------------------------------ */
+  --container-page: 80rem;
+  --measure: 68ch;
+
+  /* --- Radii (one scale, no scatter) ------------------------------------ */
+  --radius-control: 0.75rem;
+  --radius-card: 1rem;
+  --radius-panel: 1.5rem;
+
+  /* 4px base rhythm: 4, 8, 12, 16, 24, 32, 48, 64, 96. */
+  --space-unit: 0.25rem;
+
+  /* --- Motion ----------------------------------------------------------- */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  :where(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--font-display);
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Anchor targets must clear the sticky header (§12 item 12). */
+  :where(h1, h2, h3, h4, h5, h6, [id]) {
+    scroll-margin-top: 6rem;
+  }
+
+  /* Visible focus on everything, always. Never `outline: none` alone. */
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Real typographic characters, not straight quotes or three dots. */
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .form-input {
+    display: block;
+    width: 100%;
+    min-height: 2.75rem;
+    margin-top: 0.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-control);
+    background: var(--color-surface);
+    padding: 0.75rem 0.875rem;
+    color: var(--color-ink);
+    font: inherit;
+  }
+
+  .form-input:focus {
+    border-color: var(--color-ink);
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+
+  .original-home {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+  }
+
+  .home-page h1,
+  .home-page h2,
+  .home-page h3,
+  .home-page .hero-gradient-text {
+    font-family: var(--font-display);
+  }
+
+  .hero-gradient-text {
+    background: linear-gradient(110deg, var(--color-ink) 0%, var(--color-primary) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .hero-device-stage {
+    isolation: isolate;
+  }
+
+  .hero-laptop {
+    transform: perspective(1200px) rotateY(-15deg) rotateX(10deg);
+    transform-style: preserve-3d;
+  }
+
+  .hero-phone {
+    transform: perspective(1200px) rotateY(-10deg) rotateX(6deg) translateZ(90px) rotateZ(3deg);
+  }
+
+  .reference-perspective {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+  }
+
+  .reference-desktop-3d {
+    transform: rotateY(-16deg) rotateX(10deg) rotateZ(-2deg) translateZ(10px);
+    transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reference-mobile-3d {
+    transform: rotateY(-12deg) rotateX(6deg) rotateZ(3deg) translateZ(65px);
+    transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reference-metric-3d {
+    transform: rotateY(-8deg) rotateX(4deg) rotateZ(-1deg) translateZ(95px);
+  }
+
+  .reference-badge-3d {
+    transform: rotateY(-6deg) rotateX(8deg) translateZ(85px);
+  }
+
+  .reference-perspective:hover .reference-desktop-3d {
+    transform: rotateY(-12deg) rotateX(7deg) translateZ(24px);
+  }
+
+  .reference-perspective:hover .reference-mobile-3d {
+    transform: rotateY(-8deg) rotateX(4deg) rotateZ(5deg) translateZ(80px);
+  }
+
+  @keyframes reference-float {
+    0%, 100% { transform: translateY(0) rotateY(-12deg) rotateX(6deg) rotateZ(3deg) translateZ(65px); }
+    50% { transform: translateY(-10px) rotateY(-10deg) rotateX(7deg) rotateZ(4deg) translateZ(72px); }
+  }
+
+  .reference-float {
+    animation: reference-float 6s ease-in-out infinite;
+  }
+
+  @keyframes reference-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .reference-marquee {
+    width: max-content;
+    animation: reference-marquee 24s linear infinite;
+  }
+
+  .reference-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  .reference-card-shadow {
+    box-shadow: 0 10px 30px -4px rgb(0 0 0 / 4%), 0 2px 6px -1px rgb(0 0 0 / 2%);
+  }
+
+  .reference-float-shadow {
+    box-shadow: 0 20px 45px -10px rgb(0 0 0 / 8%), 0 8px 16px -6px rgb(0 0 0 / 3%);
+  }
+
+  .original-home > section {
+    isolation: isolate;
+  }
+
+  .original-home h1,
+  .original-home h2,
+  .original-home h3,
+  .original-home p {
+    margin-top: 0;
+  }
+
+  .original-service,
+  .original-process {
+    box-shadow: 0 10px 30px -4px rgb(0 0 0 / 4%), 0 2px 6px -1px rgb(0 0 0 / 2%);
+    transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
+  }
+
+  .original-service:hover,
+  .original-process:hover {
+    border-color: var(--color-ink);
+    box-shadow: 0 20px 45px -10px rgb(0 0 0 / 8%), 0 8px 16px -6px rgb(0 0 0 / 3%);
+    transform: translateY(-0.375rem);
+  }
+
+  .original-stage {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+  }
+
+  .original-laptop {
+    transform: rotateY(-16deg) rotateX(10deg) rotateZ(-2deg) translateZ(10px);
+    transform-style: preserve-3d;
+    transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .original-phone {
+    transform: rotateY(-12deg) rotateX(6deg) rotateZ(3deg) translateZ(65px);
+  }
+
+  .original-metric {
+    transform: rotateY(-8deg) rotateX(4deg) rotateZ(-1deg) translateZ(95px);
+  }
+
+  .original-laptop i,
+  .original-case-visual i {
+    display: block;
+    height: 0.75rem;
+    width: 0.75rem;
+    border-radius: 999px;
+    background: var(--color-line);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .original-service, .original-process, .reference-float { transition: none; animation: none; }
+  }
+}

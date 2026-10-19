@@ -1,0 +1,9 @@
+# Creaova — robots.txt
+#
+# TODO(M7): regenerate the Sitemap line once the canonical domain replaces the
+# reserved `creaova.example.com` placeholder (doc/MULTIPAGE_UI_PLAN.md §10).
+
+User-agent: *
+Allow: /
+
+Sitemap: https://creaova.example.com/sitemap.xml
