@@ -1,10 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
+import { Menu, X } from "lucide-react";
 
-import logoFull from "~/assets/logo-full.svg";
+import logoFull from "~/assets/images/logo/Creaova_Logo1-transparent.png";
 import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
 import { primaryCta, site } from "~/data/constants";
+
+function isNavItemActive(to: string, pathname: string, hash: string) {
+  const [path, targetHash] = to.split("#");
+  if (targetHash) return pathname === path && hash === `#${targetHash}`;
+  return path === "/" ? pathname === "/" && !hash : pathname === path || pathname.startsWith(`${path}/`);
+}
 
 /**
  * The mobile navigation drawer.
@@ -27,6 +34,7 @@ import { primaryCta, site } from "~/data/constants";
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const location = useLocation();
 
   // Drive the native dialog from React state, and keep them from disagreeing.
   useEffect(() => {
@@ -48,7 +56,7 @@ export function MobileNav() {
 
   // Never leave a modal open behind a hidden trigger.
   useEffect(() => {
-    const query = window.matchMedia("(min-width: 768px)");
+    const query = window.matchMedia("(min-width: 1024px)");
     const onChange = (event: MediaQueryListEvent) => {
       if (event.matches) setOpen(false);
     };
@@ -64,47 +72,27 @@ export function MobileNav() {
         aria-expanded={open}
         aria-controls="mobile-nav"
         aria-label="Open menu"
-        className="inline-flex size-11 items-center justify-center rounded-control border border-line text-ink transition-colors duration-200 hover:border-ink md:hidden"
+        className="inline-flex size-10 items-center justify-center rounded-full border border-line text-ink transition-colors duration-200 hover:border-ink lg:hidden"
       >
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          className="size-5"
-        >
-          <path d="M4 7h16M4 12h16M4 17h16" />
-        </svg>
+        <Menu aria-hidden="true" className="size-5" strokeWidth={1.75} />
       </button>
 
       <dialog
         id="mobile-nav"
         ref={dialogRef}
         onClose={() => setOpen(false)}
-        className="nav-drawer fixed inset-0 m-0 h-full max-h-none w-full max-w-none overflow-y-auto bg-bg p-0 text-ink md:hidden"
+        className="nav-drawer fixed inset-0 m-0 h-full max-h-none w-full max-w-none overflow-y-auto bg-bg p-0 text-ink lg:hidden"
       >
         <div className="flex min-h-full flex-col">
           <Container className="flex h-16 shrink-0 items-center justify-between border-b border-line">
-            <Link to="/" aria-label="Creaova — home" className="flex items-center gap-3"><img src={logoFull} alt="Creaova" className="h-9 w-auto" /></Link>
+            <Link to="/" aria-label="Creaova home" className="flex items-center gap-3"><img src={logoFull} alt="Creaova" className="h-16 w-auto" /></Link>
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close menu"
-              className="inline-flex size-11 items-center justify-center rounded-control border border-line text-ink transition-colors duration-200 hover:border-ink"
+              className="inline-flex size-10 items-center justify-center rounded-full border border-line text-ink transition-colors duration-200 hover:border-ink"
             >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-                className="size-5"
-              >
-                <path d="M6 6l12 12M18 6L6 18" />
-              </svg>
+              <X aria-hidden="true" className="size-5" strokeWidth={1.75} />
             </button>
           </Container>
 
@@ -117,18 +105,18 @@ export function MobileNav() {
                       to={item.to}
                       end={item.to === "/"}
                       onClick={() => setOpen(false)}
-                      className={({ isActive }) =>
+                      className={() =>
                         [
                           "flex min-h-14 items-center justify-between gap-4 py-4 font-display text-h3 transition-colors duration-200",
-                          isActive ? "text-ink" : "text-muted hover:text-ink",
+                          isNavItemActive(item.to, location.pathname, location.hash) ? "text-ink" : "text-muted hover:text-ink",
                         ].join(" ")
                       }
                     >
-                      {({ isActive }) => (
+                      {() => (
                         <>
                           <span>{item.label}</span>
                           {/* Non-colour cue: active state must not rely on colour alone (WCAG 1.4.1). */}
-                          {isActive ? (
+                          {isNavItemActive(item.to, location.pathname, location.hash) ? (
                             <span className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
                               Current
                             </span>

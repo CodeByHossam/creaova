@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-import logoFull from "~/assets/logo-full.svg";
+import logoFull from "~/assets/images/logo/Creaova_Logo1-transparent.png";
 import { Container } from "~/components/Container";
 import type { FooterLink } from "~/data/constants";
 import { site, socialLinks } from "~/data/constants";

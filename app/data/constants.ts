@@ -122,6 +122,8 @@ export const site: Site = {
     { label: "Home", to: "/" },
     { label: "Services", to: "/services" },
     { label: "Portfolio", to: "/portfolio" },
+    { label: "Process", to: "/#process" },
+    { label: "Reviews", to: "/#testimonials" },
     { label: "About", to: "/about" },
     { label: "Contact", to: "/contact" },
   ],
@@ -129,10 +131,10 @@ export const site: Site = {
   socialLinks,
 
   logo: {
-    src: "/logo.png",
-    inverseSrc: "/logo-inverse.png",
-    width: 480,
-    height: 278,
+    src: "/assets/images/logo/Creaova_Logo1-transparent.png",
+    inverseSrc: "/assets/images/logo/Creaova_Logo1-transparent.png",
+    width: 1254,
+    height: 1254,
     alt: "Creaova",
   },
 

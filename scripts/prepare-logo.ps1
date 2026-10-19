@@ -59,7 +59,7 @@ $ErrorActionPreference = 'Stop'
 
 # --- Configuration ----------------------------------------------------------
 
-$SourcePath = Join-Path $PSScriptRoot '..\logo\Creaova_Logo1.png'
+$SourcePath = Join-Path $PSScriptRoot '..\app\assets\images\logo\Creaova_Logo1.png'
 $OutDir     = Join-Path $PSScriptRoot '..\public'
 
 # Crop rectangle in source pixels - measured, not guessed. Mark + wordmark only.

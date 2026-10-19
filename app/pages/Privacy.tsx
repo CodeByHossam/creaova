@@ -1,34 +1,7 @@
 import { Container } from "~/components/Container";
 
-export function meta() {
-  return [
-    { title: "Privacy Policy | Creaova" },
-    {
-      name: "description",
-      content: "Privacy information for visitors to Creaova's website.",
-    },
-  ];
-}
+export function meta() { return [{ title: "Privacy Policy | Creaova" }, { name: "description", content: "Privacy information for visitors to Creaova's website." }]; }
 
-export default function Privacy() {
-  return (
-    <Container className="py-24 lg:py-32">
-      <p className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
-        Legal · Draft
-      </p>
-      <h1 className="mt-6 max-w-[var(--measure)] text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-        Privacy policy
-      </h1>
-      <p className="mt-7 max-w-[var(--measure)] text-lg leading-7 text-gray-600">
-        This page is a placeholder, not a complete privacy policy. The policy must
-        be written and reviewed for Creaova’s actual data practices before launch.
-      </p>
-      <p className="mt-6 max-w-[var(--measure)] leading-7 text-gray-600">
-        The contact form is planned to send submissions directly to a third-party
-        form provider. Do not publish this page as a final policy until the
-        provider, retention practices, and applicable privacy requirements have
-        been confirmed.
-      </p>
-    </Container>
-  );
-}
+const sections = [["Information we receive", "When you contact Creaova, we may receive the information you choose to provide, such as your name, email address, project details, and any context included in your message."], ["How we use information", "We use enquiry details to understand the request, respond to questions, prepare a proposal, and communicate about a potential project. We do not use this demo site to make automated decisions about visitors."], ["Service providers", "The production form endpoint, analytics tools, email provider, and hosting provider must be confirmed before launch. This draft should be updated with the real providers and their applicable privacy documentation."], ["Retention and requests", "We retain information only for as long as it is needed for the purpose it was collected or as required by applicable obligations. Before launch, confirm the retention period and the process for access, correction, deletion, and other privacy requests."], ["Updates to this policy", "This policy may be updated when the website, form provider, or business practices change. The effective date and a contact for privacy questions should be added before publication."]];
+
+export default function Privacy() { return <Container className="py-20 lg:py-28"><div className="max-w-3xl"><p className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">Legal · Draft for review</p><h1 className="mt-6 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">Privacy policy</h1><p className="mt-7 text-lg leading-7 text-gray-600">This working draft explains the structure of Creaova’s privacy notice. It must be reviewed against the actual tools, jurisdictions, and data practices before publication.</p><div className="mt-14 space-y-10">{sections.map(([title, text], index) => <section key={title} className="border-t border-neutral-200 pt-7"><p className="font-mono text-sm text-primary-text">0{index + 1}</p><h2 className="mt-3 text-2xl font-bold text-gray-900">{title}</h2><p className="mt-3 leading-7 text-gray-600">{text}</p></section>)}</div></div></Container>; }

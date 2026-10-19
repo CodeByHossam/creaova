@@ -20,22 +20,22 @@ type Variant = "primary" | "secondary" | "ghost" | "dark" | "light";
 type Size = "md" | "lg";
 
 const base =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-full font-semibold transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 !rounded-full font-semibold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-ink text-on-dark hover:bg-primary hover:text-on-primary",
+  primary: "bg-ink text-on-dark shadow-sm hover:-translate-y-0.5 hover:bg-primary hover:text-on-primary hover:shadow-orange-glow",
   // Outline style: ink text on ink hairline. On hover it inverts rather than
   // turning orange, so the orange stays reserved for the single primary action.
   secondary: "border border-ink text-ink hover:bg-ink hover:text-on-dark",
   ghost: "text-primary-text hover:text-ink",
-  dark: "bg-ink text-on-dark hover:bg-primary hover:text-on-primary",
-  light: "bg-white text-ink hover:bg-primary hover:text-on-primary",
+  dark: "bg-ink text-on-dark shadow-sm hover:-translate-y-0.5 hover:bg-primary hover:text-on-primary hover:shadow-orange-glow",
+  light: "bg-white text-ink shadow-sm hover:bg-primary hover:text-on-primary",
 };
 
 // min-h-11 = 44px, the minimum touch target from §9.
 const sizes: Record<Size, string> = {
-  md: "px-5 py-3 text-sm",
-  lg: "min-h-12 px-7 py-4 text-base",
+  md: "h-10 px-4 text-sm",
+  lg: "h-12 px-6 text-base",
 };
 
 type Props = {
