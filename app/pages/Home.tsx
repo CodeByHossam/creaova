@@ -1,86 +1,492 @@
-import type { ReactNode } from "react";
 import { Link } from "react-router";
-import { Accessibility, ArrowUpRight, Settings2, Target } from "lucide-react";
+import {
+  Accessibility,
+  ArrowRight,
+  ArrowUpRight,
+  Cloud,
+  Code,
+  Settings2,
+  Smartphone,
+  Target,
+} from "lucide-react";
 
+import { Badge } from "~/components/Badge";
 import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
 import { CTABand } from "~/components/CTABand";
 import { ReviewsBand } from "~/components/ReviewsBand";
+import { SectionHeading } from "~/components/SectionHeading";
+import { primaryCta, site } from "~/data/constants";
 import { projects } from "~/data/projects";
+import { services } from "~/data/services";
 
 export function meta() {
   return [
-    { title: "Creaova | Web & App Experiences That Grow Your Business" },
-    { name: "description", content: "Creaova architects digital products, web platforms, and mobile experiences for ambitious businesses." },
+    { title: "Creaova Digital Solutions [ CDS ]" },
+    {
+      name: "description",
+      content: "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch.",
+    },
+    { property: "og:title", content: "Creaova Digital Solutions [ CDS ]" },
+    {
+      property: "og:description",
+      content: "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch.",
+    },
   ];
 }
 
-function Badge({ children, dark = false }: { children: ReactNode; dark?: boolean }) {
-  return <div className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 ${dark ? "border-white/20 bg-white/10" : "border-neutral-200 bg-neutral-100"}`}><span className="size-2 rounded-full bg-[#F97316]" /><span className={`text-xs font-bold uppercase tracking-widest ${dark ? "text-[#F97316]" : "text-neutral-800"}`}>{children}</span></div>;
-}
+/**
+ * The homepage in the "Editorial Studio" system (plan Phase 3):
+ * one honest single-column hero (no mock dashboards, no invented metrics),
+ * numbered sections 01-04 via SectionHeading, one shared card language, and a
+ * static strip of technologies the studio actually ships with.
+ *
+ * Load-bearing markup: every id/element pair below (#services article,
+ * #work a, #process article) is keyed by the staggered entry animation in
+ * globals.css — keep the tags when editing.
+ */
 
-function HeroVisual() {
-  return <div className="reference-perspective relative mx-auto h-[27rem] w-full max-w-[31rem] sm:h-[31rem]">
-    <div className="absolute left-1/2 top-1/2 size-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/10 blur-[100px]" aria-hidden="true" />
-    <div className="reference-desktop-3d absolute left-0 top-16 z-0 flex h-64 w-[92%] flex-col justify-between overflow-hidden rounded-2xl border border-neutral-300 bg-white p-4 shadow-2xl sm:h-72 sm:w-[28rem]">
-      <div className="flex items-center justify-between border-b border-neutral-100 pb-3"><div className="flex gap-1.5"><i className="size-3 rounded-full bg-neutral-300" /><i className="size-3 rounded-full bg-neutral-300" /><i className="size-3 rounded-full bg-neutral-300" /></div><div className="hidden h-6 w-52 items-center gap-2 rounded-md border border-neutral-200 bg-neutral-100 px-3 sm:flex"><span className="size-2 rounded-full bg-[#F97316]" /><span className="font-mono text-[10px] text-neutral-500">creaova.io/experience</span></div><span className="w-5" /></div>
-      <div className="grid flex-1 grid-cols-3 gap-3 pt-4"><div className="space-y-2 border-r border-neutral-100 pr-2"><div className="h-2 w-16 rounded bg-neutral-900" /><div className="h-2 w-20 rounded bg-orange-500/40" /><div className="h-2 w-14 rounded bg-neutral-200" /><div className="space-y-1.5 pt-4"><div className="flex h-7 items-center gap-2 rounded-lg bg-neutral-100 p-1"><span className="size-4 rounded bg-[#F97316]" /><span className="h-1.5 w-10 rounded bg-neutral-800" /></div><div className="flex h-7 items-center gap-2 rounded-lg bg-neutral-50 p-1"><span className="size-4 rounded bg-neutral-300" /><span className="h-1.5 w-8 rounded bg-neutral-400" /></div></div></div><div className="col-span-2 space-y-3 pl-1"><div className="flex items-center justify-between"><div><div className="mb-1 h-1.5 w-12 rounded bg-neutral-300" /><b className="text-sm font-bold tracking-wide text-neutral-900">Enterprise Core</b></div><span className="rounded-full border border-orange-200 bg-orange-100 px-2 py-0.5 text-[10px] font-bold text-[#F97316]">+38.4%</span></div><div className="flex h-24 items-end gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-2"><span className="h-[30%] w-1/6 rounded-t bg-neutral-300" /><span className="h-[50%] w-1/6 rounded-t bg-neutral-400" /><span className="h-[40%] w-1/6 rounded-t bg-neutral-300" /><span className="h-[70%] w-1/6 rounded-t bg-neutral-700" /><span className="h-[60%] w-1/6 rounded-t bg-neutral-800" /><span className="h-[95%] w-1/6 rounded-t bg-[#F97316]" /></div></div></div>
-      <div className="flex items-center justify-between border-t border-neutral-100 pt-2 text-[10px] text-neutral-400"><span>Latency: 18ms</span><span className="font-semibold text-[#F97316]">100% Score</span></div>
-    </div>
-    <div className="reference-mobile-3d reference-float absolute -bottom-4 right-2 z-20 flex h-72 w-48 flex-col justify-between overflow-hidden rounded-[32px] border-2 border-neutral-800 bg-[#111111] p-4 text-white shadow-2xl sm:right-6 sm:h-80 sm:w-52"><div className="mx-auto mb-2 flex h-3.5 w-16 items-center justify-center rounded-full bg-neutral-800"><span className="size-2 rounded-full bg-neutral-900" /></div><div className="flex items-center justify-between"><div><p className="text-[10px] font-semibold uppercase tracking-wider text-neutral-400">Revenue Pulse</p><p className="text-lg font-extrabold text-white">$142,850</p></div><span className="grid size-8 place-items-center rounded-full bg-[#F97316] text-[10px] font-bold text-white">CR</span></div><div className="my-2 space-y-2 rounded-xl border border-neutral-800 bg-neutral-900 p-2.5"><div className="flex justify-between text-[11px] text-neutral-300"><span>Conversion Velocity</span><span className="font-bold text-[#F97316]">Fast</span></div><div className="flex h-12 w-full items-center"><svg className="h-full w-full" viewBox="0 0 100 40" aria-hidden="true"><path d="M0,35 Q25,5 50,25 T100,5" fill="none" stroke="#F97316" strokeLinecap="round" strokeWidth="3" /></svg></div></div><div className="space-y-1.5"><div className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 p-2"><span className="text-[11px] font-medium text-neutral-200">Checkout Flow</span><span className="text-[11px] font-bold text-[#F97316]">+24.8%</span></div><div className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 p-2"><span className="text-[11px] font-medium text-neutral-200">Retention</span><span className="text-[11px] font-semibold text-neutral-300">94.2%</span></div></div><div className="mt-2 w-full rounded-xl bg-[#F97316] py-2 text-center text-xs font-bold text-white">Deploy Build</div></div>
-    <div className="reference-metric-3d absolute -top-2 left-2 z-30 flex items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-3 shadow-xl sm:left-4"><div className="grid size-10 place-items-center rounded-xl border border-orange-200 bg-orange-50 text-[#F97316]" aria-hidden="true">↗</div><div><p className="text-[10px] font-bold uppercase tracking-wider text-neutral-500">Avg. Conversion</p><p className="text-base font-extrabold text-[#111111]">+148% <span className="text-xs font-bold text-[#F97316]">Surge</span></p></div></div>
-    <div className="reference-badge-3d absolute -bottom-6 left-12 z-30 flex items-center gap-2.5 rounded-full border border-neutral-800 bg-[#111111] px-4 py-2 shadow-xl"><span className="size-2.5 rounded-full bg-[#F97316]" /><span className="text-xs font-bold tracking-wide text-white">NextGen Core Active</span></div>
-  </div>;
-}
-
-const disciplines = [["Front-End Precision", "Digital Experience & Web Architecture", "High-conversion bespoke web platforms built on modern infrastructure and clear information architecture.", "Next.js SSR"], ["Mobile Engineering", "Mobile App Ecosystems", "Native-feeling product experiences crafted for fluid gestures, accessibility, and everyday use.", "React Native"], ["Scale & Velocity", "Cloud & Conversion Optimization", "Elastic foundations, measurable experiments, and dependable systems that create room to grow.", "AWS Multi-Region"]] as const;
-const steps = [["01", "Discovery & Architecture", "Understand the commercial funnel, technical constraints, user journeys, and opportunities."], ["02", "Rapid Prototyping", "Translate the requirements into interactive prototypes and a clear visual direction."], ["03", "Production Engineering", "Build a clean, typed, accessible product with resilient APIs and dependable delivery."], ["04", "Scale & Optimization", "Measure what matters and make the next useful improvement with confidence."]] as const;
-const confidenceItems = [
-  { title: "Clear priorities", text: "Every decision is tied to the customer journey, the commercial goal, and the next useful release.", meta: "01 / Direction", icon: Target },
-  { title: "Accessible interfaces", text: "Thoughtful structure, readable type, and inclusive interactions make the product easier to use for everyone.", meta: "02 / Experience", icon: Accessibility },
-  { title: "Maintainable systems", text: "A considered foundation keeps the product fast, understandable, and ready to evolve as the business grows.", meta: "03 / Foundation", icon: Settings2 },
+const disciplines = [
+  [
+    "Front-End Precision",
+    "Digital experience & web architecture",
+    "High-conversion bespoke web platforms on modern infrastructure — fast to load, secure, and built to be found on search.",
+    "Next.js SSR",
+  ],
+  [
+    "Mobile Engineering",
+    "Mobile app ecosystems",
+    "Native-feeling product experiences crafted for fluid gestures, accessibility, and the everyday moments that matter.",
+    "React Native",
+  ],
+  [
+    "Scale & Velocity",
+    "Cloud & conversion optimization",
+    "Elastic foundations, measurable experiments, and dependable systems that keep performing as the business grows.",
+    "AWS Multi-Region",
+  ],
 ] as const;
 
-function ConfidenceSection() {
+// lucide icons replace the old ⌘/▯/ϟ glyphs (plan M4).
+const disciplineIcons = [Code, Smartphone, Cloud] as const;
+
+const steps = [
+  [
+    "01",
+    "Understand your requirements",
+    "We listen first — your business, your customers, and the outcome you need — so the work starts from your goals.",
+  ],
+  [
+    "02",
+    "Shape the right solution",
+    "We turn those requirements into a clear structure and a visual direction that you review and approve step by step.",
+  ],
+  [
+    "03",
+    "Build with care",
+    "We make it real with clean, professional code — secure, fast, accessible, and built to be found on search engines.",
+  ],
+  [
+    "04",
+    "Support you after launch",
+    "We stay close after go-live with reliable follow-up and support, so the site keeps performing as your business grows.",
+  ],
+] as const;
+
+const confidenceItems = [
+  {
+    title: "A partner, not a vendor",
+    text: "We stay close after launch and keep supporting the work, so the site keeps serving you long after go-live.",
+    meta: "01 / Partnership",
+    icon: Target,
+  },
+  {
+    title: "Secure & professional",
+    text: "Clean, well-structured code and considered security practices give you a foundation you can rely on.",
+    meta: "02 / Trust",
+    icon: Accessibility,
+  },
+  {
+    title: "Fast & easy to find",
+    text: "Strong performance and search foundations mean the site loads quickly and reaches the people who matter to you.",
+    meta: "03 / Performance",
+    icon: Settings2,
+  },
+] as const;
+
+// Truthful, non-numeric facts only (plan C2): heritage and engagement pace —
+// the old 99.8% NPS / 4.2x ROI / 120+ products row was invented. The old "What
+// we build" column was also dropped (user request): the services index card in
+// the hero already names the three disciplines, so the row repeated them.
+const heroFacts = [
+  ["Established in", site.footer.location],
+  ["How we start", "Start in days, not months"],
+] as const;
+
+// The hero index card (chosen "Editorial Index" hero): the three real service
+// rows, derived from the Services page data — number + title + anchor id — so
+// the card cannot drift from what the site actually offers. Hover: number -> burnt
+// orange, label shift, arrow reveal.
+const heroIndex = services.map((service) => [
+  service.number,
+  service.title,
+  `/services#${service.id}`,
+]);
+
+// The studio's full working toolset — front end, back end, data, infrastructure
+// and tooling — shown as a continuously scrolling ticker in the technology band.
+const stack = [
+  "React",
+  "TypeScript",
+  "JavaScript",
+  "React Native",
+  "Node.js",
+  "Express.js",
+  "MongoDB",
+  "MySQL",
+  "Redux Toolkit",
+  "RTK Query",
+  "Tailwind CSS",
+  "HTML5",
+  "CSS3",
+  "REST APIs",
+  "AWS",
+  "Docker",
+  "Git",
+  "GitHub",
+  "Vite",
+  "Vitest",
+  "Jest",
+  "JWT",
+  "Cloudinary",
+  "Amazon S3",
+  "Amazon RDS",
+  "Stripe",
+  "Postman",
+  "npm",
+] as const;
+
+export default function Home() {
   return (
-    <section id="confidence-new" className="border-t border-neutral-200 bg-[#FAFAFA] py-20 lg:py-28">
-      <Container>
-        <div className="grid items-end gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-          <div className="max-w-xl">
-            <Badge>Built for Confidence</Badge>
-            <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-[#111111] sm:text-4xl lg:text-5xl">A stronger digital foundation starts with clarity.</h2>
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-neutral-600 sm:text-lg">We keep collaboration direct, decisions visible, and the work grounded in what your customers and your business actually need.</p>
-            <Link to="/about" className="group mt-8 inline-flex items-center gap-2 text-sm font-bold text-[#111111] transition-colors duration-300 hover:text-[#F97316]">How we work <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></Link>
+    <>
+      {/* ------------------------------- Hero ------------------------------ */}
+      {/* "Editorial Index" hero: statement column on the left, an index of the
+          three real services on the right. The card is separated by tone (warm
+          surface-subtle, no border/shadow) rather than by a UI box; rows link
+          to the real Services anchors. Hover: number -> burnt orange, label
+          shifts, arrow reveals. */}
+      <section className="bg-bg">
+        <Container className="py-20 lg:py-24">
+          <div className="grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+            <div>
+              <Badge>Digital experience architecture</Badge>
+              <h1 className="mt-7 text-display font-semibold leading-none text-ink">
+                We build <span className="text-primary-text">websites</span> that build your business
+              </h1>
+              {/* Brand tagline as live DOM text (brackets via HTML entities).
+                  text-primary-text = the burnt orange allowed as text on light
+                  surfaces (#C2410C, 5.2:1) — raw orange-500 fails AA there. */}
+              <p className="mt-5 font-mono text-sm tracking-widest text-muted md:text-base">
+                Creativity meets innovation
+              </p>
+              <p className="mt-8 max-w-2xl text-lede text-muted">{site.footer.brandLine}</p>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <Button to={primaryCta.to} size="lg">
+                  {primaryCta.label}
+                </Button>
+                <Button to="/portfolio" variant="secondary" size="lg">
+                  View our work
+                </Button>
+              </div>
+              <dl className="mt-14 grid max-w-xl grid-cols-1 gap-x-10 gap-y-7 border-t border-line pt-8 sm:grid-cols-2">
+                {heroFacts.map(([label, value]) => (
+                  <div key={label}>
+                    <dt className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
+                      {label}
+                    </dt>
+                    <dd className="mt-2 text-base font-semibold text-ink">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            <nav aria-label="Services index" className="rounded-card bg-surface-subtle p-8 sm:p-10">
+              <p className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
+                Index — what we build
+              </p>
+              <div className="mt-5">
+                {heroIndex.map(([number, label, to]) => (
+                  <Link
+                    key={to}
+                    to={to}
+                    className="group flex items-baseline gap-4 border-t border-line py-5 first:border-t-0"
+                  >
+                    <span className="font-mono text-meta text-muted transition-colors duration-500 ease-in-out group-hover:text-primary-text">
+                      {number}
+                    </span>
+                    <span className="font-display text-xl font-semibold text-ink transition-transform duration-500 ease-in-out group-hover:translate-x-1.5">
+                      {label}
+                    </span>
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="ml-auto size-4 self-center -translate-x-2 text-primary-text opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100"
+                    />
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-6 flex items-center justify-between border-t border-line pt-6 font-mono text-meta uppercase tracking-[0.18em]">
+                <span className="text-muted">A UAE studio</span>
+                <Link
+                  to="/services"
+                  className="text-primary-text transition-colors duration-200 ease-out hover:text-primary-text-hover"
+                >
+                  All services
+                </Link>
+              </div>
+            </nav>
           </div>
-          <div className="grid gap-4 md:grid-cols-3 lg:gap-5">
-            {confidenceItems.map(({ title, text, meta, icon: Icon }) => (
-              <article key={title} className="group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 reference-card-shadow transition-all duration-300 hover:-translate-y-1.5 hover:border-[#F97316] hover:shadow-[0_20px_45px_-10px_rgba(249,115,22,0.16)]">
-                <div className="absolute right-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full bg-orange-50 transition-transform duration-500 group-hover:scale-150" aria-hidden="true" />
-                <div className="relative">
-                  <div className="flex items-center justify-between"><div className="grid size-12 place-items-center rounded-2xl bg-[#111111] text-white transition-colors duration-300 group-hover:bg-[#F97316]"><Icon className="size-5" strokeWidth={1.8} /></div><span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-neutral-400">{meta}</span></div>
-                  <h3 className="mt-8 text-lg font-bold text-[#111111]">{title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-neutral-600">{text}</p>
-                  <div className="mt-6 h-px w-10 bg-[#F97316] transition-all duration-300 group-hover:w-full" />
+        </Container>
+      </section>
+
+      {/* ---------------------------- Technology --------------------------- */}
+      {/* Continuously scrolling "news ticker" band: the whole toolset moves
+          right-to-left and loops seamlessly. The list is rendered twice — the
+          second copy is aria-hidden so a screen reader hears it once — and the
+          CSS translate moves exactly -50%, so the loop has no visible jump.
+          Hovering pauses it, and reduced-motion stops the animation entirely. */}
+      <section
+        aria-label="Technologies we build with"
+        className="border-y border-line bg-surface"
+      >
+        <div className="flex items-center gap-6 py-5 sm:gap-10">
+          <p className="ml-4 shrink-0 font-mono text-meta uppercase tracking-[0.18em] text-muted sm:ml-8">
+            Built with
+          </p>
+          <div className="marquee-viewport relative min-w-0 flex-1">
+            <div className="marquee-track flex w-max items-center">
+              <ul className="flex items-center">
+                {stack.map((item) => (
+                  <li
+                    key={item}
+                    className="flex shrink-0 items-center gap-8 pr-8 text-sm font-semibold whitespace-nowrap text-ink"
+                  >
+                    {item}
+                    <span
+                      aria-hidden="true"
+                      className="size-1 rounded-full bg-primary-text/40"
+                    />
+                  </li>
+                ))}
+              </ul>
+              <ul aria-hidden="true" className="flex items-center">
+                {stack.map((item) => (
+                  <li
+                    key={item}
+                    className="flex shrink-0 items-center gap-8 pr-8 text-sm font-semibold whitespace-nowrap text-ink"
+                  >
+                    {item}
+                    <span
+                      aria-hidden="true"
+                      className="size-1 rounded-full bg-primary-text/40"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------------------- 01 Services -------------------------- */}
+      <section id="services" className="bg-bg py-20 lg:py-28">
+        <Container>
+          <SectionHeading
+            align="left"
+            number="01"
+            eyebrow="Services"
+            title="Engineered for impact. Built for the next stage."
+            lede="Design, engineering and ongoing support in one place — a secure, fast, search-friendly foundation your business can grow on."
+          />
+          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {disciplines.map(([label, title, text, tag], index) => {
+              const Icon = disciplineIcons[index];
+              return (
+                <article
+                  key={title}
+                  className="group flex flex-col rounded-card border border-line bg-surface p-7 transition-[border-color,transform] duration-500 ease-in-out hover:-translate-y-1 hover:border-ink"
+                >
+                  <span className="grid size-12 place-items-center rounded-lg bg-ink text-on-dark transition-colors duration-500 ease-in-out group-hover:bg-primary group-hover:text-on-primary">
+                    <Icon aria-hidden="true" className="size-5" strokeWidth={1.8} />
+                  </span>
+                  <span className="mt-6 block font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
+                    {label}
+                  </span>
+                  {/* min-h reserves two title lines so a wrapping title cannot
+                      push its own body text out of line with its siblings. */}
+                  <h3 className="mt-2.5 flex min-h-[3.25rem] items-start text-xl font-semibold text-ink">
+                    {title}
+                  </h3>
+                  <p className="mt-3 flex min-h-[3.75rem] items-start text-sm leading-relaxed text-muted">
+                    {text}
+                  </p>
+                  {/* Tag + link pinned to the bottom so all three cards end
+                      together no matter how the copy wraps. */}
+                  <div className="mt-auto pt-7">
+                    <span className="inline-block rounded-md border border-line bg-surface-subtle px-2.5 py-1 text-xs font-semibold text-ink">
+                      {tag}
+                    </span>
+                    <Link
+                      to="/services"
+                      className="mt-4 flex items-center justify-between border-t border-line pt-5 text-sm font-semibold text-ink transition-colors duration-400 ease-in-out group-hover:text-primary-text"
+                    >
+                      Explore
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      />
+                    </Link>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </Container>
+      </section>
+
+      {/* ------------------------------ 02 Work ---------------------------- */}
+      <section id="work" className="bg-dark py-20 lg:py-28">
+        <Container>
+          <div className="flex flex-col justify-between gap-7 md:flex-row md:items-end">
+            <SectionHeading
+              align="left"
+              dark
+              number="02"
+              eyebrow="Selected concepts"
+              title="Clear thinking, made tangible."
+              lede="Explore concept directions that show how we think about product clarity, visual systems, and digital trust."
+            />
+            <Link
+              to="/portfolio"
+              className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-on-dark-muted transition-colors duration-200 ease-out hover:text-on-dark"
+            >
+              View portfolio
+              <ArrowUpRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            </Link>
+          </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {projects.slice(0, 3).map((project) => (
+              <Link
+                key={project.slug}
+                to="/portfolio"
+                className="group rounded-card border border-dark-line bg-dark-surface p-5 transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 hover:border-on-dark/30"
+              >
+                <div
+                  className="flex aspect-[4/3] items-end rounded-lg bg-cover bg-center p-4"
+                  style={{
+                    backgroundImage: `linear-gradient(to top, rgb(0 0 0 / 35%), rgb(255 255 255 / 5%)), url(${project.image})`,
+                    backgroundColor: project.accent,
+                  }}
+                >
+                  <span className="rounded-full bg-on-dark/90 px-3 py-1 font-mono text-meta uppercase tracking-wider text-ink">
+                    Concept project
+                  </span>
                 </div>
+                <h3 className="mt-5 text-xl font-semibold text-on-dark">{project.title}</h3>
+                {/* min-h keeps each description to a 2-line box — without it a
+                    wrapping description pushed one card in the row taller. */}
+                <p className="mt-2 flex min-h-[3rem] items-start text-sm leading-6 text-on-dark-muted">
+                  {project.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ---------------------------- 03 Process --------------------------- */}
+      <section id="process" className="bg-bg py-20 lg:py-28">
+        <Container>
+          <SectionHeading
+            number="03"
+            eyebrow="How we work"
+            title="A practical engine for good work."
+            lede="A clear, step-by-step sequence — from understanding your requirements, to launch, to the follow-up that comes after it."
+          />
+          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {steps.map(([number, title, text]) => (
+              <article
+                key={number}
+                className="flex min-h-56 flex-col rounded-card border border-line bg-surface p-6 transition-[border-color,transform] duration-500 ease-in-out hover:-translate-y-1 hover:border-ink"
+              >
+                <span className="font-mono text-xl font-medium text-primary-text">{number}</span>
+                {/* min-h reserves two title lines: "Understand your requirements"
+                    wraps, its siblings do not, and without this the first card's
+                    body sat 28px lower than the rest. */}
+                <h3 className="mt-5 flex min-h-[3.25rem] items-start text-lg font-semibold text-ink">
+                  {title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
               </article>
             ))}
           </div>
-        </div>
-      </Container>
-    </section>
-  );
-}
+        </Container>
+      </section>
 
-export default function Home() {
-  return <>
-    <section className="relative flex min-h-0 items-center overflow-hidden bg-white pb-14 pt-12 lg:py-20"><Container className="w-full"><div className="grid items-center gap-10 xl:grid-cols-12 xl:gap-8"><div className="z-10 space-y-6 text-center xl:col-span-6 xl:text-left"><Badge>Digital Experience Architecture</Badge><h1 className="text-4xl font-extrabold uppercase leading-[1.08] tracking-tight text-[#111111] sm:text-5xl lg:text-6xl">We Build <span className="text-[#F97316]">Websites</span><br />That Build Your Business</h1><p className="mx-auto max-w-xl text-base leading-relaxed text-neutral-600 sm:text-lg xl:mx-0">We architect high-conversion digital platforms, cloud architectures, and immersive web apps engineered to scale revenue and set new category benchmarks.</p><div className="flex flex-col items-center justify-center gap-3 pt-1 sm:flex-row xl:justify-start"><Button to="/contact" variant="dark" size="md" className="w-full sm:w-auto">Start a Project →</Button><Button to="/portfolio" variant="secondary" size="md" className="w-full sm:w-auto">View Our Work ↗</Button></div><div className="grid max-w-lg grid-cols-3 gap-4 border-t border-neutral-200 pt-5 text-left"><div><strong className="block text-lg font-extrabold text-[#111111]">99.8%</strong><span className="block text-[9px] uppercase tracking-wider text-neutral-500">Client NPS</span></div><div><strong className="block text-lg font-extrabold text-[#F97316]">4.2x</strong><span className="block text-[9px] uppercase tracking-wider text-neutral-500">Avg. ROI boost</span></div><div><strong className="block text-lg font-extrabold text-[#111111]">120+</strong><span className="block text-[9px] uppercase tracking-wider text-neutral-500">Products live</span></div></div></div><div className="xl:col-span-6"><HeroVisual /></div></div></Container></section>
-    <section className="overflow-hidden border-y border-neutral-200 bg-[#FAFAFA] py-10"><div className="mb-5 px-4 text-center"><p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Powering next-generation scale platforms with modern technology</p></div><div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]"><div className="reference-marquee flex items-center gap-12 py-2 sm:gap-16">{["React", "AWS Cloud", "Stripe", "Webflow", "Vercel", "Figma Enterprise", "Next.js", "React", "AWS Cloud"].map((item, index) => <span key={`${item}-${index}`} className="whitespace-nowrap text-sm font-extrabold tracking-tight text-neutral-700">{item}</span>)}</div></div></section>
-    <section id="services" className="bg-white py-20 lg:py-28"><Container><div className="mx-auto mb-16 max-w-2xl space-y-4 text-center"><Badge>High-Performance Disciplines</Badge><h2 className="text-3xl font-extrabold tracking-tight text-[#111111] sm:text-4xl lg:text-5xl">Engineered for Impact.<br />Built for Hyper-Growth.</h2><p className="text-base text-neutral-600 sm:text-lg">We connect commercial intent, interface design, and engineering into one clear digital foundation.</p></div><div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">{disciplines.map(([label, title, text, tag]) => <article key={title} className="group rounded-3xl border border-neutral-200 bg-white p-8 reference-card-shadow transition-all duration-300 hover:-translate-y-1.5 hover:border-[#111111]"><div className="grid size-14 place-items-center rounded-2xl bg-[#111111] text-2xl text-white transition-colors group-hover:bg-[#F97316]">⌘</div><span className="mt-6 block text-[11px] font-bold uppercase tracking-wider text-[#F97316]">{label}</span><h3 className="mt-2 text-2xl font-bold text-[#111111] transition-colors group-hover:text-[#F97316]">{title}</h3><p className="mt-3 text-sm leading-relaxed text-neutral-600">{text}</p><span className="mt-6 inline-block rounded-md bg-neutral-100 px-2.5 py-1 text-xs font-semibold text-neutral-800">{tag}</span><div className="mt-6 border-t border-neutral-100 pt-6"><Link className="text-sm font-bold text-[#111111] transition-colors group-hover:text-[#F97316]" to="/services">Explore →</Link></div></article>)}</div></Container></section>
-    <section id="work" className="relative overflow-hidden bg-[#111111] py-20 text-white lg:py-28"><Container><div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end"><div className="max-w-xl space-y-4"><Badge dark>Selected Concepts</Badge><h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">Clear thinking, made tangible.</h2><p className="text-base text-neutral-400">Explore concept directions that show how we think about product clarity, visual systems, and digital trust.</p></div><Link className="text-sm font-bold text-[#F97316] transition-colors hover:text-white" to="/portfolio">View Portfolio →</Link></div><div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">{projects.slice(0, 3).map((project) => <Link to="/portfolio" key={project.slug} className="group rounded-3xl border border-white/10 bg-white/[0.04] p-5 transition-[background-color,border-color,transform] duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.07]"><div className="flex aspect-[4/3] items-end rounded-2xl bg-cover bg-center p-5" style={{ backgroundImage: `linear-gradient(to top, rgb(0 0 0 / 35%), rgb(255 255 255 / 5%)), url(${project.image})`, backgroundColor: project.accent }}><span className="rounded-full bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[#111111]">Concept project</span></div><h3 className="mt-5 text-xl font-semibold">{project.title}</h3><p className="mt-2 text-sm leading-6 text-gray-400">{project.description}</p></Link>)}</div></Container></section>
-    <section id="process" className="bg-white py-20 lg:py-28"><Container><div className="mx-auto mb-16 max-w-2xl space-y-4 text-center"><Badge>How We Execute</Badge><h2 className="text-3xl font-extrabold tracking-tight text-[#111111] sm:text-4xl lg:text-5xl">A practical engine for good work.</h2><p className="text-base text-neutral-600 sm:text-lg">A clear sequence from first conversation to a product foundation that can evolve.</p></div><div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">{steps.map(([number, title, text]) => <article key={number} className="space-y-4 rounded-3xl border border-neutral-200 bg-[#FAFAFA] p-6 reference-card-shadow"><span className="text-3xl font-extrabold text-[#F97316]">{number}</span><h3 className="text-xl font-extrabold text-[#111111]">{title}</h3><p className="text-sm leading-relaxed text-neutral-600">{text}</p></article>)}</div></Container></section>
-    <section id="confidence" className="border-t border-neutral-200 bg-[#FAFAFA] py-20 lg:py-28"><Container><div className="mx-auto max-w-3xl text-center"><Badge>Built for Confidence</Badge><h2 className="mt-5 text-3xl font-extrabold tracking-tight text-[#111111] sm:text-4xl">A stronger digital foundation starts with clarity.</h2><p className="mt-5 text-base leading-relaxed text-neutral-600 sm:text-lg">We keep collaboration direct, decisions visible, and the work grounded in what your customers and your business actually need.</p><div className="mt-10 grid gap-6 text-left sm:grid-cols-3">{["Clear priorities", "Accessible interfaces", "Maintainable systems"].map((item) => <div key={item} className="rounded-3xl border border-neutral-200 bg-white p-6 reference-card-shadow"><span className="text-2xl text-[#F97316]">✓</span><h3 className="mt-5 font-bold text-[#111111]">{item}</h3><p className="mt-2 text-sm leading-relaxed text-neutral-600">Considered from the first interaction through the next release.</p></div>)}</div></div></Container></section>
-    <ConfidenceSection />
-    <ReviewsBand />
-    <CTABand />
-  </>;
+      {/* -------------------------- 04 Confidence -------------------------- */}
+      <section id="confidence" className="border-t border-line bg-surface-subtle py-20 lg:py-28">
+        <Container>
+          <div className="grid items-end gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+            <div>
+              <SectionHeading
+                align="left"
+                number="04"
+                eyebrow="Built for confidence"
+                title="A stronger digital foundation starts with clarity."
+                lede="We work as a partner, not a vendor: direct communication, decisions you can see at every step, and work grounded in what your customers actually need."
+              />
+              <Link
+                to="/about"
+                className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ink transition-colors duration-500 ease-in-out hover:text-primary-text"
+              >
+                How we work
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </Link>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3 lg:gap-5">
+              {confidenceItems.map(({ title, text, meta, icon: Icon }) => (
+                <article
+                  key={title}
+                  className="group rounded-card border border-line bg-surface p-6 transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 hover:border-ink"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="grid size-11 place-items-center rounded-lg bg-ink text-on-dark transition-colors duration-200 ease-out group-hover:bg-primary group-hover:text-on-primary">
+                      <Icon aria-hidden="true" className="size-5" strokeWidth={1.8} />
+                    </span>
+                    <span className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
+                      {meta}
+                    </span>
+                  </div>
+                  <h3 className="mt-6 text-lg font-semibold text-ink">{title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
+                  <div
+                    aria-hidden="true"
+                    className="mt-6 h-px w-10 bg-primary transition-[width] duration-300 ease-out group-hover:w-full"
+                  />
+                </article>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <ReviewsBand />
+      <CTABand />
+    </>
+  );
 }

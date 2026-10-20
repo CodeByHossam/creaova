@@ -32,11 +32,11 @@ export default function NotFound() {
     <Container className="flex min-h-[60vh] flex-col justify-center py-24 lg:py-32">
       <p className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">404</p>
 
-      <h1 className="mt-6 max-w-[var(--measure)] text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+      <h1 className="mt-6 max-w-[var(--measure)] text-display font-semibold text-ink">
         We couldn’t find that page.
       </h1>
 
-      <p className="mt-7 max-w-[var(--measure)] text-lg leading-7 text-gray-600">
+      <p className="mt-7 max-w-[var(--measure)] text-lede text-muted">
         The link may be out of date, or the page may have moved. Everything else
         is still where you left it.
       </p>

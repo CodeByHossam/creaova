@@ -1,27 +1,59 @@
 import { Container } from "~/components/Container";
+import { SectionHeading } from "~/components/SectionHeading";
 
 const reviewPlaceholders = [
-  ["Clear from the first conversation.", "Illustrative review content reserved for verified client feedback."],
-  ["Thoughtful work, delivered without the theatre.", "Illustrative review content reserved for verified client feedback."],
-  ["A digital foundation the team can keep building on.", "Illustrative review content reserved for verified client feedback."],
+  [
+    "Clear from the first conversation.",
+    "Illustrative review content reserved for verified client feedback.",
+  ],
+  [
+    "Thoughtful work, delivered without the theatre.",
+    "Illustrative review content reserved for verified client feedback.",
+  ],
+  [
+    "A digital foundation the team can keep building on.",
+    "Illustrative review content reserved for verified client feedback.",
+  ],
 ] as const;
 
+/**
+ * Home testimonial band — honest placeholders only (plan C2): no invented
+ * names, companies, photos, or star ratings. The old five-star row implied a
+ * verified 5/5 score that does not exist, so it was removed; the editorial
+ * quote mark carries the decoration instead. Tokens only: the old orange
+ * (#F97316) on white sat at 2.8:1 (plan C1) — accent text is now
+ * `text-primary-text` (5.2:1).
+ */
 export function ReviewsBand() {
   return (
-    <section id="testimonials" className="border-t border-neutral-200 bg-[#FAFAFA] py-20 lg:py-28">
+    <section id="testimonials" className="border-t border-line bg-bg py-20 lg:py-28">
       <Container>
-        <div className="mx-auto mb-12 max-w-2xl text-center">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#F97316]">Client perspective</span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#111111] sm:text-4xl">Good work should make the next step clearer.</h2>
-          <p className="mt-4 text-base leading-relaxed text-neutral-600">Verified client reviews will be published here as approved. For now, this section preserves the reference experience without presenting invented endorsements as real.</p>
-        </div>
-        <div className="grid gap-8 md:grid-cols-3">
+        <SectionHeading
+          eyebrow="Client perspective"
+          title="Good work should make the next step clearer."
+          lede="Verified client reviews will be published here as approved. For now, this section preserves the reference experience without presenting invented endorsements as real."
+        />
+        <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
           {reviewPlaceholders.map(([quote, note]) => (
-            <article key={quote} className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-[0_10px_30px_-4px_rgb(0_0_0_/_4%),0_2px_6px_-1px_rgb(0_0_0_/_2%)]">
-              <div className="flex gap-1 text-[#F97316]" aria-label="Review placeholder">★★★★★</div>
-              <span className="mt-5 block text-4xl leading-none text-[#F97316]" aria-hidden="true">“</span>
-              <p className="mt-3 text-lg font-semibold leading-relaxed text-[#111111]">{quote}</p>
-              <p className="mt-6 border-t border-neutral-100 pt-4 text-xs leading-relaxed text-neutral-500">{note}</p>
+            <article
+              key={quote}
+              className="flex flex-col rounded-card border border-line bg-surface p-8"
+            >
+              <span
+                aria-hidden="true"
+                className="block font-display text-4xl leading-none text-primary-text"
+              >
+                “
+              </span>
+              {/* min-h keeps the quote to a 2-line box at every width: the
+                  quotes wrap differently on mobile, which otherwise left the
+                  first card 29px shorter than its siblings. */}
+              <p className="mt-4 flex min-h-[3.5rem] items-start text-lg font-medium leading-relaxed text-ink">
+                {quote}
+              </p>
+              <p className="mt-auto border-t border-line pt-4 text-meta leading-relaxed text-muted">
+                {note}
+              </p>
             </article>
           ))}
         </div>

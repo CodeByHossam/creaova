@@ -13,7 +13,8 @@
 #   2. Keys the uniform white background to alpha, so edges stay anti-aliased.
 #   3. Writes two variants at the SAME alpha:
 #        - public/logo.png          as supplied - orange mark + ink wordmark
-#        - public/logo-inverse.png  white, for the dark CTA band and footer
+#        - public/logo-inverse.png  dark-surface variant: saturated orange kept,
+#                                   neutral pixels mapped to white (footer)
 #   4. Resizes to a retina-safe width.
 #
 # MEASURED GEOMETRY of Creaova_Logo1.png (1254x1254), by row/column ink profiling:
@@ -35,13 +36,15 @@
 #   from 11.2 px (comfortably legible) to 8.6 px (mush). The mark + wordmark lockup
 #   is 912 x 528, aspect 1.73.
 #
-# WHY THE INVERSE IS FLAT WHITE, NOT "ORANGE MARK + WHITE WORDMARK"
-#   The mark's core measures near-black (#080808, saturation ~0) across a large
-#   area, and the artwork as a whole is a dark-to-orange gradient. Any transform
-#   that tried to keep the orange while lightening the dark parts would leave that
-#   near-black core invisible against --dark (#111111). Flat white is the only
-#   variant guaranteed to read on the dark bands. The orange accent is still
-#   present there via buttons, links and rules.
+# WHY THE INVERSE KEEPS THE ORANGE (user decision, 2026-10-20)
+#   The dark-surface variant must keep the brand theme colour - "the logo should
+#   have the orange colour, like the original" - so flat white is no longer
+#   acceptable. The transform keeps bright, saturated orange pixels exactly as
+#   supplied and maps everything else (the mark's near-black core, the ink
+#   wordmark, neutral anti-aliasing) to white. Both halves of the mark then read
+#   on --dark: the white core by luminance, the orange fringe at >= 3:1, and the
+#   wordmark as white at 7.4:1. This preserves the original two-tone character
+#   instead of flattening it away.
 #
 # The source file is NEVER modified, so the artwork can be re-derived if a vector
 # ever arrives.
@@ -74,7 +77,7 @@ $TargetW = 480
 # Deviation from the background at which a pixel counts as fully opaque ink.
 $FullOpacityAt = 200.0
 
-# Monochrome target for the dark-surface variant.
+# Neutral target for pixels that map to white in the dark-surface variant.
 $InvR = 255; $InvG = 255; $InvB = 255
 
 # --- Load the source --------------------------------------------------------
@@ -137,7 +140,10 @@ for ($y = 0; $y -lt $CropH; $y++) {
   $inkRow = $y * $inkStride
   for ($x = 0; $x -lt $CropW; $x++) {
     $si = $srcRow + ($CropX + $x) * 3
-    $r = $srcPixels[$si]; $g = $srcPixels[$si + 1]; $bl = $srcPixels[$si + 2]
+    # Format24bppRgb is BGR in memory on little-endian, NOT RGB. Reading this
+    # backwards swaps red/blue and turns the orange mark navy in the output -
+    # that bug shipped once and must not return.
+    $bl = $srcPixels[$si]; $g = $srcPixels[$si + 1]; $r = $srcPixels[$si + 2]
 
     # Per-channel distance from the background, taking the MAX. Luminance would be
     # wrong here: the mark is a saturated orange whose luminance sits mid-range, so
@@ -165,7 +171,13 @@ for ($y = 0; $y -lt $CropH; $y++) {
 [System.Runtime.InteropServices.Marshal]::Copy($inkPixels, 0, $inkData.Scan0, $inkPixels.Length)
 $ink.UnlockBits($inkData)
 
-# --- Pass 2: the white variant, from the same alpha -------------------------
+# --- Pass 2: the dark-surface variant, from the same alpha -------------------
+#
+# Keeps bright, saturated orange pixels exactly as supplied; maps everything
+# else (near-black core, ink wordmark, neutral anti-aliasing) to white. The
+# brightness floor (r > 140) is chosen so every pixel KEPT as orange measures
+# >= 3:1 against --dark (#16130F); anything darker becomes white instead of
+# shipping an invisible smudge.
 
 $inv = [System.Drawing.Bitmap]::new($CropW, $CropH, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
 $invData = $inv.LockBits($outRect,
@@ -180,9 +192,20 @@ for ($y = 0; $y -lt $CropH; $y++) {
   for ($x = 0; $x -lt $CropW; $x++) {
     $oi = $inkRow + $x * 4
     $ni = $invRow + $x * 4
-    $invPixels[$ni]     = [byte]$InvB
-    $invPixels[$ni + 1] = [byte]$InvG
-    $invPixels[$ni + 2] = [byte]$InvR
+    # ink is BGRA in memory: [0]=B, [1]=G, [2]=R.
+    $b = $inkPixels[$oi]
+    $g = $inkPixels[$oi + 1]
+    $r = $inkPixels[$oi + 2]
+    $warm = ($r -gt 140) -and (($r - $b) -gt 60)
+    if ($warm) {
+      $invPixels[$ni]     = [byte]$b
+      $invPixels[$ni + 1] = [byte]$g
+      $invPixels[$ni + 2] = [byte]$r
+    } else {
+      $invPixels[$ni]     = [byte]$InvB
+      $invPixels[$ni + 1] = [byte]$InvG
+      $invPixels[$ni + 2] = [byte]$InvR
+    }
     $invPixels[$ni + 3] = $inkPixels[$oi + 3]
   }
 }
@@ -196,7 +219,9 @@ function Save-LogoPng {
     [System.Drawing.Bitmap]$Source,
     [int]$Width,
     [string]$Path,
-    [switch]$FlattenToWhite
+    # Normalise near-white NEUTRAL pixels to exactly 255,255,255 after the
+    # resize. Warm (orange) pixels are never touched - this variant keeps them.
+    [switch]$PurifyWhite
   )
   $height = [int][Math]::Round($Source.Height * ($Width / [double]$Source.Width))
   $dest = [System.Drawing.Bitmap]::new($Width, $height, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
@@ -212,11 +237,11 @@ function Save-LogoPng {
   $g.DrawImage($Source, 0, 0, $Width, $height)
   $g.Dispose()
 
-  if ($FlattenToWhite) {
-    # HighQualityBicubic overshoots on the alpha ramp, which leaves a few hundred
-    # fully-opaque pixels sitting at 253-254 instead of 255. Invisible, but it means
-    # the asset is not literally flat white. Normalise RGB; alpha is what carries
-    # the shape, so this is lossless.
+  if ($PurifyWhite) {
+    # HighQualityBicubic overshoots on the alpha ramp, which leaves a few
+    # fully-opaque WHITE pixels sitting at 250-254 instead of 255. Invisible,
+    # but it means the asset is not literally flat white. Normalise only pixels
+    # that are already neutral and near-white; orange pixels keep their colour.
     $r2 = [System.Drawing.Rectangle]::new(0, 0, $Width, $height)
     $d2 = $dest.LockBits($r2,
           [System.Drawing.Imaging.ImageLockMode]::ReadWrite,
@@ -225,7 +250,10 @@ function Save-LogoPng {
     $px2 = [byte[]]::new($st2 * $height)
     [System.Runtime.InteropServices.Marshal]::Copy($d2.Scan0, $px2, 0, $px2.Length)
     for ($i = 0; $i -lt $px2.Length; $i += 4) {
-      $px2[$i] = 255; $px2[$i + 1] = 255; $px2[$i + 2] = 255
+      $pb = $px2[$i]; $pg = $px2[$i + 1]; $pr = $px2[$i + 2]
+      if ($pr -ge 248 -and [Math]::Abs($pr - $pg) -le 3 -and [Math]::Abs($pg - $pb) -le 3) {
+        $px2[$i] = 255; $px2[$i + 1] = 255; $px2[$i + 2] = 255
+      }
     }
     [System.Runtime.InteropServices.Marshal]::Copy($px2, 0, $d2.Scan0, $px2.Length)
     $dest.UnlockBits($d2)
@@ -241,7 +269,7 @@ $inkPath = Join-Path $OutDir 'logo.png'
 $invPath = Join-Path $OutDir 'logo-inverse.png'
 
 $inkDim = Save-LogoPng -Source $ink -Width $TargetW -Path $inkPath
-$invDim = Save-LogoPng -Source $inv -Width $TargetW -Path $invPath -FlattenToWhite
+$invDim = Save-LogoPng -Source $inv -Width $TargetW -Path $invPath -PurifyWhite
 
 $ink.Dispose(); $inv.Dispose(); $src.Dispose()
 

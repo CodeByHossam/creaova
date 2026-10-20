@@ -4,37 +4,34 @@ import { Link } from "react-router";
 /**
  * The one button in the system.
  *
- * Reference: plans/MULTIPAGE_UI_PLAN.md §4.3, §5.1
+ * Reference: plans/UI_UX_ENHANCEMENT_PLAN.md (Phase 1), MULTIPAGE_UI_PLAN §4.3
  *
  * Colour rule that this file exists to enforce: orange is a FILL, never text on
- * a light background. `primary` therefore always pairs `bg-primary` with
- * `text-on-primary` (#111111), which measures 6.74:1. The prototype's
- * white-on-orange CTA was 2.80:1 and failed WCAG AA (§12.1) — binding the two
- * tokens together means that defect cannot be reintroduced by hand.
- *
- * `secondary` is a hairline outline; `ghost` is for tertiary actions like
- * "back". No shadows and no glow anywhere (§5.4).
+ * a light background. `primary` pairs `bg-primary` (#EA580C) with
+ * `text-on-primary` (ink, 5.2:1) — and the resting state is ink, with orange
+ * arriving only on hover, so the single primary action never fights the page.
+ * No shadows and no glow anywhere (plan M6): separation is hairlines + space.
  */
 
 type Variant = "primary" | "secondary" | "ghost" | "dark" | "light";
 type Size = "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 !rounded-full font-semibold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 rounded-lg font-semibold whitespace-nowrap transition-[background-color,border-color,color,transform] duration-500 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-ink text-on-dark shadow-sm hover:-translate-y-0.5 hover:bg-primary hover:text-on-primary hover:shadow-orange-glow",
+  primary: "bg-ink text-on-dark hover:-translate-y-0.5 hover:bg-primary hover:text-on-primary",
   // Outline style: ink text on ink hairline. On hover it inverts rather than
   // turning orange, so the orange stays reserved for the single primary action.
   secondary: "border border-ink text-ink hover:bg-ink hover:text-on-dark",
   ghost: "text-primary-text hover:text-ink",
-  dark: "bg-ink text-on-dark shadow-sm hover:-translate-y-0.5 hover:bg-primary hover:text-on-primary hover:shadow-orange-glow",
-  light: "bg-white text-ink shadow-sm hover:bg-primary hover:text-on-primary",
+  dark: "bg-ink text-on-dark hover:-translate-y-0.5 hover:bg-primary hover:text-on-primary",
+  light: "bg-surface text-ink hover:bg-primary hover:text-on-primary",
 };
 
-// min-h-11 = 44px, the minimum touch target from §9.
+// h-11 = 44px, the minimum touch target from §9 (the old h-10 = 40px missed it).
 const sizes: Record<Size, string> = {
-  md: "h-10 px-4 text-sm",
+  md: "h-11 px-5 text-sm",
   lg: "h-12 px-6 text-base",
 };
 

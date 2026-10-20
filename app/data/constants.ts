@@ -131,10 +131,12 @@ export const site: Site = {
   socialLinks,
 
   logo: {
-    src: "/assets/images/logo/Creaova_Logo1-transparent.png",
-    inverseSrc: "/assets/images/logo/Creaova_Logo1-transparent.png",
-    width: 1254,
-    height: 1254,
+    // Prepared by scripts/prepare-logo.ps1: cropped lockup (mark + wordmark),
+    // 480x278, ~119 KB — versus the 1 MB uncropped source it replaces.
+    src: "/logo.png",
+    inverseSrc: "/logo-inverse.png",
+    width: 480,
+    height: 278,
     alt: "Creaova",
   },
 
@@ -142,7 +144,7 @@ export const site: Site = {
 
   footer: {
     brandLine:
-      "Web design, web development and mobile apps — made in the UAE for businesses that need to be taken seriously online.",
+      "An established digital studio in the UAE. We design and build secure, high-performing websites and apps — and stay with you as a partner after launch.",
     location: "Sharjah · Dubai · UAE",
 
     // Four columns, kept deliberately short (§3.2). Every footer link is a

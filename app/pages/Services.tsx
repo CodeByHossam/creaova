@@ -1,21 +1,174 @@
+import { ArrowUpRight, Code, Palette, Smartphone } from "lucide-react";
 import { Link } from "react-router";
 
+import { Badge } from "~/components/Badge";
 import { Container } from "~/components/Container";
 import { CTABand } from "~/components/CTABand";
+import { SectionHeading } from "~/components/SectionHeading";
 import { processSteps, services } from "~/data/services";
 
-const icons = ["⌘", "▯", "ϟ"];
+export function meta() {
+  return [
+    { title: "Services | Creaova Digital Solutions" },
+    { name: "description", content: "Creaova's web design, development and mobile app services — secure, fast, search-friendly builds with a clear process and support after launch." },
+  ];
+}
 
-export function meta() { return [{ title: "Services | Creaova Digital Solutions" }, { name: "description", content: "Explore Creaova's web design, development, and mobile product services." }]; }
+// lucide icons replace the old ⌘/▯/ϟ glyphs (plan M4).
+const serviceIcons = [Palette, Code, Smartphone] as const;
 
-const engagement = [["Focused start", "Begin with a clear problem, useful context, and a small set of decisions that move the work forward."], ["Direct collaboration", "Work with a senior team through short feedback loops, visible priorities, and practical recommendations."], ["Useful handoff", "Leave with a coherent product foundation, documented decisions, and a next step you can act on."]];
+const engagement = [
+  ["We understand your requirements", "We start by listening — your business, your customers, and the outcome you need — so every decision stays grounded."],
+  ["A partner, not a vendor", "Direct communication and clear priorities let you review and approve each step of the work with real confidence."],
+  ["Support after launch", "We stay involved after go-live with genuine follow-up — fixes, guidance, and the next useful improvement for you."],
+];
 
 export default function Services() {
-  return <>
-    <section className="bg-white py-20 lg:py-28"><Container><div className="mx-auto max-w-3xl space-y-5 text-center"><div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-3.5 py-1.5"><span className="size-2 rounded-full bg-[#F97316]" /><span className="text-xs font-bold uppercase tracking-widest text-[#F97316]">High-Performance Disciplines</span></div><h1 className="text-4xl font-extrabold tracking-tight text-[#111111] sm:text-5xl lg:text-6xl">Engineered for impact.<br />Built for the next stage.</h1><p className="text-base leading-relaxed text-neutral-600 sm:text-lg">We connect strategy, interface design, and engineering into digital foundations that are clear to use and ready to evolve.</p></div></Container></section>
-    <section className="bg-white pb-20 lg:pb-28"><Container><div className="grid gap-8 md:grid-cols-3">{services.map((service, index) => <article id={service.id} key={service.id} className="group flex flex-col justify-between overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-[0_10px_30px_-4px_rgb(0_0_0_/_4%),0_2px_6px_-1px_rgb(0_0_0_/_2%)] transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1.5 hover:border-[#111111]"><div className="relative aspect-[16/9] overflow-hidden"><img src={service.image} alt="" loading="lazy" className="size-full object-cover grayscale-[20%] transition-transform duration-500 group-hover:scale-105" /><div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" /><div className="absolute bottom-4 left-5 grid size-12 place-items-center rounded-2xl bg-[#111111] text-2xl text-white transition-colors group-hover:bg-[#F97316]">{icons[index]}</div></div><div className="flex flex-1 flex-col justify-between p-6"><div className="space-y-5"><div className="space-y-2"><span className="text-[11px] font-bold uppercase tracking-wider text-[#F97316]">{service.number} / {service.title}</span><h2 className="text-2xl font-bold text-[#111111] transition-colors group-hover:text-[#F97316]">{service.title}</h2><p className="text-base font-medium leading-relaxed text-neutral-800">{service.summary}</p><p className="text-sm leading-relaxed text-neutral-600">{service.details}</p></div><div className="flex flex-wrap gap-2 pt-2">{service.deliverables.map((item) => <span key={item} className="rounded-md bg-neutral-100 px-2.5 py-1 text-xs font-semibold text-neutral-800">{item}</span>)}</div></div><div className="mt-6 flex items-center justify-between border-t border-neutral-100 pt-6"><span className="flex items-center gap-1.5 text-xs font-bold text-neutral-900"><span className="size-2 rounded-full bg-[#F97316]" /> Built to perform</span><Link className="text-sm font-bold text-[#111111] transition-colors group-hover:text-[#F97316]" to="/contact">Discuss →</Link></div></div></article>)}</div></Container></section>
-    <section className="border-y border-neutral-200 bg-[#FAFAFA] py-20 lg:py-28"><Container><div className="mx-auto mb-12 max-w-2xl text-center"><span className="text-xs font-bold uppercase tracking-widest text-[#F97316]">What working together feels like</span><h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#111111] sm:text-4xl">A calm process with enough energy to move.</h2></div><div className="grid gap-6 md:grid-cols-3">{engagement.map(([title, text], index) => <article key={title} className="rounded-3xl border border-neutral-200 bg-white p-7 shadow-[0_10px_30px_-4px_rgb(0_0_0_/_4%)]"><span className="font-mono text-sm text-[#F97316]">0{index + 1}</span><h3 className="mt-6 text-xl font-extrabold text-[#111111]">{title}</h3><p className="mt-3 text-sm leading-relaxed text-neutral-600">{text}</p></article>)}</div></Container></section>
-    <section id="process" className="bg-white py-20 lg:py-28"><Container><div className="mx-auto mb-16 max-w-2xl space-y-4 text-center"><div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-100 px-3.5 py-1.5"><span className="size-2 rounded-full bg-[#F97316]" /><span className="text-xs font-bold uppercase tracking-widest text-neutral-800">How We Execute</span></div><h2 className="text-3xl font-extrabold tracking-tight text-[#111111] sm:text-4xl lg:text-5xl">Our four-step design and engineering engine.</h2><p className="text-base leading-relaxed text-neutral-600 sm:text-lg">From zero-state architecture to a scalable live product in predictable, collaborative sprints.</p></div><div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">{processSteps.map(([number, title, text], index) => <article key={number} className="space-y-4 rounded-3xl border border-neutral-200 bg-[#FAFAFA] p-6 shadow-[0_10px_30px_-4px_rgb(0_0_0_/_4%),0_2px_6px_-1px_rgb(0_0_0_/_2%)] transition-[border-color,box-shadow] duration-300 hover:border-[#111111]"><div className="flex items-center justify-between"><span className={`text-3xl font-extrabold ${index === 3 ? "text-[#F97316]" : "text-[#111111]"}`}>{number}</span><span className="rounded-full bg-orange-100 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#F97316]">{index === 0 ? "Blueprint" : index === 1 ? "Spatial UI" : index === 2 ? "Full-Stack" : "Expansion"}</span></div><h3 className="text-xl font-extrabold text-[#111111]">{title}</h3><p className="text-sm leading-relaxed text-neutral-600">{text}</p><ul className="space-y-1.5 pt-2 text-xs text-neutral-500"><li><span className="mr-2 font-bold text-[#F97316]">✓</span>Technical direction</li><li><span className="mr-2 font-bold text-[#F97316]">✓</span>Measured quality</li><li><span className="mr-2 font-bold text-[#F97316]">✓</span>Performance focus</li></ul></article>)}</div></Container></section>
-    <CTABand />
-  </>;
+  return (
+    <>
+      {/* ------------------------------ Hero ------------------------------ */}
+      <section className="bg-bg py-20 lg:py-28">
+        <Container>
+          <div className="mx-auto max-w-3xl space-y-6 text-center">
+            <Badge>High-performance disciplines</Badge>
+            <h1 className="text-display font-semibold text-ink">
+              Engineered for impact.
+              <br />
+              Built for the next stage.
+            </h1>
+            <p className="mx-auto max-w-2xl text-lede text-muted">
+              Strategy, interface design and engineering in one place — digital
+              foundations that are secure, fast, friendly to search engines, and
+              supported after launch.
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      {/* ---------------------------- 01 Services -------------------------- */}
+      <section id="services" className="bg-bg pb-20 lg:pb-28">
+        <Container>
+          <SectionHeading align="left" number="01" eyebrow="Services" title="What we build." />
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {services.map((service, index) => {
+              const Icon = serviceIcons[index];
+              return (
+                <article
+                  id={service.id}
+                  key={service.id}
+                  className="group flex flex-col overflow-hidden rounded-card border border-line bg-surface transition-[border-color,transform] duration-500 ease-in-out hover:-translate-y-1 hover:border-ink"
+                >
+                  <div className="relative aspect-[16/9] overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt=""
+                      loading="lazy"
+                      className="size-full object-cover grayscale-[20%] transition-transform duration-700 ease-in-out group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
+                    <span className="absolute bottom-4 left-5 grid size-12 place-items-center rounded-lg bg-ink text-on-dark transition-colors duration-500 ease-in-out group-hover:bg-primary group-hover:text-on-primary">
+                      <Icon aria-hidden="true" className="size-5" strokeWidth={1.8} />
+                    </span>
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <span className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
+                      {service.number} / {service.title}
+                    </span>
+                    <h3 className="mt-2 text-xl font-semibold text-ink">{service.title}</h3>
+                    <p className="mt-4 text-sm font-medium leading-relaxed text-ink">
+                      {service.summary}
+                    </p>
+                    {/* min-h reserves 4 lines: the details run to 4 lines at
+                        mobile widths and 3 on desktop, so the taller case sets
+                        the floor. */}
+                    <p className="mt-2 flex min-h-[5.75rem] items-start text-sm leading-relaxed text-muted">
+                      {service.details}
+                    </p>
+                    {/* The deliverable tag row was removed: it restated what the
+                        details paragraph already covers and was the single
+                        biggest driver of card height. The CTA stays pinned to
+                        the bottom so every card still ends level. */}
+                    <div className="mt-auto border-t border-line pt-5">
+                      <Link
+                        to="/contact"
+                        className="flex items-center justify-between text-sm font-semibold text-ink transition-colors duration-500 ease-in-out group-hover:text-primary-text"
+                      >
+                        Discuss
+                        <ArrowUpRight
+                          aria-hidden="true"
+                          className="size-4 transition-transform duration-500 ease-in-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </Container>
+      </section>
+
+      {/* -------------------------- 02 Engagement -------------------------- */}
+      <section className="border-y border-line bg-surface-subtle py-20 lg:py-28">
+        <Container>
+          <SectionHeading
+            number="02"
+            eyebrow="Working together"
+            title="A partnership, one clear step at a time."
+          />
+          <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
+            {engagement.map(([title, text], index) => (
+              <article
+                key={title}
+                className="rounded-card border border-line bg-surface p-7 transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 hover:border-ink"
+              >
+                <span className="font-mono text-xl font-medium text-primary-text">
+                  0{index + 1}
+                </span>
+                <h3 className="mt-6 flex min-h-[3.25rem] items-start text-xl font-semibold text-ink">
+                  {title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ---------------------------- 03 Process --------------------------- */}
+      <section id="process" className="bg-bg py-20 lg:py-28">
+        <Container>
+          <SectionHeading
+            number="03"
+            eyebrow="How we execute"
+            title="Our four-step process."
+            lede="From first conversation, through launch, to the follow-up that comes after — a predictable path you can follow step by step."
+          />
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {processSteps.map(([number, title, text], index) => (
+              <article
+                key={number}
+                className="flex min-h-56 flex-col rounded-card border border-line bg-surface p-6 transition-[border-color,transform] duration-500 ease-in-out hover:-translate-y-1 hover:border-ink"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-mono text-xl font-medium text-primary-text">
+                    {number}
+                  </span>
+                  <span className="rounded-md border border-line bg-surface-subtle px-2.5 py-1 font-mono text-meta uppercase tracking-wider text-ink">
+                    {index === 0 ? "Discover" : index === 1 ? "Shape" : index === 2 ? "Build" : "Support"}
+                  </span>
+                </div>
+                <h3 className="mt-5 flex min-h-[3.25rem] items-start text-lg font-semibold text-ink">
+                  {title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <CTABand />
+    </>
+  );
 }

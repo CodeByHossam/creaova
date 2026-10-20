@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
 import { Menu, X } from "lucide-react";
 
-import logoFull from "~/assets/images/logo/Creaova_Logo1-transparent.png";
 import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
+import { Logo } from "~/components/Logo";
 import { primaryCta, site } from "~/data/constants";
 
 function isNavItemActive(to: string, pathname: string, hash: string) {
@@ -72,7 +72,7 @@ export function MobileNav() {
         aria-expanded={open}
         aria-controls="mobile-nav"
         aria-label="Open menu"
-        className="inline-flex size-10 items-center justify-center rounded-full border border-line text-ink transition-colors duration-200 hover:border-ink lg:hidden"
+        className="inline-flex size-10 items-center justify-center rounded-full border border-line text-ink transition-colors duration-200 ease-out hover:border-ink lg:hidden"
       >
         <Menu aria-hidden="true" className="size-5" strokeWidth={1.75} />
       </button>
@@ -85,12 +85,12 @@ export function MobileNav() {
       >
         <div className="flex min-h-full flex-col">
           <Container className="flex h-16 shrink-0 items-center justify-between border-b border-line">
-            <Link to="/" aria-label="Creaova home" className="flex items-center gap-3"><img src={logoFull} alt="Creaova" className="h-16 w-auto" /></Link>
+            <Link to="/" aria-label="Creaova home" className="flex items-center gap-3"><Logo className="h-9" /></Link>
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close menu"
-              className="inline-flex size-10 items-center justify-center rounded-full border border-line text-ink transition-colors duration-200 hover:border-ink"
+              className="inline-flex size-10 items-center justify-center rounded-full border border-line text-ink transition-colors duration-200 ease-out hover:border-ink"
             >
               <X aria-hidden="true" className="size-5" strokeWidth={1.75} />
             </button>
@@ -107,7 +107,7 @@ export function MobileNav() {
                       onClick={() => setOpen(false)}
                       className={() =>
                         [
-                          "flex min-h-14 items-center justify-between gap-4 py-4 font-display text-h3 transition-colors duration-200",
+                          "flex min-h-14 items-center justify-between gap-4 py-4 font-display text-h3 transition-colors duration-200 ease-out",
                           isNavItemActive(item.to, location.pathname, location.hash) ? "text-ink" : "text-muted hover:text-ink",
                         ].join(" ")
                       }

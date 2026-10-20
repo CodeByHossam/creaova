@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Creaova [ C DS ] — Email signature</title>
+    <!--
+      Standalone email signature for Creaova Digital Solutions.
+      Table-based + inline CSS on purpose: webmail and desktop clients strip
+      <style> blocks, classes, and flex/grid. No Tailwind here.
+
+      BEFORE SENDING: the logo URL uses the placeholder domain from
+      app/data/constants.ts (https://creaova.example.com). Replace it with the
+      real production domain, and make sure logo.png is publicly reachable.
+    -->
+  </head>
+  <body style="margin: 0; padding: 16px; background-color: #ffffff;">
+    <table
+      role="presentation"
+      cellpadding="0"
+      cellspacing="0"
+      border="0"
+      style="border-collapse: collapse; font-family: Arial, Helvetica, sans-serif;"
+    >
+      <tr>
+        <td style="padding: 0 16px 0 0; vertical-align: top;">
+          <a href="https://creaova.example.com" style="border: 0; text-decoration: none;">
+            <img
+              src="https://creaova.example.com/logo.png"
+              alt="Creaova Digital Solutions"
+              width="150"
+              style="display: block; width: 150px; height: auto; border: 0;"
+            />
+          </a>
+        </td>
+        <td style="padding: 0; vertical-align: top;">
+          <p
+            style="margin: 0; font-size: 15px; font-weight: bold; color: #16130f; letter-spacing: 0.12em;"
+          >
+            CREAOVA
+          </p>
+          <p
+            style="margin: 4px 0 0; font-size: 11px; color: #57534e; letter-spacing: 0.18em; text-transform: uppercase;"
+          >
+            Digital Solutions [ C DS ]
+          </p>
+          <p
+            style="margin: 10px 0 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #f97316;"
+          >
+            &lt; Creativity meets innovation /&gt;
+          </p>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

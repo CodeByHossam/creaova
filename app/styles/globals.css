@@ -1,74 +1,82 @@
-/* Creaova typography: Inter for interface text, JetBrains Mono for telemetry. */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap");
+/* Creaova typography — "Editorial Studio" concept (plans/UI_UX_ENHANCEMENT_PLAN.md):
+   Fraunces (serif display) for h1/h2, Instrument Sans for interface + body text,
+   JetBrains Mono for meta/telemetry. */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
 
 /* ===========================================================================
-   Creaova design tokens
+   Creaova design tokens — "Editorial Studio" concept
    The single source of truth for colour, type, layout and motion.
-   Reference: plans/MULTIPAGE_UI_PLAN.md §5
+   Reference: plans/UI_UX_ENHANCEMENT_PLAN.md (Phase 0)
 
    RULES
    1. Components must reference a token, never a raw hex value.
-   2. The palette mirrors plans/design-options/option-1-creaova-original.html.
-      - orange fill            -> --color-primary      (#F97316)
-      - orange hover           -> --color-primary-hover (#EA580C)
-      - text ON an orange fill -> --color-on-primary   (#FFFFFF)
+   2. Colour roles:
+      - --color-primary       burnt orange used as FILL only (buttons, chips).
+                              Always paired with --color-on-primary (ink, 5.2:1).
+      - --color-primary-text  the ONLY orange allowed as text on light surfaces
+                              (#C2410C — 5.2:1, passes WCAG AA).
+      - Never orange text on white with #F97316 (2.8:1 — fails AA).
    3. No coloured glow. Separation comes from hairlines and space.
    =========================================================================== */
 
 @theme static {
-  /* --- Surfaces ---------------------------------------------------------- */
-  --color-bg: #ffffff;
+  /* --- Surfaces (warm paper) -------------------------------------------- */
+  --color-bg: #faf9f6;
   --color-surface: #ffffff;
-  --color-ink: #111111;
-  --color-muted: #52525b;
-  --color-line: #e5e7eb;
-  --color-surface-subtle: #f4f4f5;
-  --color-primary-light: #fff7ed;
-  --color-primary-muted: #ffedd5;
-  --color-dark-line-strong: #3f3f46;
+  --color-ink: #16130f;
+  --color-muted: #57534e;
+  --color-line: #e7e3dc;
+  --color-surface-subtle: #f4f1ea;
+  --color-primary-light: #fdf3ec;
+  --color-primary-muted: #f7e4d6;
+  --color-dark-line-strong: #332e27;
 
-  /* --- Brand (orange = fill only) --------------------------------------- */
-  --color-primary: #f97316;
-  --color-primary-hover: #ea580c;
-  --color-on-primary: #ffffff;
-  --color-primary-text: #f97316;
+  /* --- Brand (orange = fill only; text orange is --color-primary-text) --- */
+  --color-primary: #ea580c;
+  --color-primary-hover: #c2410c;
+  --color-on-primary: #16130f;
+  --color-primary-text: #c2410c;
+  /* hover for orange TEXT on light surfaces (darker than the resting color;
+     ~7:1 on white) — distinct from --color-primary-hover, which is for fills */
+  --color-primary-text-hover: #9a3412;
 
   /* --- Dark sections (portfolio band, CTA band, footer) ------------------ */
-  --color-dark: #111111;
-  --color-dark-surface: #18181b;
-  --color-dark-line: #27272a;
-  --color-on-dark: #ffffff;
-  --color-on-dark-muted: #a1a1aa;
+  --color-dark: #16130f;
+  --color-dark-surface: #1f1b16;
+  --color-dark-line: #332e27;
+  --color-on-dark: #faf9f6;
+  --color-on-dark-muted: #a8a29e;
 
   /* --- Status (form feedback only) -------------------------------------- */
   --color-success: #15803d;
   --color-error: #b91c1c;
 
   /* --- Type families ---------------------------------------------------- */
-  --font-heading: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-subheading: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-label: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-meta: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-subheading: "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-label: "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-meta: "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* Existing utility aliases kept for component compatibility. */
-  --font-display: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* --- Type scale (5 steps; tight beats sprawling) ----------------------- */
-  --text-display: clamp(2.5rem, 5vw, 3.75rem);
-  --text-display--line-height: 1.08;
-  --text-display--letter-spacing: -0.035em;
+  /* Serif display: less negative tracking than a grotesk — serifs need air. */
+  --text-display: clamp(2.75rem, 5.5vw, 4rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.015em;
 
-  --text-h2: clamp(2rem, 4vw, 3rem);
+  --text-h2: clamp(1.875rem, 3.5vw, 2.75rem);
   --text-h2--line-height: 1.1;
-  --text-h2--letter-spacing: -0.02em;
+  --text-h2--letter-spacing: -0.01em;
 
-  --text-h3: 1.5rem;
-  --text-h3--line-height: 1.25;
-  --text-h3--letter-spacing: -0.01em;
+  --text-h3: 1.375rem;
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.005em;
 
   --text-lede: 1.125rem;
   --text-lede--line-height: 1.6;
@@ -83,16 +91,15 @@
   --container-page: 80rem;
   --measure: 68ch;
 
-  /* --- Radii (one scale, no scatter) ------------------------------------ */
-  --radius-control: 0.75rem;
-  --radius-card: 1rem;
-  --radius-panel: 1.5rem;
-  --radius-hero: 2.25rem;
+  /* --- Radii (smaller, print-like; one scale, no scatter) ---------------- */
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --radius-panel: 1rem;
+  --radius-hero: 1.5rem;
 
-  /* --- Elevation -------------------------------------------------------- */
-  --shadow-card-clean: 0 10px 30px -4px rgb(0 0 0 / 4%), 0 2px 6px -1px rgb(0 0 0 / 2%);
-  --shadow-card-float: 0 20px 45px -10px rgb(0 0 0 / 8%), 0 8px 16px -6px rgb(0 0 0 / 3%);
-  --shadow-orange-glow: 0 8px 25px -4px rgb(249 115 22 / 28%);
+  /* --- Elevation (almost none — separation comes from hairlines) --------- */
+  --shadow-card-clean: 0 1px 2px rgb(22 19 15 / 5%);
+  --shadow-card-float: 0 10px 24px -8px rgb(22 19 15 / 12%);
 
   /* 4px base rhythm: 4, 8, 12, 16, 24, 32, 48, 64, 96. */
   --space-unit: 0.25rem;
@@ -122,15 +129,20 @@
     scroll-behavior: smooth;
   }
 
-  :where(h1, h2, h3, h4, h5, h6) {
+  /* Display serif for h1/h2; sans (600) for h3+. Sentence case always —
+     no global text-transform (see plan H2). */
+  :where(h1, h2) {
     font-family: var(--font-heading);
-    font-weight: 900;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
   }
 
-  :where(h1, h2) {
-    font-weight: 900 !important;
-    letter-spacing: -0.025em;
-    line-height: 1.08;
+  :where(h3, h4, h5, h6) {
+    font-family: var(--font-subheading);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.3;
   }
 
   body {
@@ -154,9 +166,11 @@
     scroll-margin-top: 6rem;
   }
 
-  /* Visible focus on everything, always. Never `outline: none` alone. */
+  /* Visible focus on everything, always. Never `outline: none` alone.
+     Orange (#EA580C) rather than ink: it stays visible on BOTH paper (3.6:1)
+     and the dark panels (5.2:1), where an ink ring would disappear. */
   :focus-visible {
-    outline: 2px solid var(--color-ink);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
     border-radius: 2px;
   }
@@ -181,10 +195,6 @@
     }
   }
 
-  /* Replaced by the richer confidence card composition in Home.tsx. */
-  #confidence {
-    display: none;
-  }
 }
 
 @layer components {
@@ -198,7 +208,7 @@
   .form-input {
     display: block;
     width: 100%;
-    min-height: 2.75rem;
+    min-height: 2.75rem; /* 44px — touch-target minimum */
     margin-top: 0.5rem;
     border: 1px solid var(--color-line);
     border-radius: var(--radius-control);
@@ -206,119 +216,23 @@
     padding: 0.75rem 0.875rem;
     color: var(--color-ink);
     font: inherit;
+    transition: border-color 150ms ease, outline-color 150ms ease;
+  }
+
+  /* Affordance on hover; the ring stays orange so it also reads on the dark
+     contact panel, where an ink outline would be invisible. */
+  .form-input:hover {
+    border-color: var(--color-muted);
   }
 
   .form-input:focus {
     border-color: var(--color-ink);
-    outline: 2px solid var(--color-ink);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
-  .original-home {
-    font-family: var(--font-sans);
-    color: var(--color-ink);
-  }
-
-  .home-page h1,
-  .home-page h2,
-  .home-page h3,
-  .home-page .hero-gradient-text {
-    font-family: var(--font-display);
-  }
-
-  .hero-gradient-text {
-    background: linear-gradient(
-      110deg,
-      var(--color-ink) 0%,
-      var(--color-primary) 100%
-    );
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-  }
-
-  .hero-device-stage {
-    isolation: isolate;
-  }
-
-  .hero-laptop {
-    transform: perspective(1200px) rotateY(-15deg) rotateX(10deg);
-    transform-style: preserve-3d;
-  }
-
-  .hero-phone {
-    transform: perspective(1200px) rotateY(-10deg) rotateX(6deg)
-      translateZ(90px) rotateZ(3deg);
-  }
-
-  .reference-perspective {
-    perspective: 1200px;
-    transform-style: preserve-3d;
-  }
-
-  main h1,
-  main h2,
-  main h3,
-  main h4 {
-    text-transform: capitalize;
-  }
-
-  main h1.uppercase {
-    text-transform: uppercase;
-  }
-
-  @media (min-width: 64rem) {
-    main > section:first-child h1 {
-      font-size: 3rem !important;
-      line-height: 1.08;
-    }
-  }
-
-  .reference-desktop-3d {
-    transform: rotateY(-16deg) rotateX(10deg) rotateZ(-2deg) translateZ(10px);
-    backface-visibility: hidden;
-    will-change: transform;
-    animation: reference-enter 700ms var(--ease-soft) both;
-    animation-delay: 120ms;
-    transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .reference-mobile-3d {
-    transform: rotateY(-12deg) rotateX(6deg) rotateZ(3deg) translateZ(65px);
-    backface-visibility: hidden;
-    will-change: transform;
-    animation: reference-enter 700ms var(--ease-soft) both;
-    animation-delay: 360ms;
-    transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  @media (min-width: 40rem) {
-    .reference-mobile-3d {
-      right: 0.5rem;
-      bottom: 3.5rem !important;
-      transform: rotateY(-12deg) rotateX(6deg) rotateZ(3deg) translateZ(65px) scale(0.94);
-    }
-  }
-
-  .reference-metric-3d {
-    transform: rotateY(-8deg) rotateX(4deg) rotateZ(-1deg) translateZ(95px);
-    animation: reference-enter 600ms var(--ease-soft) both;
-    animation-delay: 40ms;
-  }
-
-  .reference-badge-3d {
-    transform: translateZ(85px);
-    animation: reference-enter 600ms var(--ease-soft) both;
-    animation-delay: 520ms;
-  }
-
-  @keyframes reference-enter {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  .form-input::placeholder {
+    color: var(--color-muted);
   }
 
   @keyframes reference-fade-up {
@@ -331,231 +245,139 @@
       transform: translateY(0);
     }
   }
+}
 
+/* ===========================================================================
+   Entry stagger — deliberately OUTSIDE @layer.
+   Inside `@layer components` these rules lost to Tailwind's utilities layer and
+   never applied (measured animation-name: none on every card). Unlayered rules
+   beat layered ones, so this block wins.
+   Depth-agnostic: descendant children, whatever wrapper (Container / grid div)
+   sits between the section and the cards.
+   =========================================================================== */
+#services article,
+#services a,
+#work article,
+#work a,
+#process article,
+#process a,
+#testimonials article,
+#testimonials a {
+  animation: reference-fade-up 600ms var(--ease-soft) both;
+}
+
+#services article:nth-child(2),
+#services a:nth-child(2),
+#work article:nth-child(2),
+#work a:nth-child(2),
+#process article:nth-child(2),
+#process a:nth-child(2),
+#testimonials article:nth-child(2),
+#testimonials a:nth-child(2) {
+  animation-delay: 110ms;
+}
+
+#services article:nth-child(3),
+#services a:nth-child(3),
+#work article:nth-child(3),
+#work a:nth-child(3),
+#process article:nth-child(3),
+#process a:nth-child(3),
+#testimonials article:nth-child(3),
+#testimonials a:nth-child(3) {
+  animation-delay: 220ms;
+}
+
+#services article:nth-child(4),
+#services a:nth-child(4),
+#work article:nth-child(4),
+#work a:nth-child(4),
+#process article:nth-child(4),
+#process a:nth-child(4),
+#testimonials article:nth-child(4),
+#testimonials a:nth-child(4) {
+  animation-delay: 330ms;
+}
+
+#services article:nth-child(5),
+#services a:nth-child(5),
+#work article:nth-child(5),
+#work a:nth-child(5),
+#testimonials article:nth-child(5),
+#testimonials a:nth-child(5) {
+  animation-delay: 440ms;
+}
+
+#services article:nth-child(n + 6),
+#services a:nth-child(n + 6),
+#work article:nth-child(n + 6),
+#work a:nth-child(n + 6),
+#testimonials article:nth-child(n + 6),
+#testimonials a:nth-child(n + 6) {
+  animation-delay: 550ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
   #services article,
+  #services a,
+  #work article,
   #work a,
   #process article,
-  #testimonials article {
-    animation: reference-fade-up 650ms var(--ease-soft) both;
-  }
-
-  #services article:nth-child(2),
-  #work a:nth-child(2),
-  #process article:nth-child(2),
-  #testimonials article:nth-child(2) {
-    animation-delay: 90ms;
-  }
-
-  #services article:nth-child(3),
-  #work a:nth-child(3),
-  #process article:nth-child(3),
-  #testimonials article:nth-child(3) {
-    animation-delay: 180ms;
-  }
-
-  #process article:nth-child(4) {
-    animation-delay: 270ms;
-  }
-
-  /* Process cards: turn the four steps into a clear, editorial sequence. */
-  #process article {
-    position: relative;
-    min-height: 16rem;
-    overflow: hidden;
-    border-color: var(--color-line);
-    background: var(--color-surface);
-    padding: 2rem;
-    transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
-  }
-
-  #process article::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 0.25rem;
-    width: 100%;
-    background: var(--color-primary);
-    content: "";
-    transform: scaleX(0.18);
-    transform-origin: left;
-    transition: transform 300ms ease;
-  }
-
-  #process article:hover {
-    border-color: var(--color-ink);
-    box-shadow: 0 20px 45px -16px rgb(17 17 17 / 18%);
-    transform: translateY(-0.375rem);
-  }
-
-  #process article:hover::before {
-    transform: scaleX(1);
-  }
-
-  #process article > span:first-child {
-    display: grid;
-    width: 3rem;
-    height: 3rem;
-    place-items: center;
-    border-radius: 999px;
-    background: var(--color-ink);
-    color: var(--color-on-dark);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    transition: background-color 300ms ease, color 300ms ease;
-  }
-
-  #process article:hover > span:first-child {
-    background: var(--color-primary);
-    color: var(--color-on-primary);
-  }
-
-  @media (min-width: 64rem) {
-    #process article:not(:last-child)::after {
-      position: absolute;
-      top: 3.45rem;
-      right: -1.1rem;
-      z-index: 2;
-      width: 2.2rem;
-      height: 1px;
-      background: var(--color-line);
-      content: "";
-    }
-  }
-
-  .reference-perspective:hover .reference-desktop-3d {
-    transform: rotateY(-12deg) rotateX(7deg) translateZ(24px);
-  }
-
-  .reference-perspective:hover .reference-mobile-3d {
-    transform: rotateY(-8deg) rotateX(4deg) rotateZ(5deg) translateZ(80px);
-  }
-
-  @keyframes reference-float {
-    0%,
-    100% {
-      transform: translateY(0) rotateY(-12deg) rotateX(6deg) rotateZ(3deg)
-        translateZ(65px);
-    }
-    50% {
-      transform: translateY(-10px) rotateY(-10deg) rotateX(7deg) rotateZ(4deg)
-        translateZ(72px);
-    }
-  }
-
-  .reference-float {
-    animation: reference-float 6s ease-in-out infinite;
-  }
-
-  @keyframes reference-marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  .reference-marquee {
-    width: max-content;
-    animation: reference-marquee 24s linear infinite;
-    animation-delay: 250ms;
-  }
-
-  .reference-marquee:hover {
-    animation-play-state: paused;
-  }
-
-  .reference-card-shadow {
-    box-shadow:
-      0 10px 30px -4px rgb(0 0 0 / 4%),
-      0 2px 6px -1px rgb(0 0 0 / 2%);
-  }
-
-  .reference-float-shadow {
-    box-shadow:
-      0 20px 45px -10px rgb(0 0 0 / 8%),
-      0 8px 16px -6px rgb(0 0 0 / 3%);
-  }
-
-  .original-home > section {
-    isolation: isolate;
-  }
-
-  .original-home h1,
-  .original-home h2,
-  .original-home h3,
-  .original-home p {
-    margin-top: 0;
-  }
-
-  .original-service,
-  .original-process {
-    box-shadow:
-      0 10px 30px -4px rgb(0 0 0 / 4%),
-      0 2px 6px -1px rgb(0 0 0 / 2%);
-    transition:
-      transform 300ms ease,
-      border-color 300ms ease,
-      box-shadow 300ms ease;
-  }
-
-  .original-service:hover,
-  .original-process:hover {
-    border-color: var(--color-ink);
-    box-shadow:
-      0 20px 45px -10px rgb(0 0 0 / 8%),
-      0 8px 16px -6px rgb(0 0 0 / 3%);
-    transform: translateY(-0.375rem);
-  }
-
-  .original-stage {
-    perspective: 1200px;
-    transform-style: preserve-3d;
-  }
-
-  .original-laptop {
-    transform: rotateY(-16deg) rotateX(10deg) rotateZ(-2deg) translateZ(10px);
-    transform-style: preserve-3d;
-    transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .original-phone {
-    transform: rotateY(-12deg) rotateX(6deg) rotateZ(3deg) translateZ(65px);
-  }
-
-  .original-metric {
-    transform: rotateY(-8deg) rotateX(4deg) rotateZ(-1deg) translateZ(95px);
-  }
-
-  .original-laptop i,
-  .original-case-visual i {
-    display: block;
-    height: 0.75rem;
-    width: 0.75rem;
-    border-radius: 999px;
-    background: var(--color-line);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .original-service,
-    .original-process,
-    .reference-float {
-      transition: none;
-      animation: none;
-    }
-
-    .reference-desktop-3d,
-    .reference-mobile-3d,
-    .reference-metric-3d,
-    .reference-badge-3d,
-    .hero-reference-image,
-    .reference-marquee,
-    #services article,
-    #work a,
-    #process article,
-    #testimonials article {
-      animation: none;
-    }
+  #process a,
+  #testimonials article,
+  #testimonials a {
+    animation: none;
   }
 }
+
+/* ===========================================================================
+   Technology ticker — the "Built with" band.
+   Two identical lists sit side by side inside .marquee-track; translating the
+   track by exactly -50% moves the first list fully off and brings the second
+   into the same position, so the loop is seamless. Unlayered (same reason as
+   the stagger above). Motion is decorative: reduced-motion pins it in place and
+   the duplicate list is aria-hidden in the markup.
+   =========================================================================== */
+.marquee-viewport {
+  overflow: hidden;
+  /* Fade the text into both edges so terms appear and leave instead of
+     clipping mid-letter. */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 3rem,
+    #000 calc(100% - 3rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 3rem,
+    #000 calc(100% - 3rem),
+    transparent 100%
+  );
+}
+
+.marquee-track {
+  animation: marquee-scroll 42s linear infinite;
+}
+
+.marquee-viewport:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+

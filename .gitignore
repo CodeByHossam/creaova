@@ -31,8 +31,7 @@ Thumbs.db
 !.vscode/extensions.json
 
 
-# plans
-/plans/*
-
-# AI-Helper
-/AI-Base/*
+# AI memory — local only, deliberately NOT published to GitHub.
+# Single source of truth: project memory (root *.md) + reusable toolkit (_toolkit/)
+# + preserved reference material. Replaced the old /plans/* and /AI-Base/* folders.
+/ai-base/

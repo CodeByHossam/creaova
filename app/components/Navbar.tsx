@@ -1,27 +1,29 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
-import {
-  BriefcaseBusiness,
-  Circle,
-  FolderKanban,
-  House,
-  Mail,
-  MessageCircle,
-  Users,
-  Workflow,
-} from "lucide-react";
 
-// Assuming this is the correct path to your final Black/Orange logo
-import logoFull from "~/assets/images/logo/Creaova_Logo1-transparent.png";
+import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
+import { Logo } from "~/components/Logo";
 import { MobileNav } from "~/components/MobileNav";
 import { primaryCta, site } from "~/data/constants";
 
+/**
+ * Site header — sticky, hairline-separated, editorial text-only links.
+ *
+ * Reference: plans/UI_UX_ENHANCEMENT_PLAN.md (Phase 2, findings H4/H7).
+ *
+ * - The logo is the prepared 480x278 lockup at h-10/lg:h-12 — sized to fit the
+ *   64/80px bar (the old h-16/lg:h-28 rendered a 112px logo in an 80px bar).
+ * - No per-item icons: they added noise without aiding recognition (Hick's Law),
+ *   and the active state is marked by ink text + an orange underline — a
+ *   non-colour cue as well as colour (WCAG 1.4.1).
+ * - The CTA is the shared Button, so it keeps the system's contrast rule.
+ */
 function navLinkClass({ isActive }: { isActive: boolean }) {
-  return `relative inline-flex items-center gap-1.5 rounded-lg px-4 py-2 font-body text-sm font-medium transition-colors duration-200 group ${
-    isActive 
-      ? "text-[#111111] bg-neutral-100/80" 
-      : "text-neutral-600 hover:text-[#111111] hover:bg-neutral-100/50"
+  return `relative inline-flex items-center rounded-lg px-3 py-2 font-body font-medium text-sm transition-colors duration-200 ease-out ${
+    isActive
+      ? "text-ink underline decoration-primary decoration-2 underline-offset-[6px]"
+      : "text-muted hover:text-ink"
   }`;
 }
 
@@ -30,16 +32,6 @@ function isNavItemActive(to: string, pathname: string, hash: string) {
   if (targetHash) return pathname === path && hash === `#${targetHash}`;
   return path === "/" ? pathname === "/" && !hash : pathname === path || pathname.startsWith(`${path}/`);
 }
-
-const navIcons = {
-  "/": House,
-  "/services": BriefcaseBusiness,
-  "/portfolio": FolderKanban,
-  "/#process": Workflow,
-  "/#testimonials": MessageCircle,
-  "/about": Users,
-  "/contact": Mail,
-} as const;
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -53,41 +45,32 @@ export function Navbar() {
   }, []);
 
   return (
-    <header 
-      className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${
-        scrolled 
-          ? "border-neutral-200/80 bg-white/85 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.03)]" 
-          : "border-transparent bg-white/50 backdrop-blur-md"
+    <header
+      className={`sticky top-0 z-50 w-full border-b transition-[background-color,border-color,backdrop-filter] duration-300 ease-out ${
+        scrolled
+          ? "border-line bg-bg/85 backdrop-blur-xl"
+          : "border-transparent bg-bg/70 backdrop-blur-md"
       }`}
     >
       <Container className="flex h-16 items-center justify-between gap-4 lg:h-20 lg:gap-2">
-        
         {/* Brand Logo */}
-        <Link 
-          to="/" 
-          aria-label="Creaova Digital Solutions — Home" 
-          className="group flex shrink-0 items-center gap-3 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2"
+        <Link
+          to="/"
+          aria-label="Creaova Digital Solutions — Home"
+          className="group flex shrink-0 items-center rounded-xl"
         >
-          <img src={logoFull} alt="Creaova Logo" className="h-16 w-auto transition-transform duration-300 group-hover:scale-[1.02] lg:h-28" />
+          <Logo priority className="h-10 lg:h-12" />
         </Link>
 
         {/* Desktop Navigation */}
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center space-x-1">
+          <ul className="flex items-center gap-1">
             {site.nav.map((item) => {
               const isActive = isNavItemActive(item.to, location.pathname, location.hash);
-              const Icon = navIcons[item.to as keyof typeof navIcons] ?? Circle;
 
               return (
                 <li key={item.to}>
                   <NavLink to={item.to} end className={() => navLinkClass({ isActive })}>
-                    <Icon
-                      aria-hidden="true"
-                      className={`size-[1.05rem] shrink-0 transition-colors duration-200 group-hover:text-[#F97316] ${
-                        isActive ? "text-[#F97316]" : "text-neutral-500"
-                      }`}
-                      strokeWidth={1.9}
-                    />
                     {item.label}
                   </NavLink>
                 </li>
@@ -98,21 +81,14 @@ export function Navbar() {
 
         {/* Action Area */}
         <div className="flex items-center gap-1">
-          <Link 
-            to={primaryCta.to} 
-            className="group relative hidden items-center justify-center overflow-hidden rounded-full bg-[#111111] px-6 py-2.5 text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition-[transform,color,background-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-[#F97316] hover:shadow-[0_4px_20px_-4px_rgba(249,115,22,0.4)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 sm:inline-flex"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              {primaryCta.label || "Get a Quote"} 
-              <span 
-                className="transition-transform duration-300 group-hover:translate-x-1" 
-                aria-hidden="true"
-              >
-                →
-              </span>
-            </span>
-          </Link>
-          
+          {/* Wrapped so `hidden` can't fight the Button's own `inline-flex`
+              (different elements → the media query wins cleanly). */}
+          <span className="hidden sm:block">
+            <Button to={primaryCta.to} variant="primary" size="md">
+              {primaryCta.label}
+            </Button>
+          </span>
+
           {/* Mobile Navigation Trigger */}
           <div className="lg:hidden">
             <MobileNav />
