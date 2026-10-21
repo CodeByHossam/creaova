@@ -389,8 +389,8 @@ export default function Home() {
         <Container>
           <SectionHeading
             number="03"
-            eyebrow="How we work"
-            title="A practical engine for good work."
+            eyebrow="Our approach"
+            title="Strategy in motion."
             lede="A clear, step-by-step sequence — from understanding your requirements, to launch, to the follow-up that comes after it."
           />
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">

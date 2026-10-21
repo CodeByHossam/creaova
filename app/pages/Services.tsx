@@ -102,8 +102,8 @@ export default function Services() {
         <Container>
           <SectionHeading
             number="03"
-            eyebrow="How we execute"
-            title="Our four-step process."
+            eyebrow="Our approach"
+            title="A proven framework."
             lede="From first conversation, through launch, to the follow-up that comes after — a predictable path you can follow step by step."
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
