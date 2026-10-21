@@ -76,28 +76,7 @@ const disciplines = [
 // lucide icons replace the old ⌘/▯/ϟ glyphs (plan M4).
 const disciplineIcons = [Code, Smartphone, Cloud] as const;
 
-const steps = [
-  [
-    "01",
-    "Understand your requirements",
-    "We listen first — your business, your customers, and the outcome you need — so the work starts from your goals.",
-  ],
-  [
-    "02",
-    "Shape the right solution",
-    "We turn those requirements into a clear structure and a visual direction that you review and approve step by step.",
-  ],
-  [
-    "03",
-    "Build with care",
-    "We make it real with clean, professional code — secure, fast, accessible, and built to be found on search engines.",
-  ],
-  [
-    "04",
-    "Support you after launch",
-    "We stay close after go-live with reliable follow-up and support, so the site keeps performing as your business grows.",
-  ],
-] as const;
+
 
 const confidenceItems = [
   {
@@ -389,12 +368,17 @@ export default function Home() {
         <Container>
           <SectionHeading
             number="03"
-            eyebrow="Our approach"
-            title="Strategy in motion."
-            lede="A clear, step-by-step sequence — from understanding your requirements, to launch, to the follow-up that comes after it."
+            eyebrow="Built for quality"
+            title="Secure, clean, and delivered on time."
+            lede="We focus on the details that matter — secure foundations, clean code, efficient delivery, and long-term value without unnecessary cost."
           />
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {steps.map(([number, title, text]) => (
+            {[
+              ["01", "Secure by design", "Thoughtful security practices from day one — clean structure, safe forms, and a stable foundation you can rely on."],
+              ["02", "Clean, professional code", "Readable, maintainable code that scales with your business and keeps future updates simple and cost-effective."],
+              ["03", "Fast & search-friendly", "Optimized for performance and discoverability so your site loads quickly and reaches the right people."],
+              ["04", "On-time, reliable delivery", "Clear timelines, direct communication, and a smooth handoff — with support ready when you need it."],
+            ].map(([number, title, text]) => (
               <ProcessCard key={number} number={number} title={title} text={text} />
             ))}
           </div>

@@ -97,13 +97,13 @@ export default function Services() {
         </Container>
       </section>
 
-      {/* ---------------------------- 03 Process --------------------------- */}
-      <section id="process" className="bg-bg py-16 sm:py-20 lg:py-24 scroll-mt-[7rem]">
+      {/* ---------------------------- 03 Process/our aproach --------------------------- */}
+      <section id="process" className="bg-bg py-16 sm:py-20 lg:py-24 -scroll-mt-4">
         <Container>
           <SectionHeading
             number="03"
             eyebrow="Our approach"
-            title="A proven framework."
+            title="Our four-step process."
             lede="From first conversation, through launch, to the follow-up that comes after — a predictable path you can follow step by step."
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">

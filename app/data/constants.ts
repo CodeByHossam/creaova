@@ -120,9 +120,9 @@ export const site: Site = {
 
   nav: [
     { label: "Home", to: "/" },
-    { label: "Services", to: "/services" },
+    { label: "Services", to: "/services#services_hero" },
     { label: "Portfolio", to: "/portfolio" },
-    { label: "Process", to: "/#process" },
+    { label: "Process", to: "/services#process" },
     { label: "Reviews", to: "/#testimonials" },
     { label: "About", to: "/about" },
     { label: "Contact", to: "/contact" },

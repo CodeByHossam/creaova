@@ -17,39 +17,46 @@ export function DisciplineCard({
   to?: string;
 }) {
   return (
-    <article className="group flex flex-col rounded-card border border-line bg-surface p-7 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-sm">
-      {/* Icon: Smoothly transitions background and text colors */}
-      <span className="grid size-12 place-items-center rounded-lg bg-ink text-on-dark transition-all duration-300 ease-out group-hover:bg-primary group-hover:text-on-primary">
-        <Icon aria-hidden="true" className="size-5" strokeWidth={1.8} />
+    <article className="group flex h-full min-w-0 flex-col rounded-card border border-line bg-surface p-4 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-sm sm:p-5 lg:p-5 2xl:p-6">
+      {/* Icon */}
+      <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-ink text-on-dark transition-colors duration-300 group-hover:bg-primary group-hover:text-on-primary">
+        <Icon
+          aria-hidden="true"
+          className="size-[18px]"
+          strokeWidth={1.8}
+        />
       </span>
 
-      <span className="mt-6 block font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
+      {/* Label */}
+      <span className="mt-4 block font-mono text-meta uppercase tracking-[0.12em] text-primary-text">
         {label}
       </span>
 
-      <h3 className="mt-2.5 flex min-h-[3.25rem] items-start text-xl font-semibold text-ink">
+      {/* Title */}
+      <h3 className="mt-2 text-lg font-semibold leading-snug text-ink sm:text-xl">
         {title}
       </h3>
 
-      <p className="mt-3 flex min-h-[3.75rem] items-start text-sm leading-relaxed text-muted">
+      {/* Description */}
+      <p className="mt-2 text-sm leading-relaxed text-muted">
         {text}
       </p>
 
-      <div className="mt-auto pt-7">
-        {/* Tag: Smoothly transitions border and background */}
-        <span className="inline-block rounded-md border border-line bg-surface-subtle px-2.5 py-1 text-xs font-semibold text-ink transition-all duration-300 ease-out group-hover:border-ink/20 group-hover:bg-surface">
+      {/* Footer */}
+      <div className="mt-auto pt-5">
+        <span className="inline-block max-w-full rounded-md border border-line bg-surface-subtle px-2 py-1 text-xs font-semibold text-ink transition-colors duration-300 group-hover:border-ink/20 group-hover:bg-surface">
           {tag}
         </span>
 
         <Link
           to={to}
-          className="mt-4 flex items-center justify-between border-t border-line pt-5 text-sm font-semibold text-ink transition-all duration-300 ease-out group-hover:text-primary-text"
+          className="mt-4 flex items-center justify-between border-t border-line pt-3 text-sm font-semibold text-ink transition-colors duration-300 group-hover:text-primary-text"
         >
           Explore
-          {/* Arrow: Smoothly transitions the translate transform */}
+
           <ArrowUpRight
             aria-hidden="true"
-            className="size-4 transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            className="size-4 shrink-0 transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
           />
         </Link>
       </div>
