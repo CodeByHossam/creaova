@@ -144,10 +144,17 @@
     scroll-margin-top: 5rem; /* 80px for mobile header */
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1024px) and (max-width: 1279px) {
     :target,
     [id] {
-      scroll-margin-top: 6rem; /* 96px for desktop header */
+      scroll-margin-top: calc(6rem + 20px); /* 96px + 20px for laptop */
+    }
+  }
+
+  @media (min-width: 1280px) {
+    :target,
+    [id] {
+      scroll-margin-top: 6rem; /* 96px for desktop */
     }
   }
 
