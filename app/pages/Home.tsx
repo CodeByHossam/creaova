@@ -385,7 +385,7 @@ export default function Home() {
       </section>
 
       {/* ---------------------------- 03 Process --------------------------- */}
-      <section id="process" className="bg-bg py-16 sm:py-20 lg:py-28">
+      <section id="process" className="bg-bg py-16 sm:py-20 lg:py-28 scroll-mt-[7rem]">
         <Container>
           <SectionHeading
             number="03"

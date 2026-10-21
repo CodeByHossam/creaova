@@ -98,7 +98,7 @@ export default function Services() {
       </section>
 
       {/* ---------------------------- 03 Process --------------------------- */}
-      <section id="process" className="bg-bg py-16 sm:py-20 lg:py-24">
+      <section id="process" className="bg-bg py-16 sm:py-20 lg:py-24 scroll-mt-[7rem]">
         <Container>
           <SectionHeading
             number="03"
