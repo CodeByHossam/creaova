@@ -129,6 +129,19 @@
     scroll-behavior: smooth;
   }
 
+  /* Prevent sticky header from obscuring anchored sections */
+  :target,
+  [id] {
+    scroll-margin-top: 5rem; /* 80px for mobile header */
+  }
+
+  @media (min-width: 1024px) {
+    :target,
+    [id] {
+      scroll-margin-top: 6rem; /* 96px for desktop header */
+    }
+  }
+
   /* Display serif for h1/h2; sans (600) for h3+. Sentence case always —
      no global text-transform (see plan H2). */
   :where(h1, h2) {
