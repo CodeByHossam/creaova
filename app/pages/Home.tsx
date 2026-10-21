@@ -180,7 +180,7 @@ export default function Home() {
           to the real Services anchors. Hover: number -> burnt orange, label
           shifts, arrow reveals. */}
       <section className="bg-bg">
-        <Container className="py-20 lg:py-24">
+        <Container className="py-16 sm:py-20 lg:py-24">
           <div className="grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
             <div>
               <Badge>Digital experience architecture</Badge>
@@ -302,7 +302,7 @@ export default function Home() {
       </section>
 
       {/* ---------------------------- 01 Services -------------------------- */}
-      <section id="services" className="bg-bg py-20 lg:py-28">
+      <section id="services" className="bg-bg py-16 sm:py-20 lg:py-28">
         <Container>
           <SectionHeading
             align="left"
@@ -358,7 +358,7 @@ export default function Home() {
       </section>
 
       {/* ------------------------------ 02 Work ---------------------------- */}
-      <section id="work" className="bg-dark py-20 lg:py-28">
+      <section id="work" className="bg-dark py-16 sm:py-20 lg:py-28">
         <Container>
           <div className="flex flex-col justify-between gap-7 md:flex-row md:items-end">
             <SectionHeading
@@ -411,7 +411,7 @@ export default function Home() {
       </section>
 
       {/* ---------------------------- 03 Process --------------------------- */}
-      <section id="process" className="bg-bg py-20 lg:py-28">
+      <section id="process" className="bg-bg py-16 sm:py-20 lg:py-28">
         <Container>
           <SectionHeading
             number="03"
@@ -440,7 +440,7 @@ export default function Home() {
       </section>
 
       {/* -------------------------- 04 Confidence -------------------------- */}
-      <section id="confidence" className="border-t border-line bg-surface-subtle py-20 lg:py-28">
+      <section id="confidence" className="border-t border-line bg-surface-subtle py-16 sm:py-20 lg:py-28">
         <Container>
           <div className="grid items-end gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
             <div>

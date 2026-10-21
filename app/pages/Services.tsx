@@ -27,7 +27,7 @@ export default function Services() {
   return (
     <>
       {/* ------------------------------ Hero ------------------------------ */}
-      <section className="bg-bg py-20 lg:py-28">
+      <section className="bg-bg py-16 sm:py-20 lg:py-28">
         <Container>
           <div className="mx-auto max-w-3xl space-y-6 text-center">
             <Badge>High-performance disciplines</Badge>
@@ -109,7 +109,7 @@ export default function Services() {
       </section>
 
       {/* -------------------------- 02 Engagement -------------------------- */}
-      <section className="border-y border-line bg-surface-subtle py-20 lg:py-28">
+      <section className="border-y border-line bg-surface-subtle py-16 sm:py-20 lg:py-28">
         <Container>
           <SectionHeading
             number="02"
@@ -136,7 +136,7 @@ export default function Services() {
       </section>
 
       {/* ---------------------------- 03 Process --------------------------- */}
-      <section id="process" className="bg-bg py-20 lg:py-28">
+      <section id="process" className="bg-bg py-16 sm:py-20 lg:py-28">
         <Container>
           <SectionHeading
             number="03"

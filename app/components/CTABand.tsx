@@ -14,7 +14,7 @@ import { primaryCta } from "~/data/constants";
  */
 export function CTABand() {
   return (
-    <section id="quote" className="border-t border-line bg-bg py-20 lg:py-28">
+    <section id="quote" className="border-t border-line bg-bg py-16 sm:py-20 lg:py-28">
       <Container className="max-w-5xl">
         <div className="rounded-card border border-dark-line bg-dark px-8 py-12 text-center sm:px-14 sm:py-14">
           <div className="mx-auto max-w-2xl space-y-6">
