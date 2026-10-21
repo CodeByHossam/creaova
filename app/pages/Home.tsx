@@ -302,7 +302,7 @@ export default function Home() {
       </section>
 
       {/* ---------------------------- 01 Services -------------------------- */}
-      <section id="services" className="bg-bg py-16 sm:py-20 lg:py-28">
+      <section id="services" className="bg-bg pt-16 pb-10 sm:pt-20 sm:pb-14 lg:pt-28 lg:pb-18">
         <Container>
           <SectionHeading
             align="left"
@@ -311,7 +311,7 @@ export default function Home() {
             title="Engineered for impact. Built for the next stage."
             lede="Design, engineering and ongoing support in one place — a secure, fast, search-friendly foundation your business can grow on."
           />
-          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3 lg:mt-12">
             {disciplines.map(([label, title, text, tag], index) => {
               const Icon = disciplineIcons[index];
               return (

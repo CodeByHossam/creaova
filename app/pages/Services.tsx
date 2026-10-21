@@ -27,7 +27,7 @@ export default function Services() {
   return (
     <>
       {/* ------------------------------ Hero ------------------------------ */}
-      <section className="bg-bg py-16 sm:py-20 lg:py-28">
+      <section className="bg-bg pt-16 pb-10 sm:pt-20 sm:pb-14 lg:pt-28 lg:pb-18">
         <Container>
           <div className="mx-auto max-w-3xl space-y-6 text-center">
             <Badge>High-performance disciplines</Badge>
