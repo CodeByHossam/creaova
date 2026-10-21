@@ -341,12 +341,12 @@ export default function Home() {
                     </span>
                     <Link
                       to="/services"
-                      className="mt-4 flex items-center justify-between border-t border-line pt-5 text-sm font-semibold text-ink transition-colors duration-400 ease-in-out group-hover:text-primary-text"
+                      className="mt-4 flex items-center justify-between border-t border-line pt-5 text-sm font-semibold text-ink transition-colors duration-500 ease-in-out group-hover:text-primary-text"
                     >
                       Explore
                       <ArrowUpRight
                         aria-hidden="true"
-                        className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        className="size-4 transition-transform duration-500 ease-in-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                       />
                     </Link>
                   </div>
