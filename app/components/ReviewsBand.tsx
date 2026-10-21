@@ -26,7 +26,7 @@ const reviewPlaceholders = [
  */
 export function ReviewsBand() {
   return (
-    <section id="testimonials" className="border-t border-line bg-bg py-20 lg:py-28">
+    <section id="testimonials" className="border-t border-line bg-bg py-20 lg:py-28 lg:-scroll-mt-10">
       <Container>
         <SectionHeading
           eyebrow="Client perspective"

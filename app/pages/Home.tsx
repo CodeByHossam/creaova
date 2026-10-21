@@ -15,7 +15,9 @@ import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
 import { CTABand } from "~/components/CTABand";
 import { DisciplineCard } from "~/components/DisciplineCard";
-import { ProcessCard } from "~/components/ProcessCard";
+import { HomeProjectCard } from "~/components/HomeProjectCard";
+import { QualityCard } from "~/components/QualityCard";
+import { ConfidenceCard } from "~/components/ConfidenceCard";
 import { ReviewsBand } from "~/components/ReviewsBand";
 import { SectionHeading } from "~/components/SectionHeading";
 import { primaryCta, site } from "~/data/constants";
@@ -24,19 +26,36 @@ import { services } from "~/data/services";
 
 export function meta() {
   return [
-    { title: "Creaova Digital Solutions [ CDS ] — UAE Web Design & Development Studio" },
+    {
+      title:
+        "Creaova Digital Solutions [ CDS ] — UAE Web Design & Development Studio",
+    },
     {
       name: "description",
-      content: "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch.",
+      content:
+        "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch.",
     },
-    { property: "og:title", content: "Creaova Digital Solutions [ CDS ] — UAE Web Design & Development Studio" },
+    {
+      property: "og:title",
+      content:
+        "Creaova Digital Solutions [ CDS ] — UAE Web Design & Development Studio",
+    },
     {
       property: "og:description",
-      content: "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch.",
+      content:
+        "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch.",
     },
     { property: "og:url", content: "https://creaova.example.com/" },
-    { name: "twitter:title", content: "Creaova Digital Solutions [ CDS ] — UAE Web Design & Development Studio" },
-    { name: "twitter:description", content: "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch." },
+    {
+      name: "twitter:title",
+      content:
+        "Creaova Digital Solutions [ CDS ] — UAE Web Design & Development Studio",
+    },
+    {
+      name: "twitter:description",
+      content:
+        "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch.",
+    },
     { tagName: "link", rel: "canonical", href: "https://creaova.example.com/" },
   ];
 }
@@ -75,8 +94,6 @@ const disciplines = [
 
 // lucide icons replace the old ⌘/▯/ϟ glyphs (plan M4).
 const disciplineIcons = [Code, Smartphone, Cloud] as const;
-
-
 
 const confidenceItems = [
   {
@@ -166,7 +183,8 @@ export default function Home() {
             <div>
               <Badge>Digital experience architecture</Badge>
               <h1 className="mt-7 text-display font-semibold leading-none text-ink">
-                We build <span className="text-primary-text">websites</span> that build your business
+                We build <span className="text-primary-text">websites</span>{" "}
+                that build your business
               </h1>
               {/* Brand tagline as live DOM text (brackets via HTML entities).
                   text-primary-text = the burnt orange allowed as text on light
@@ -174,7 +192,9 @@ export default function Home() {
               <p className="mt-5 font-mono text-sm tracking-widest text-muted md:text-base">
                 Creativity meets innovation
               </p>
-              <p className="mt-8 max-w-2xl text-lede text-muted">{site.footer.brandLine}</p>
+              <p className="mt-8 max-w-2xl text-lede text-muted">
+                {site.footer.brandLine}
+              </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <Button to={primaryCta.to} size="lg">
                   {primaryCta.label}
@@ -189,13 +209,18 @@ export default function Home() {
                     <dt className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
                       {label}
                     </dt>
-                    <dd className="mt-2 text-base font-semibold text-ink">{value}</dd>
+                    <dd className="mt-2 text-base font-semibold text-ink">
+                      {value}
+                    </dd>
                   </div>
                 ))}
               </dl>
             </div>
 
-            <nav aria-label="Services index" className="rounded-card bg-surface-subtle p-8 sm:p-10">
+            <nav
+              aria-label="Services index"
+              className="rounded-card bg-surface-subtle p-8 sm:p-10"
+            >
               <p className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
                 Index — what we build
               </p>
@@ -283,7 +308,10 @@ export default function Home() {
       </section>
 
       {/* ---------------------------- 01 Services -------------------------- */}
-      <section id="services" className="bg-bg pt-16 pb-10 sm:pt-20 sm:pb-14 lg:pt-28 lg:pb-18">
+      <section
+        id="services"
+        className="bg-bg pt-16 pb-10 sm:pt-20 sm:pb-14 lg:pt-28 lg:pb-18"
+      >
         <Container>
           <SectionHeading
             align="left"
@@ -292,7 +320,7 @@ export default function Home() {
             title="Engineered for impact. Built for the next stage."
             lede="Design, engineering and ongoing support in one place — a secure, fast, search-friendly foundation your business can grow on."
           />
-          <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3 lg:mt-12">
+          <div className="mt-8 mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3 lg:mt-12">
             {disciplines.map(([label, title, text, tag], index) => {
               const Icon = disciplineIcons[index];
               return (
@@ -324,47 +352,34 @@ export default function Home() {
             />
             <Link
               to="/portfolio"
-              className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-on-dark-muted transition-colors duration-200 ease-out hover:text-on-dark"
+              className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-on-dark-muted transition-colors duration-300 ease-out hover:text-on-dark"
             >
               View portfolio
               <ArrowUpRight
                 aria-hidden="true"
-                className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                className="size-4 transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
             </Link>
           </div>
-          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+
+          {/* 
+      FIXED: 
+      1. Changed xl:grid-cols-3 to lg:grid-cols-3 (forces 3 columns on laptops).
+      2. Added max-w-6xl mx-auto to keep the 3 cards from stretching too wide on huge screens.
+    */}
+          <div className="mt-12 mx-auto max-w-6xl grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {projects.slice(0, 3).map((project) => (
-              <Link
-                key={project.slug}
-                to="/portfolio"
-                className="group rounded-card border border-dark-line bg-dark-surface p-5 transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 hover:border-on-dark/30"
-              >
-                <div
-                  className="flex aspect-[4/3] items-end rounded-lg bg-cover bg-center p-4"
-                  style={{
-                    backgroundImage: `linear-gradient(to top, rgb(0 0 0 / 35%), rgb(255 255 255 / 5%)), url(${project.image})`,
-                    backgroundColor: project.accent,
-                  }}
-                >
-                  <span className="rounded-full bg-on-dark/90 px-3 py-1 font-mono text-meta uppercase tracking-wider text-ink">
-                    Concept project
-                  </span>
-                </div>
-                <h3 className="mt-5 text-xl font-semibold text-on-dark">{project.title}</h3>
-                {/* min-h keeps each description to a 2-line box — without it a
-                    wrapping description pushed one card in the row taller. */}
-                <p className="mt-2 flex min-h-[3rem] items-start text-sm leading-6 text-on-dark-muted">
-                  {project.description}
-                </p>
-              </Link>
+              <HomeProjectCard key={project.slug} project={project} />
             ))}
           </div>
         </Container>
       </section>
 
       {/* ---------------------------- 03 Process --------------------------- */}
-      <section id="process" className="bg-bg py-16 sm:py-20 lg:py-28 scroll-mt-[7rem]">
+      <section
+        id="process"
+        className="bg-bg py-16 sm:py-20 lg:py-28 scroll-mt-[7rem]"
+      >
         <Container>
           <SectionHeading
             number="03"
@@ -376,17 +391,20 @@ export default function Home() {
             {[
               ["01", "Secure by design", "Thoughtful security practices from day one — clean structure, safe forms, and a stable foundation you can rely on."],
               ["02", "Clean, professional code", "Readable, maintainable code that scales with your business and keeps future updates simple and cost-effective."],
-              ["03", "Fast & search-friendly", "Optimized for performance and discoverability so your site loads quickly and reaches the right people."],
+              ["03", "Optimized performance & SEO-friendly", "Built for speed and discoverability — optimized performance and SEO best practices to help your site rank and load fast."],
               ["04", "On-time, reliable delivery", "Clear timelines, direct communication, and a smooth handoff — with support ready when you need it."],
             ].map(([number, title, text]) => (
-              <ProcessCard key={number} number={number} title={title} text={text} />
+              <QualityCard key={number} number={number} title={title} text={text} />
             ))}
           </div>
         </Container>
       </section>
 
       {/* -------------------------- 04 Confidence -------------------------- */}
-      <section id="confidence" className="border-t border-line bg-surface-subtle py-16 sm:py-20 lg:py-28">
+      <section
+        
+        className="border-t border-line bg-surface-subtle py-16 sm:py-20 lg:py-28 "
+      >
         <Container>
           <div className="grid items-end gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
             <div>
@@ -410,25 +428,7 @@ export default function Home() {
             </div>
             <div className="grid gap-4 md:grid-cols-3 lg:gap-5">
               {confidenceItems.map(({ title, text, meta, icon: Icon }) => (
-                <article
-                  key={title}
-                  className="group rounded-card border border-line bg-surface p-6 transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 hover:border-ink"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="grid size-11 place-items-center rounded-lg bg-ink text-on-dark transition-colors duration-200 ease-out group-hover:bg-primary group-hover:text-on-primary">
-                      <Icon aria-hidden="true" className="size-5" strokeWidth={1.8} />
-                    </span>
-                    <span className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
-                      {meta}
-                    </span>
-                  </div>
-                  <h3 className="mt-6 text-lg font-semibold text-ink">{title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
-                  <div
-                    aria-hidden="true"
-                    className="mt-6 h-px w-10 bg-primary transition-[width] duration-300 ease-out group-hover:w-full"
-                  />
-                </article>
+                <ConfidenceCard key={title} title={title} text={text} meta={meta} Icon={Icon} />
               ))}
             </div>
           </div>

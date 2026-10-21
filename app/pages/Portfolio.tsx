@@ -32,7 +32,7 @@ export default function Portfolio() {
 
           {/* id="work" + data-stagger: this grid's children are <article>, so it
               is animated by the `#work > *` rule in globals.css, not `#work a`. */}
-          <div id="work" className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div id="work" className="mt-14 mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}

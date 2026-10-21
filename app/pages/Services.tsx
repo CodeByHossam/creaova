@@ -11,16 +11,29 @@ import { processSteps, services } from "~/data/services";
 export function meta() {
   return [
     { title: "Services | Creaova Digital Solutions" },
-    { name: "description", content: "Creaova's web design, development and mobile app services — secure, fast, search-friendly builds with a clear process and support after launch." },
+    {
+      name: "description",
+      content:
+        "Creaova's web design, development and mobile app services — secure, fast, search-friendly builds with a clear process and support after launch.",
+    },
   ];
 }
 
 const serviceIcons = [Palette, Code, Smartphone] as const;
 
 const engagement = [
-  ["We understand your requirements", "We start by listening — your business, your customers, and the outcome you need — so every decision stays grounded."],
-  ["A partner, not a vendor", "Direct communication and clear priorities let you review and approve each step of the work with real confidence."],
-  ["Support after launch", "We stay involved after go-live with genuine follow-up — fixes, guidance, and the next useful improvement for you."],
+  [
+    "We understand your requirements",
+    "We start by listening — your business, your customers, and the outcome you need — so every decision stays grounded.",
+  ],
+  [
+    "A partner, not a vendor",
+    "Direct communication and clear priorities let you review and approve each step of the work with real confidence.",
+  ],
+  [
+    "Support after launch",
+    "We stay involved after go-live with genuine follow-up — fixes, guidance, and the next useful improvement for you.",
+  ],
 ];
 
 export default function Services() {
@@ -28,11 +41,14 @@ export default function Services() {
     <>
       {/* ------------------------------ Hero ------------------------------ */}
       {/* Reduced bottom padding and constrained height so content below is closer */}
-      <section className="bg-bg pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20">
+      <section
+        id="services_hero"
+        className="bg-bg pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20 lg:-scroll-mt-12"
+      >
         <Container>
           <div className="mx-auto max-w-3xl space-y-6 text-center">
             <Badge>High-performance disciplines</Badge>
-            <h1 className="text-display font-semibold text-ink text-4xl sm:text-5xl lg:text-6xl">
+            <h1 className="text-display font-semibold text-ink text-3xl sm:text-4xl lg:text-5xl">
               Engineered for impact.
               <br />
               Built for the next stage.
@@ -55,16 +71,19 @@ export default function Services() {
               <span className="font-mono text-sm uppercase tracking-[0.18em] text-primary-text mb-2 block">
                 01 — Services
               </span>
-              <h2 className="text-3xl font-semibold text-ink sm:text-4xl">What we build.</h2>
+              <h2 className="text-3xl font-semibold text-ink sm:text-4xl">
+                What we build.
+              </h2>
             </div>
-           
           </div>
 
           {/* Reduced mt-12 to mt-8 so cards appear faster when scrolling */}
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {services.map((service, index) => {
               const Icon = serviceIcons[index];
-              return <ServiceCard key={service.id} service={service} Icon={Icon} />;
+              return (
+                <ServiceCard key={service.id} service={service} Icon={Icon} />
+              );
             })}
           </div>
         </Container>
@@ -90,7 +109,9 @@ export default function Services() {
                 <h3 className="mt-4 flex min-h-[3.25rem] items-start text-xl font-semibold text-ink">
                   {title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  {text}
+                </p>
               </article>
             ))}
           </div>
@@ -98,7 +119,10 @@ export default function Services() {
       </section>
 
       {/* ---------------------------- 03 Process/our aproach --------------------------- */}
-      <section id="process" className="bg-bg py-16 sm:py-20 lg:py-24 -scroll-mt-4">
+      <section
+        id="process"
+        className="bg-bg py-16 sm:py-20 lg:py-24 lg:-scroll-mt-4"
+      >
         <Container>
           <SectionHeading
             number="03"
@@ -108,7 +132,12 @@ export default function Services() {
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {processSteps.map(([number, title, text]) => (
-              <ProcessCard key={number} number={number} title={title} text={text} />
+              <ProcessCard
+                key={number}
+                number={number}
+                title={title}
+                text={text}
+              />
             ))}
           </div>
         </Container>
