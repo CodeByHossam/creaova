@@ -22,16 +22,20 @@ import { services } from "~/data/services";
 
 export function meta() {
   return [
-    { title: "Creaova Digital Solutions [ CDS ]" },
+    { title: "Creaova Digital Solutions [ CDS ] — UAE Web Design & Development Studio" },
     {
       name: "description",
       content: "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch.",
     },
-    { property: "og:title", content: "Creaova Digital Solutions [ CDS ]" },
+    { property: "og:title", content: "Creaova Digital Solutions [ CDS ] — UAE Web Design & Development Studio" },
     {
       property: "og:description",
       content: "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch.",
     },
+    { property: "og:url", content: "https://creaova.example.com/" },
+    { name: "twitter:title", content: "Creaova Digital Solutions [ CDS ] — UAE Web Design & Development Studio" },
+    { name: "twitter:description", content: "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch." },
+    { tagName: "link", rel: "canonical", href: "https://creaova.example.com/" },
   ];
 }
 

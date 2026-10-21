@@ -9,13 +9,30 @@ export function Layout({ children }: { children: ReactNode }) {
     <head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="theme-color" content="#16130f" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
-      {/* Text-based SVG favicon: the [ C DS ] monogram, live in the SVG so no
-          image asset is involved. Orange on the dark tile = 6.7:1 (legible at
-          favicon size in both light and dark browser chrome). */}
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="canonical" href="https://creaova.example.com" />
+      <meta property="og:site_name" content="Creaova Digital Solutions [ CDS ]" />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary_large_image" />
       <link
         rel="icon"
         href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20d='M16.8%208.6C15.8%207.4%2014.3%206.6%2012.6%206.6C9.5%206.6%207%209.1%207%2012.2C7%2015.3%209.5%2017.8%2012.6%2017.8C14.3%2017.8%2015.8%2017%2016.8%2015.8'%20stroke='%23EA580C'%20fill='none'%20stroke-width='2.6'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E"
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Creaova Digital Solutions [ CDS ]",
+            url: "https://creaova.example.com",
+            email: "hello@example.com",
+            areaServed: "AE",
+            sameAs: [],
+          }),
+        }}
       />
       <Meta />
       <Links />
