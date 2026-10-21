@@ -29,7 +29,7 @@ export function meta() {
 
 export default function NotFound() {
   return (
-    <Container className="flex min-h-[60vh] flex-col justify-center py-24 lg:py-32">
+    <Container className="flex min-h-[calc(100vh-4rem)] flex-col justify-center py-20 lg:min-h-[calc(100vh-5rem)] lg:py-28">
       <p className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">404</p>
 
       <h1 className="mt-6 max-w-[var(--measure)] text-display font-semibold text-ink">
