@@ -225,15 +225,15 @@ export default function Home() {
                     to={to}
                     className="group flex items-baseline gap-4 border-t border-line py-5 first:border-t-0"
                   >
-                    <span className="font-mono text-meta text-muted transition-colors duration-500 ease-in-out group-hover:text-primary-text">
+                    <span className="font-mono text-meta text-muted transition duration-200 ease-out group-hover:text-primary-text">
                       {number}
                     </span>
-                    <span className="font-display text-xl font-semibold text-ink transition-transform duration-500 ease-in-out group-hover:translate-x-1.5">
+                    <span className="font-display text-xl font-semibold text-ink transition duration-200 ease-out group-hover:translate-x-1.5">
                       {label}
                     </span>
                     <ArrowRight
                       aria-hidden="true"
-                      className="ml-auto size-4 self-center -translate-x-2 text-primary-text opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100"
+                      className="ml-auto size-4 self-center -translate-x-2 text-primary-text opacity-0 transition duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100"
                     />
                   </Link>
                 ))}
@@ -317,9 +317,9 @@ export default function Home() {
               return (
                 <article
                   key={title}
-                  className="group flex flex-col rounded-card border border-line bg-surface p-7 transition-[border-color,transform] duration-500 ease-in-out hover:-translate-y-1 hover:border-ink"
+                  className="group flex flex-col rounded-card border border-line bg-surface p-7 transition duration-200 ease-out hover:-translate-y-1 hover:border-ink"
                 >
-                  <span className="grid size-12 place-items-center rounded-lg bg-ink text-on-dark transition-colors duration-500 ease-in-out group-hover:bg-primary group-hover:text-on-primary">
+                  <span className="grid size-12 place-items-center rounded-lg bg-ink text-on-dark transition duration-200 ease-out group-hover:bg-primary group-hover:text-on-primary">
                     <Icon aria-hidden="true" className="size-5" strokeWidth={1.8} />
                   </span>
                   <span className="mt-6 block font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
@@ -341,12 +341,12 @@ export default function Home() {
                     </span>
                     <Link
                       to="/services"
-                      className="mt-4 flex items-center justify-between border-t border-line pt-5 text-sm font-semibold text-ink transition-colors duration-500 ease-in-out group-hover:text-primary-text"
+                      className="mt-4 flex items-center justify-between border-t border-line pt-5 text-sm font-semibold text-ink transition duration-200 ease-out group-hover:text-primary-text"
                     >
                       Explore
                       <ArrowUpRight
                         aria-hidden="true"
-                        className="size-4 transition-transform duration-500 ease-in-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        className="size-4 transition duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                       />
                     </Link>
                   </div>
@@ -453,7 +453,7 @@ export default function Home() {
               />
               <Link
                 to="/about"
-                className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ink transition-colors duration-500 ease-in-out hover:text-primary-text"
+                className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ink transition duration-200 ease-out hover:text-primary-text"
               >
                 How we work
                 <ArrowUpRight
