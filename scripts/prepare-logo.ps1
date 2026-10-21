@@ -13,8 +13,8 @@
 #   2. Keys the uniform white background to alpha, so edges stay anti-aliased.
 #   3. Writes two variants at the SAME alpha:
 #        - public/logo.png          as supplied - orange mark + ink wordmark
-#        - public/logo-inverse.png  dark-surface variant: saturated orange kept,
-#                                   neutral pixels mapped to white (footer)
+#        - public/logo-inverse.png  dark-surface variant: flat white silhouette
+#                                   of the whole lockup (footer)
 #   4. Resizes to a retina-safe width.
 #
 # MEASURED GEOMETRY of Creaova_Logo1.png (1254x1254), by row/column ink profiling:
@@ -36,15 +36,24 @@
 #   from 11.2 px (comfortably legible) to 8.6 px (mush). The mark + wordmark lockup
 #   is 912 x 528, aspect 1.73.
 #
-# WHY THE INVERSE KEEPS THE ORANGE (user decision, 2026-10-20)
-#   The dark-surface variant must keep the brand theme colour - "the logo should
-#   have the orange colour, like the original" - so flat white is no longer
-#   acceptable. The transform keeps bright, saturated orange pixels exactly as
-#   supplied and maps everything else (the mark's near-black core, the ink
-#   wordmark, neutral anti-aliasing) to white. Both halves of the mark then read
-#   on --dark: the white core by luminance, the orange fringe at >= 3:1, and the
-#   wordmark as white at 7.4:1. This preserves the original two-tone character
-#   instead of flattening it away.
+# WHY THE INVERSE IS FLAT WHITE (user decision, 2026-10-22)
+#   The dark-surface variant must read as ONE clean lockup on --dark
+#   (#16130F) - "the footer logo should be clear white", not scratched.
+#
+#   The previous variant kept the saturated orange pixels and mapped only the
+#   neutral ones to white. Measured on the source artwork, that split the mark
+#   roughly in half: the orange outer arc stayed orange while the near-black
+#   core became white, and the two met along a noisy anti-aliased edge that
+#   pixel-profiled as a band of mixed pixels (x/o in the warmth map). At the
+#   size the footer renders it, that band reads as scratched, speckled
+#   artwork - the logo looked damaged rather than designed.
+#
+#   Flat white fixes it at the root: one colour for the whole lockup, so the
+#   silhouette stays crisp at any size and the mark can no longer show a
+#   mottled seam. The alpha mask is reused unchanged, so the artwork's
+#   geometry is exactly the same as the ink variant - only the colour
+#   changes. The brand orange is not lost: it is the ink mark's colour on the
+#   light surfaces, and the site's accent colour everywhere else.
 #
 # The source file is NEVER modified, so the artwork can be re-derived if a vector
 # ever arrives.
@@ -173,11 +182,11 @@ $ink.UnlockBits($inkData)
 
 # --- Pass 2: the dark-surface variant, from the same alpha -------------------
 #
-# Keeps bright, saturated orange pixels exactly as supplied; maps everything
-# else (near-black core, ink wordmark, neutral anti-aliasing) to white. The
-# brightness floor (r > 140) is chosen so every pixel KEPT as orange measures
-# >= 3:1 against --dark (#16130F); anything darker becomes white instead of
-# shipping an invisible smudge.
+# FLAT WHITE. Every opaque pixel becomes pure white and the alpha channel is
+# carried over untouched, so the inverse is the ink variant's exact silhouette
+# in a single colour. No per-pixel hue decision is made here on purpose: the
+# previous "keep the warm pixels" rule is what split the mark into a mottled
+# orange-and-white shape (see the WHY block at the top of this file).
 
 $inv = [System.Drawing.Bitmap]::new($CropW, $CropH, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
 $invData = $inv.LockBits($outRect,
@@ -192,20 +201,10 @@ for ($y = 0; $y -lt $CropH; $y++) {
   for ($x = 0; $x -lt $CropW; $x++) {
     $oi = $inkRow + $x * 4
     $ni = $invRow + $x * 4
-    # ink is BGRA in memory: [0]=B, [1]=G, [2]=R.
-    $b = $inkPixels[$oi]
-    $g = $inkPixels[$oi + 1]
-    $r = $inkPixels[$oi + 2]
-    $warm = ($r -gt 140) -and (($r - $b) -gt 60)
-    if ($warm) {
-      $invPixels[$ni]     = [byte]$b
-      $invPixels[$ni + 1] = [byte]$g
-      $invPixels[$ni + 2] = [byte]$r
-    } else {
-      $invPixels[$ni]     = [byte]$InvB
-      $invPixels[$ni + 1] = [byte]$InvG
-      $invPixels[$ni + 2] = [byte]$InvR
-    }
+    $invPixels[$ni]     = [byte]$InvB
+    $invPixels[$ni + 1] = [byte]$InvG
+    $invPixels[$ni + 2] = [byte]$InvR
+    # The alpha ramp is the artwork's edge anti-aliasing - keep it exactly.
     $invPixels[$ni + 3] = $inkPixels[$oi + 3]
   }
 }
@@ -220,7 +219,9 @@ function Save-LogoPng {
     [int]$Width,
     [string]$Path,
     # Normalise near-white NEUTRAL pixels to exactly 255,255,255 after the
-    # resize. Warm (orange) pixels are never touched - this variant keeps them.
+    # resize. HighQualityBicubic overshoots on the alpha ramp, which leaves a
+    # few fully-opaque pixels sitting at 250-254 instead of 255 - invisible,
+    # but it means the asset is not literally flat white.
     [switch]$PurifyWhite
   )
   $height = [int][Math]::Round($Source.Height * ($Width / [double]$Source.Width))

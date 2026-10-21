@@ -4,8 +4,9 @@ import { Menu, X } from "lucide-react";
 
 import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
+import { ContactIcon } from "~/components/ContactIcon";
 import { Logo } from "~/components/Logo";
-import { primaryCta, site } from "~/data/constants";
+import { contactChannels, primaryCta, site } from "~/data/constants";
 
 function isNavItemActive(to: string, pathname: string, hash: string) {
   const [path, targetHash] = to.split("#");
@@ -141,37 +142,38 @@ export function MobileNav() {
             </div>
 
             <div className="mt-auto space-y-4 pt-10">
-              <div>
-                <p className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
-                  Email
-                </p>
-                <a
-                  href={`mailto:${site.contact.email}`}
-                  className="mt-1 inline-block text-sm text-ink underline underline-offset-4"
-                >
-                  {site.contact.email}
-                </a>
-              </div>
-              <div>
-                <p className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
-                  WhatsApp
-                </p>
-                {/*
-                  Deliberately inert while the number is a placeholder: a
-                  plausible-looking invented UAE mobile could belong to a real
-                  person. It becomes a wa.me link once href is set (§15b).
-                */}
-                {site.contact.whatsappHref ? (
-                  <a
-                    href={site.contact.whatsappHref}
-                    className="mt-1 inline-block text-sm text-ink underline underline-offset-4"
-                  >
-                    {site.contact.whatsappDisplay}
-                  </a>
-                ) : (
-                  <p className="mt-1 text-sm text-muted">{site.contact.whatsappDisplay}</p>
-                )}
-              </div>
+              {contactChannels
+                .filter((channel) =>
+                  ["email", "phone", "whatsapp"].includes(channel.id),
+                )
+                .map((channel) => (
+                  <div key={channel.id} className="flex items-start gap-3">
+                    <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-line text-primary-text">
+                      <ContactIcon id={channel.id} className="size-4" />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
+                        {channel.label}
+                      </p>
+                      {channel.href ? (
+                        <a
+                          href={channel.href}
+                          className="mt-1 inline-block text-sm text-ink underline underline-offset-4"
+                        >
+                          {channel.value}
+                        </a>
+                      ) : (
+                        /*
+                          Deliberately inert while the number is a placeholder:
+                          a plausible-looking invented UAE mobile could belong
+                          to a real person. It becomes a wa.me link once href
+                          is set (§15b).
+                        */
+                        <p className="mt-1 text-sm text-muted">{channel.value}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
             </div>
           </Container>
         </div>

@@ -15,16 +15,69 @@
  *     placeholder can never dial or open a chat.
  *
  * Replacing these before launch is a RELEASE BLOCKER (§16).
+ *
+ * ── HOW TO PATCH IN THE REAL DATA ─────────────────────────────────────────
+ * Everything that varies per business lives in the two blocks below:
+ *
+ *   1. `contact`  — email, phone, WhatsApp, hours, address.
+ *   2. `socialLinks` — the real profile URLs.
+ *
+ * The canonical origin lives in `.env` as `VITE_SITE_URL` and reaches
+ * `site.url` through `env.siteUrl`; `npm run sync:site-url` propagates it into
+ * the static files in `public/` that cannot read env vars (sitemap, robots,
+ * email signature).
+ *
+ * Nothing else in the app hard-codes a contact detail: the footer, mobile
+ * drawer, contact page, JSON-LD and Open Graph tags all read from here.
  */
+
+import { env } from "./env";
 
 export type NavItem = {
   label: string;
   to: string;
 };
 
+/**
+ * The brand mark that belongs to a social profile.
+ *
+ * lucide-react has no brand icons, so the marks are inlined in
+ * `~/components/BrandIcon.tsx` and picked by id — a profile can never end up
+ * with a URL but no glyph.
+ */
+export type SocialIconId = "instagram" | "linkedin" | "behance";
+
 export type SocialLink = {
   label: string;
-  href: string;
+  /**
+   * `null` when the profile has not been supplied yet → the footer renders it
+   * as plain text rather than a link to a platform homepage, which would look
+   * like a working contact route but lead nowhere.
+   */
+  href: string | null;
+  icon: SocialIconId;
+};
+
+/**
+ * The glyph that belongs to a contact channel (see `contactChannels`).
+ */
+export type ContactIconId = "email" | "phone" | "whatsapp" | "hours" | "location";
+
+/**
+ * One way to reach the studio.
+ *
+ * The footer and the contact page both render this list, so the two can never
+ * drift apart: a channel added here appears in both places, with the same
+ * label, the same value and the same icon.
+ *
+ * `href: null` means that route has no confirmed destination yet and the
+ * value renders as plain text instead of a link that leads nowhere.
+ */
+export type ContactChannel = {
+  id: ContactIconId;
+  label: string;
+  value: string;
+  href: string | null;
 };
 
 /**
@@ -80,8 +133,12 @@ export type Site = {
     whatsappHref: string | null;
     hours: string;
     address: {
-      city: string;
-      country: string;
+      /**
+       * The studio serves the whole country rather than from one base city,
+       * so the address names the country — the site never claims a city it
+       * does not state anywhere else.
+       */
+      region: string;
     };
   };
   footer: {
@@ -92,34 +149,131 @@ export type Site = {
   };
 };
 
+/**
+ * Turn one raw international number into the four values the UI needs.
+ *
+ * Passing `null` keeps the demo state: the visible `5X XXX XXXX` template is
+ * shown and both hrefs stay `null`, so a placeholder can never dial a phone or
+ * open a chat with a stranger. Passing a real number produces a `tel:` link
+ * and a `wa.me` link that both point at the same number.
+ *
+ * `display` is how the number is written for humans ("+971 52 525 982"); it
+ * defaults to the raw value. The hrefs are always built from the digits, so
+ * the two can never disagree about which number is being dialled.
+ */
+export function phoneDetails(
+  raw: string | null,
+  display?: string,
+): {
+  phoneDisplay: string;
+  phoneHref: string | null;
+  whatsappDisplay: string;
+  whatsappHref: string | null;
+} {
+  if (!raw) {
+    return {
+      phoneDisplay: "+971 5X XXX XXXX",
+      phoneHref: null,
+      whatsappDisplay: "+971 5X XXX XXXX",
+      whatsappHref: null,
+    };
+  }
+  const digits = raw.replace(/\D/g, "");
+  const label = (display ?? raw).trim();
+  return {
+    phoneDisplay: label,
+    phoneHref: `tel:+${digits}`,
+    whatsappDisplay: label,
+    whatsappHref: `https://wa.me/${digits}`,
+  };
+}
+
 const contact: Site["contact"] = {
-  email: "hello@example.com",
-  phoneDisplay: "+971 5X XXX XXXX",
-  phoneHref: null,
-  whatsappDisplay: "+971 5X XXX XXXX",
-  whatsappHref: null,
+  email: "creaova.co@gmail.com",
+  // One number produces all four values. Swap `null` for the real number
+  // (e.g. "+971501234567") and the display text, the `tel:` link and the
+  // `wa.me` link all update together — they can no longer drift apart.
+  ...phoneDetails("+97152525982", "+971 52 525 982"),
   hours: "Sun–Thu, 9am–6pm (GST)",
   address: {
-    city: "Sharjah",
-    country: "United Arab Emirates",
+    region: "United Arab Emirates",
   },
 };
 
 export const socialLinks: SocialLink[] = [
-  { label: "Instagram", href: "https://www.instagram.com/" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/" },
-  { label: "Behance", href: "https://www.behance.net/" },
+  { label: "Instagram", href: "https://www.instagram.com/creaova.co/", icon: "instagram" },
+  // Profiles not supplied yet — `href: null` keeps them off the link list
+  // until the real URLs are confirmed. See `stillHasDemoData` below.
+  { label: "LinkedIn", href: null, icon: "linkedin" },
+  { label: "Behance", href: null, icon: "behance" },
 ];
+
+/**
+ * Every way to reach the studio, in one list.
+ *
+ * The footer column and the contact page aside both read from here, so an
+ * email, a number or an opening hour is written once and rendered twice —
+ * with the same icon in both places.
+ */
+export const contactChannels: ContactChannel[] = [
+  {
+    id: "email",
+    label: "Email",
+    value: contact.email,
+    href: `mailto:${contact.email}`,
+  },
+  {
+    id: "phone",
+    label: "Phone",
+    value: contact.phoneDisplay,
+    href: contact.phoneHref,
+  },
+  {
+    id: "whatsapp",
+    label: "WhatsApp",
+    value: contact.whatsappDisplay,
+    href: contact.whatsappHref,
+  },
+  {
+    id: "hours",
+    label: "Hours",
+    value: contact.hours,
+    href: null,
+  },
+  {
+    id: "location",
+    label: "Based in",
+    value: contact.address.region,
+    href: null,
+  },
+];
+
+/**
+ * True while any demo value is still in place.
+ *
+ * Derived instead of hand-set on purpose: the flag flips to false only once
+ * every placeholder is genuinely gone, so it can never drift out of date and
+ * leave the launch checklist (§16) reading "done" when it is not.
+ */
+function stillHasDemoData(): boolean {
+  return (
+    contact.email.endsWith("@example.com") ||
+    contact.phoneHref === null ||
+    contact.whatsappHref === null ||
+    socialLinks.some((link) => link.href === null)
+  );
+}
 
 export const site: Site = {
   name: "Creaova",
   legalName: "Creaova Digital Solutions",
   tagline: "Creativity meets innovation.",
-  url: "https://creaova.example.com",
-  isPlaceholder: true,
+  // Canonical origin, from .env → VITE_SITE_URL. Never hard-code it here.
+  url: env.siteUrl,
+  isPlaceholder: stillHasDemoData(),
 
   nav: [
-    { label: "Home", to: "/" },
+    { label: "Home", to: "/#home" },
     { label: "Services", to: "/services#services_hero" },
     { label: "Portfolio", to: "/portfolio" },
     { label: "Process", to: "/services#process" },
@@ -145,10 +299,12 @@ export const site: Site = {
   footer: {
     brandLine:
       "An established digital studio in the UAE. We design and build secure, high-performing websites and apps — and stay with you as a partner after launch.",
-    location: "Sharjah · Dubai · UAE",
+    location: "United Arab Emirates",
 
-    // Four columns, kept deliberately short (§3.2). Every footer link is a
-    // second chance to navigate, but each one also costs attention.
+    // Three quick-access groups, kept deliberately short (§3.2). Every footer
+    // link is a second chance to navigate, but each one also costs attention.
+    // The contact routes are NOT here: they have their own band in the footer,
+    // built from `contactChannels`.
     columns: [
       {
         title: "Services",
@@ -167,13 +323,11 @@ export const site: Site = {
         ],
       },
       {
-        title: "Contact",
+        title: "Company",
         links: [
-          { label: "Start a project", to: "/contact" },
-          { label: contact.email, href: `mailto:${contact.email}` },
-          // href is null while the number is a placeholder, so this renders as
-          // text. It becomes a real wa.me link the moment a number is supplied.
-          { label: `WhatsApp ${contact.whatsappDisplay}`, href: contact.whatsappHref },
+          { label: "Reviews", to: "/#testimonials" },
+          { label: "Contact", to: "/contact" },
+          { label: "Home", to: "/#home" },
         ],
       },
     ],
@@ -187,3 +341,17 @@ export const site: Site = {
 
 /** The primary header call to action, used by both Navbar and MobileNav. */
 export const primaryCta: NavItem = { label: "Start a project", to: "/contact" };
+
+/**
+ * Absolute URL for a route, built from the canonical origin in `.env`
+ * (`VITE_SITE_URL`). Use it for canonical links, Open Graph URLs and anything
+ * else that must point at the live domain rather than a relative path.
+ *
+ * The homepage keeps its trailing slash so it does not collide with the
+ * `https://domain` / `https://domain/` pair that search engines treat as two
+ * different URLs.
+ */
+export function absoluteUrl(path = "/"): string {
+  const suffix = path.startsWith("/") ? path : `/${path}`;
+  return suffix === "/" ? `${site.url}/` : `${site.url}${suffix}`;
+}

@@ -6,6 +6,8 @@
   "description": "Creaova Digital Solutions — multi-page marketing site for a UAE digital studio.",
   "scripts": {
     "dev": "react-router dev",
+    "sync:site-url": "node scripts/sync-site-url.mjs",
+    "prebuild": "npm run sync:site-url",
     "build": "react-router build",
     "preview": "vite preview --outDir build/client",
     "typegen": "react-router typegen",

@@ -4,7 +4,7 @@ import type { Project } from "~/data/projects";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="group overflow-hidden rounded-card border border-dark-line bg-dark-surface p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-on-dark/30 hover:shadow-lg hover:shadow-black/20">
+    <article className="group flex h-full flex-col overflow-hidden rounded-card border border-dark-line bg-dark-surface p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-on-dark/30 hover:shadow-lg hover:shadow-black/20">
       <div
         className="relative flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-lg p-5"
         style={{ backgroundColor: project.accent }}
@@ -46,11 +46,11 @@ export function ProjectCard({ project }: { project: Project }) {
         </span>
       </div>
 
-      <p className="mt-3 flex min-h-[4.5rem] items-start text-sm leading-6 text-on-dark-muted">
+      <p className="mt-3 text-sm leading-6 text-on-dark-muted">
         {project.description}
       </p>
 
-      <div className="mt-5 flex min-h-[3.5rem] flex-wrap content-start gap-2">
+      <div className="mt-5 flex flex-wrap content-start gap-2">
         {project.tags.map((tag) => (
           <span
             key={tag}

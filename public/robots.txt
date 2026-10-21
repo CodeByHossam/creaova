@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://creaova.example.com/sitemap.xml
+Sitemap: https://creaova.onrender.com/sitemap.xml

@@ -7,7 +7,11 @@ import { ProcessCard } from "~/components/ProcessCard";
 import { SectionHeading } from "~/components/SectionHeading";
 import { ServiceCard } from "~/components/ServiceCard";
 import { processSteps, services } from "~/data/services";
+import { absoluteUrl } from "~/data/constants";
 
+/* -------------------------------------------------------------------------- */
+/*                                    META                                    */
+/* -------------------------------------------------------------------------- */
 export function meta() {
   return [
     { title: "Services | Creaova Digital Solutions" },
@@ -16,11 +20,18 @@ export function meta() {
       content:
         "Creaova's web design, development and mobile app services — secure, fast, search-friendly builds with a clear process and support after launch.",
     },
+    { tagName: "link", rel: "canonical", href: absoluteUrl("/services") },
   ];
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                   DATA                                     */
+/* -------------------------------------------------------------------------- */
+
+// Icons mapped by index to `services` — order must match the data array.
 const serviceIcons = [Palette, Code, Smartphone] as const;
 
+// "How we work together" content for the Engagement section.
 const engagement = [
   [
     "We understand your requirements",
@@ -36,60 +47,73 @@ const engagement = [
   ],
 ];
 
+/* -------------------------------------------------------------------------- */
+/*                                  COMPONENT                                 */
+/* -------------------------------------------------------------------------- */
 export default function Services() {
   return (
     <>
-      {/* ------------------------------ Hero ------------------------------ */}
-      {/* Reduced bottom padding and constrained height so content below is closer */}
+      {/* ==================================================================== */}
+      {/* HERO                                                                 */}
+      {/* ==================================================================== */}
+      {/* The ONLY place services are rendered — the old duplicate section was
+          removed. Cards sit right under a smaller title so users see what
+          you build on first paint, with no scroll required. */}
       <section
         id="services_hero"
-        className="bg-bg pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20 lg:-scroll-mt-12"
+        className="bg-bg pt-14 pb-10 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-14 lg:-scroll-mt-8 xl:-scroll-mt-10"
       >
         <Container>
-          <div className="mx-auto max-w-3xl space-y-6 text-center">
+          {/* Compact header — tighter vertical rhythm so cards come up fast. */}
+          <div className="mx-auto max-w-3xl space-y-4 text-center">
             <Badge>High-performance disciplines</Badge>
-            <h1 className="text-display font-semibold text-ink text-3xl sm:text-4xl lg:text-5xl">
-              Engineered for impact.
-              <br />
-              Built for the next stage.
+
+            {/* Title reduced a little more: switched from `text-display`
+                to explicit sizes so it's clearly smaller but still the
+                dominant heading. `leading-tight` keeps it from sprawling. */}
+            <h1 className="text-4xl font-semibold leading-tight text-ink sm:text-5xl">
+              Web. Product. Mobile.
             </h1>
+
             <p className="mx-auto max-w-2xl text-lede text-muted">
-              Strategy, interface design and engineering in one place — digital
-              foundations that are secure, fast, friendly to search engines, and
-              supported after launch.
+              Design and engineering under one roof — secure, fast,
+              search-friendly builds, with real support after launch.
             </p>
           </div>
-        </Container>
-      </section>
 
-      {/* ---------------------------- 01 Services -------------------------- */}
-      <section id="services" className="bg-bg pb-20 lg:pb-28">
-        <Container>
-          {/* Changed to a split layout: Title on left, description on right. Saves massive vertical space. */}
-          <div className="flex flex-col gap-4 border-b border-line pb-8 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <span className="font-mono text-sm uppercase tracking-[0.18em] text-primary-text mb-2 block">
-                01 — Services
-              </span>
-              <h2 className="text-3xl font-semibold text-ink sm:text-4xl">
-                What we build.
-              </h2>
+          {/* Services grid — the one and only rendering of ServiceCard.
+              The `id="services"` lives here so #services links still work
+              now that the separate section is gone.
+              - Negative scroll margin pulls the anchor target up so the
+                cards sit higher when navigated to.
+              - `mt-8` keeps them close to the header; slight downscale on
+                mobile/tablet, full size on lg. */}
+          <div
+            id="services"
+            className="mx-auto mt-8 max-w-5xl scroll-mt-[-4rem] sm:mt-10"
+          >
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+              {services.map((service, index) => {
+                const Icon = serviceIcons[index];
+                return (
+                  // `origin-top` anchors the scale so layout stays tight;
+                  // scale resets on lg where the cards render full-size.
+                  <div
+                    key={service.id}
+                    className="origin-top scale-95 lg:scale-100"
+                  >
+                    <ServiceCard service={service} Icon={Icon} />
+                  </div>
+                );
+              })}
             </div>
           </div>
-
-          {/* Reduced mt-12 to mt-8 so cards appear faster when scrolling */}
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {services.map((service, index) => {
-              const Icon = serviceIcons[index];
-              return (
-                <ServiceCard key={service.id} service={service} Icon={Icon} />
-              );
-            })}
-          </div>
         </Container>
       </section>
 
-      {/* -------------------------- 02 Engagement -------------------------- */}
+      {/* ==================================================================== */}
+      {/* 02 — ENGAGEMENT                                                      */}
+      {/* ==================================================================== */}
       <section className="border-y border-line bg-surface-subtle py-16 sm:py-20 lg:py-24">
         <Container>
           <SectionHeading
@@ -97,11 +121,11 @@ export default function Services() {
             eyebrow="Working together"
             title="A partnership, one clear step at a time."
           />
-          <div className="mx-auto mt-10 grid max-w-5xl gap-6 md:grid-cols-3">
+          <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             {engagement.map(([title, text], index) => (
               <article
                 key={title}
-                className="rounded-card border border-line bg-surface p-6 transition duration-200 ease-out hover:-translate-y-1 hover:border-ink"
+                className="flex h-full flex-col rounded-card border border-line bg-surface p-6 transition duration-200 ease-out hover:-translate-y-1 hover:border-ink"
               >
                 <span className="font-mono text-xl font-medium text-primary-text">
                   0{index + 1}
@@ -118,10 +142,12 @@ export default function Services() {
         </Container>
       </section>
 
-      {/* ---------------------------- 03 Process/our aproach --------------------------- */}
+      {/* ==================================================================== */}
+      {/* 03 — PROCESS / OUR APPROACH                                          */}
+      {/* ==================================================================== */}
       <section
         id="process"
-        className="bg-bg py-16 sm:py-20 lg:py-24 lg:-scroll-mt-4"
+        className="bg-bg py-16 sm:py-20 lg:py-24 lg:-scroll-mt-8 xl:-scroll-mt-12"
       >
         <Container>
           <SectionHeading
@@ -130,7 +156,7 @@ export default function Services() {
             title="Our four-step process."
             lede="From first conversation, through launch, to the follow-up that comes after — a predictable path you can follow step by step."
           />
-          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {processSteps.map(([number, title, text]) => (
               <ProcessCard
                 key={number}
@@ -143,6 +169,9 @@ export default function Services() {
         </Container>
       </section>
 
+      {/* ==================================================================== */}
+      {/* CTA                                                                  */}
+      {/* ==================================================================== */}
       <CTABand />
     </>
   );

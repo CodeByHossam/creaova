@@ -20,7 +20,7 @@ import { QualityCard } from "~/components/QualityCard";
 import { ConfidenceCard } from "~/components/ConfidenceCard";
 import { ReviewsBand } from "~/components/ReviewsBand";
 import { SectionHeading } from "~/components/SectionHeading";
-import { primaryCta, site } from "~/data/constants";
+import { primaryCta, site, absoluteUrl } from "~/data/constants";
 import { projects } from "~/data/projects";
 import { services } from "~/data/services";
 
@@ -45,7 +45,7 @@ export function meta() {
       content:
         "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch.",
     },
-    { property: "og:url", content: "https://creaova.example.com/" },
+    { property: "og:url", content: absoluteUrl("/") },
     {
       name: "twitter:title",
       content:
@@ -56,7 +56,7 @@ export function meta() {
       content:
         "Creaova Digital Solutions [ CDS ] — an established UAE digital studio building secure, fast, search-friendly websites and apps, with support after launch.",
     },
-    { tagName: "link", rel: "canonical", href: "https://creaova.example.com/" },
+    { tagName: "link", rel: "canonical", href: absoluteUrl("/") },
   ];
 }
 
@@ -177,25 +177,22 @@ export default function Home() {
           surface-subtle, no border/shadow) rather than by a UI box; rows link
           to the real Services anchors. Hover: number -> burnt orange, label
           shifts, arrow reveals. */}
-      <section className="bg-bg">
-        <Container className="py-16 sm:py-20 lg:py-24">
-          <div className="grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+      <section id="home" className="bg-bg lg:-scroll-mt-10 xl:-scroll-mt-18">
+        <Container className="py-12 sm:py-16 md:py-18 lg:py-22 xl:py-24">
+          <div className="grid items-center gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 xl:gap-20">
             <div>
               <Badge>Digital experience architecture</Badge>
-              <h1 className="mt-7 text-display font-semibold leading-none text-ink">
+              <h1 className="mt-6 sm:mt-7 text-display font-semibold leading-none text-ink">
                 We build <span className="text-primary-text">websites</span>{" "}
                 that build your business
               </h1>
-              {/* Brand tagline as live DOM text (brackets via HTML entities).
-                  text-primary-text = the burnt orange allowed as text on light
-                  surfaces (#C2410C, 5.2:1) — raw orange-500 fails AA there. */}
-              <p className="mt-5 font-mono text-sm tracking-widest text-muted md:text-base">
+              <p className="mt-4 sm:mt-5 font-mono text-sm tracking-widest text-muted md:text-base">
                 Creativity meets innovation
               </p>
-              <p className="mt-8 max-w-2xl text-lede text-muted">
+              <p className="mt-6 sm:mt-8 max-w-2xl text-lede text-muted">
                 {site.footer.brandLine}
               </p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-7 sm:mt-9 flex flex-col gap-3 sm:flex-row">
                 <Button to={primaryCta.to} size="lg">
                   {primaryCta.label}
                 </Button>
@@ -203,13 +200,13 @@ export default function Home() {
                   View our work
                 </Button>
               </div>
-              <dl className="mt-14 grid max-w-xl grid-cols-1 gap-x-10 gap-y-7 border-t border-line pt-8 sm:grid-cols-2">
+              <dl className="mt-10 sm:mt-14 grid max-w-xl grid-cols-1 gap-x-10 gap-y-6 sm:gap-y-7 border-t border-line pt-6 sm:pt-8 sm:grid-cols-2">
                 {heroFacts.map(([label, value]) => (
                   <div key={label}>
                     <dt className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
                       {label}
                     </dt>
-                    <dd className="mt-2 text-base font-semibold text-ink">
+                    <dd className="mt-1.5 sm:mt-2 text-base font-semibold text-ink">
                       {value}
                     </dd>
                   </div>
@@ -219,22 +216,22 @@ export default function Home() {
 
             <nav
               aria-label="Services index"
-              className="rounded-card bg-surface-subtle p-8 sm:p-10"
+              className="rounded-card bg-surface-subtle p-5 sm:p-6 md:p-8 lg:p-10"
             >
               <p className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
                 Index — what we build
               </p>
-              <div className="mt-5">
+              <div className="mt-4 sm:mt-5">
                 {heroIndex.map(([number, label, to]) => (
                   <Link
                     key={to}
                     to={to}
-                    className="group flex items-baseline gap-4 border-t border-line py-5 first:border-t-0"
+                    className="group flex items-baseline gap-3 sm:gap-4 border-t border-line py-4 sm:py-5 first:border-t-0"
                   >
                     <span className="font-mono text-meta text-muted transition duration-200 ease-out group-hover:text-primary-text">
                       {number}
                     </span>
-                    <span className="font-display text-xl font-semibold text-ink transition duration-200 ease-out group-hover:translate-x-1.5">
+                    <span className="font-display text-lg sm:text-xl font-semibold text-ink transition duration-200 ease-out group-hover:translate-x-1 sm:group-hover:translate-x-1.5">
                       {label}
                     </span>
                     <ArrowRight
@@ -244,7 +241,7 @@ export default function Home() {
                   </Link>
                 ))}
               </div>
-              <div className="mt-6 flex items-center justify-between border-t border-line pt-6 font-mono text-meta uppercase tracking-[0.18em]">
+              <div className="mt-5 sm:mt-6 flex items-center justify-between border-t border-line pt-5 sm:pt-6 font-mono text-meta uppercase tracking-[0.18em]">
                 <span className="text-muted">A UAE studio</span>
                 <Link
                   to="/services"
@@ -258,6 +255,7 @@ export default function Home() {
         </Container>
       </section>
 
+
       {/* ---------------------------- Technology --------------------------- */}
       {/* Continuously scrolling "news ticker" band: the whole toolset moves
           right-to-left and loops seamlessly. The list is rendered twice — the
@@ -268,8 +266,8 @@ export default function Home() {
         aria-label="Technologies we build with"
         className="border-y border-line bg-surface"
       >
-        <div className="flex items-center gap-6 py-5 sm:gap-10">
-          <p className="ml-4 shrink-0 font-mono text-meta uppercase tracking-[0.18em] text-muted sm:ml-8">
+        <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 py-4 sm:py-5">
+          <p className="ml-3 sm:ml-4 md:ml-6 lg:ml-8 shrink-0 font-mono text-meta uppercase tracking-[0.18em] text-muted">
             Built with
           </p>
           <div className="marquee-viewport relative min-w-0 flex-1">
@@ -278,7 +276,7 @@ export default function Home() {
                 {stack.map((item) => (
                   <li
                     key={item}
-                    className="flex shrink-0 items-center gap-8 pr-8 text-sm font-semibold whitespace-nowrap text-ink"
+                    className="flex shrink-0 items-center gap-6 sm:gap-7 md:gap-8 pr-6 sm:pr-7 md:pr-8 text-sm font-semibold whitespace-nowrap text-ink"
                   >
                     {item}
                     <span
@@ -292,7 +290,7 @@ export default function Home() {
                 {stack.map((item) => (
                   <li
                     key={item}
-                    className="flex shrink-0 items-center gap-8 pr-8 text-sm font-semibold whitespace-nowrap text-ink"
+                    className="flex shrink-0 items-center gap-6 sm:gap-7 md:gap-8 pr-6 sm:pr-7 md:pr-8 text-sm font-semibold whitespace-nowrap text-ink"
                   >
                     {item}
                     <span
@@ -307,10 +305,11 @@ export default function Home() {
         </div>
       </section>
 
+
       {/* ---------------------------- 01 Services -------------------------- */}
       <section
         id="services"
-        className="bg-bg pt-16 pb-10 sm:pt-20 sm:pb-14 lg:pt-28 lg:pb-18"
+        className="bg-bg pt-12 pb-14 sm:pt-16 sm:pb-18 md:pt-20 md:pb-22 lg:pt-24 lg:pb-24 xl:pt-28 xl:pb-28"
       >
         <Container>
           <SectionHeading
@@ -320,7 +319,7 @@ export default function Home() {
             title="Engineered for impact. Built for the next stage."
             lede="Design, engineering and ongoing support in one place — a secure, fast, search-friendly foundation your business can grow on."
           />
-          <div className="mt-8 mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3 lg:mt-12">
+          <div className="mt-6 mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-5 md:gap-6 lg:grid-cols-3 lg:mt-12">
             {disciplines.map(([label, title, text, tag], index) => {
               const Icon = disciplineIcons[index];
               return (
@@ -337,6 +336,8 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+
 
       {/* ------------------------------ 02 Work ---------------------------- */}
       <section id="work" className="bg-dark py-16 sm:py-20 lg:py-28">
@@ -367,18 +368,19 @@ export default function Home() {
       1. Changed xl:grid-cols-3 to lg:grid-cols-3 (forces 3 columns on laptops).
       2. Added max-w-6xl mx-auto to keep the 3 cards from stretching too wide on huge screens.
     */}
-          <div className="mt-12 mx-auto max-w-6xl grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 mx-auto max-w-6xl grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {projects.slice(0, 3).map((project) => (
               <HomeProjectCard key={project.slug} project={project} />
             ))}
           </div>
+
         </Container>
       </section>
 
       {/* ---------------------------- 03 Process --------------------------- */}
       <section
         id="process"
-        className="bg-bg py-16 sm:py-20 lg:py-28 scroll-mt-[7rem]"
+        className="bg-bg py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28 scroll-mt-16 lg:scroll-mt-20"
       >
         <Container>
           <SectionHeading
@@ -387,7 +389,7 @@ export default function Home() {
             title="Secure, clean, and delivered on time."
             lede="We focus on the details that matter — secure foundations, clean code, efficient delivery, and long-term value without unnecessary cost."
           />
-          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-8 sm:mt-10 md:mt-12 grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2 sm:gap-4 lg:gap-5 xl:gap-6 xl:grid-cols-4">
             {[
               ["01", "Secure by design", "Thoughtful security practices from day one — clean structure, safe forms, and a stable foundation you can rely on."],
               ["02", "Clean, professional code", "Readable, maintainable code that scales with your business and keeps future updates simple and cost-effective."],
@@ -399,6 +401,8 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+
 
       {/* -------------------------- 04 Confidence -------------------------- */}
       <section
@@ -426,11 +430,12 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className="grid gap-4 md:grid-cols-3 lg:gap-5">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5 xl:grid-cols-3">
               {confidenceItems.map(({ title, text, meta, icon: Icon }) => (
                 <ConfidenceCard key={title} title={title} text={text} meta={meta} Icon={Icon} />
               ))}
             </div>
+
           </div>
         </Container>
       </section>

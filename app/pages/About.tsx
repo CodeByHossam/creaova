@@ -2,11 +2,13 @@ import { Badge } from "~/components/Badge";
 import { Container } from "~/components/Container";
 import { CTABand } from "~/components/CTABand";
 import { SectionHeading } from "~/components/SectionHeading";
+import { absoluteUrl } from "~/data/constants";
 
 export function meta() {
   return [
     { title: "About | Creaova Digital Solutions" },
     { name: "description", content: "Meet Creaova, an established UAE digital studio pairing strategy, design and engineering — with a clear process and support after launch." },
+    { tagName: "link", rel: "canonical", href: absoluteUrl("/about") },
   ];
 }
 
@@ -26,7 +28,7 @@ export default function About() {
   return (
     <>
       {/* ------------------------------ Hero ------------------------------ */}
-      <section className="bg-bg py-16 sm:py-20 lg:py-28">
+      <section className="bg-bg py-12 sm:py-16 lg:py-20">
         <Container>
           <div className="mx-auto max-w-4xl space-y-6 text-center">
             <Badge>About Creaova</Badge>
@@ -56,24 +58,26 @@ export default function About() {
               eyebrow="What guides us"
               title="A focused studio for meaningful digital work."
             />
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
               {principles.map(([number, title, text]) => (
                 <article
                   key={number}
-                  className="rounded-card border border-line bg-surface p-6 transition-[border-color,transform] duration-500 ease-in-out hover:-translate-y-1 hover:border-ink"
+                  className="group flex h-full flex-col rounded-card border border-line bg-surface p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-sm"
                 >
                   <span className="font-mono text-xl font-medium text-primary-text">
                     {number}
                   </span>
-                  <h3 className="mt-6 flex min-h-[3.25rem] items-start text-xl font-semibold text-ink">
+                  <h3 className="mt-6 text-xl font-semibold text-ink">
                     {title}
                   </h3>
-                  <p className="mt-4 flex min-h-[5.5rem] items-start text-sm leading-relaxed text-muted">
+                  <p className="mt-4 text-sm leading-relaxed text-muted">
                     {text}
                   </p>
                 </article>
+
               ))}
             </div>
+
           </div>
         </Container>
       </section>
@@ -86,11 +90,11 @@ export default function About() {
             eyebrow="Our working model"
             title="Small enough to stay close. Structured enough to move."
           />
-          <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
+          <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             {workingModel.map(([title, text], index) => (
               <article
                 key={title}
-                className="rounded-card border border-line bg-surface p-7 transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 hover:border-ink"
+                className="group flex h-full flex-col rounded-card border border-line bg-surface p-7 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-sm"
               >
                 <span className="font-mono text-xl font-medium text-primary-text">
                   0{index + 1}
@@ -98,8 +102,10 @@ export default function About() {
                 <h3 className="mt-5 text-xl font-semibold text-ink">{title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
               </article>
+
             ))}
           </div>
+
         </Container>
       </section>
 

@@ -8,9 +8,10 @@
       Table-based + inline CSS on purpose: webmail and desktop clients strip
       <style> blocks, classes, and flex/grid. No Tailwind here.
 
-      BEFORE SENDING: the logo URL uses the placeholder domain from
-      app/data/constants.ts (https://creaova.example.com). Replace it with the
-      real production domain, and make sure logo.png is publicly reachable.
+      TEMPLATE — do not edit public/email-signature.html directly. Edit this
+      file and run `npm run sync:site-url`; https://creaova.onrender.com is replaced with
+      VITE_SITE_URL from .env. The logo must be publicly reachable at
+      https://creaova.onrender.com/logo.png.
     -->
   </head>
   <body style="margin: 0; padding: 16px; background-color: #ffffff;">
@@ -23,9 +24,9 @@
     >
       <tr>
         <td style="padding: 0 16px 0 0; vertical-align: top;">
-          <a href="https://creaova.example.com" style="border: 0; text-decoration: none;">
+          <a href="https://creaova.onrender.com" style="border: 0; text-decoration: none;">
             <img
-              src="https://creaova.example.com/logo.png"
+              src="https://creaova.onrender.com/logo.png"
               alt="Creaova Digital Solutions"
               width="150"
               style="display: block; width: 150px; height: auto; border: 0;"

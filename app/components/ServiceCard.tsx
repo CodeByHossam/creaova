@@ -13,7 +13,7 @@ export function ServiceCard({
   return (
     <article
       id={service.id}
-      className="group flex flex-col overflow-hidden rounded-card border border-line bg-surface transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-sm"
+      className="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-sm"
     >
       <div className="relative aspect-[16/9] overflow-hidden">
         <img
@@ -28,19 +28,19 @@ export function ServiceCard({
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-4">
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
         <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary-text">
           {service.number}
         </span>
         <h3 className="mt-1.5 text-lg font-semibold leading-tight text-ink">{service.title}</h3>
-        <p className="mt-2 text-sm font-medium leading-snug text-ink line-clamp-2">
+        <p className="mt-2 text-sm font-medium leading-snug text-ink">
           {service.summary}
         </p>
-        <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted line-clamp-3">
+        <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">
           {service.details}
         </p>
 
-        <div className="mt-3 border-t border-line pt-3">
+        <div className="mt-4 border-t border-line pt-4">
           <Link
             to="/contact"
             className="flex items-center justify-between text-sm font-medium text-ink transition-all duration-300 ease-out group-hover:text-primary-text"
@@ -54,5 +54,6 @@ export function ServiceCard({
         </div>
       </div>
     </article>
+
   );
 }

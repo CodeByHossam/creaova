@@ -6,12 +6,8 @@ export function HomeProjectCard({ project }: { project: Project }) {
   return (
     <Link
       to="/portfolio"
-      className="group flex flex-col rounded-card border border-dark-line bg-dark-surface p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-on-dark/30 hover:shadow-lg hover:shadow-black/20"
+      className="group flex h-full flex-col rounded-card border border-dark-line bg-dark-surface p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-on-dark/30 hover:shadow-lg hover:shadow-black/20"
     >
-      {/* 
-        Changed aspect-[4/3] to aspect-video (16/9). 
-        This stops the cards from becoming massive vertical blocks on laptop screens.
-      */}
       <div
         className="flex aspect-video items-end rounded-lg bg-cover bg-center p-4 overflow-hidden relative"
         style={{
@@ -24,9 +20,10 @@ export function HomeProjectCard({ project }: { project: Project }) {
         </span>
       </div>
       <h3 className="mt-5 text-xl font-semibold text-on-dark">{project.title}</h3>
-      <p className="mt-2 flex min-h-[3rem] items-start text-sm leading-6 text-on-dark-muted">
+      <p className="mt-2 text-sm leading-6 text-on-dark-muted">
         {project.description}
       </p>
     </Link>
+
   );
 }

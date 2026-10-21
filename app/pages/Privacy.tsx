@@ -1,6 +1,7 @@
 import { Container } from "~/components/Container";
+import { absoluteUrl } from "~/data/constants";
 
-export function meta() { return [{ title: "Privacy Policy | Creaova" }, { name: "description", content: "Privacy information for visitors to Creaova's website." }]; }
+export function meta() { return [{ title: "Privacy Policy | Creaova" }, { name: "description", content: "Privacy information for visitors to Creaova's website." }, { tagName: "link", rel: "canonical", href: absoluteUrl("/privacy") }]; }
 
 const sections = [["Information we receive", "When you contact Creaova, we may receive the information you choose to provide, such as your name, email address, project details, and any context included in your message."], ["How we use information", "We use enquiry details to understand the request, respond to questions, prepare a proposal, and communicate about a potential project. We do not use this demo site to make automated decisions about visitors."], ["Service providers", "The production form endpoint, analytics tools, email provider, and hosting provider must be confirmed before launch. This draft should be updated with the real providers and their applicable privacy documentation."], ["Retention and requests", "We retain information only for as long as it is needed for the purpose it was collected or as required by applicable obligations. Before launch, confirm the retention period and the process for access, correction, deletion, and other privacy requests."], ["Updates to this policy", "This policy may be updated when the website, form provider, or business practices change. The effective date and a contact for privacy questions should be added before publication."]];
 

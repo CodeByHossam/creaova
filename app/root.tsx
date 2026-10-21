@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from "react-router";
 
 import { SkipLink } from "~/components/SkipLink";
+import { site } from "~/data/constants";
 import "~/styles/globals.css";
 
 export function Layout({ children }: { children: ReactNode }) {
@@ -12,7 +13,12 @@ export function Layout({ children }: { children: ReactNode }) {
       <meta name="theme-color" content="#16130f" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link rel="canonical" href="https://creaova.example.com" />
+      {/*
+        No global <link rel="canonical"> here on purpose. A single canonical in
+        the layout would point every route at the homepage, which tells search
+        engines the whole site is one page. Each route owns its own canonical,
+        built from `site.url` (see `absoluteUrl` in data/constants).
+      */}
       <meta property="og:site_name" content="Creaova Digital Solutions [ CDS ]" />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary_large_image" />
@@ -26,11 +32,24 @@ export function Layout({ children }: { children: ReactNode }) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            name: "Creaova Digital Solutions [ CDS ]",
-            url: "https://creaova.example.com",
-            email: "hello@example.com",
+            name: site.legalName,
+            alternateName: site.name,
+            url: site.url,
+            email: site.contact.email,
+            telephone: site.contact.phoneDisplay,
             areaServed: "AE",
-            sameAs: [],
+            address: {
+              "@type": "PostalAddress",
+              addressRegion: site.contact.address.region,
+              addressCountry: site.contact.address.region,
+            },
+            contactPoint: {
+              "@type": "ContactPoint",
+              contactType: "customer service",
+              email: site.contact.email,
+              telephone: site.contact.phoneDisplay,
+            },
+            sameAs: site.socialLinks.map((link) => link.href).filter(Boolean),
           }),
         }}
       />

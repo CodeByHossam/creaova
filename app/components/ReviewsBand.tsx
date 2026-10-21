@@ -26,18 +26,18 @@ const reviewPlaceholders = [
  */
 export function ReviewsBand() {
   return (
-    <section id="testimonials" className="border-t border-line bg-bg py-20 lg:py-28 lg:-scroll-mt-10">
+    <section id="testimonials" className="border-t border-line bg-bg py-16 sm:py-20 lg:py-28 lg:-scroll-mt-16 xl:-scroll-mt-20">
       <Container>
         <SectionHeading
           eyebrow="Client perspective"
           title="Good work should make the next step clearer."
           lede="Verified client reviews will be published here as approved. For now, this section preserves the reference experience without presenting invented endorsements as real."
         />
-        <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
+        <div className="mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {reviewPlaceholders.map(([quote, note]) => (
             <article
               key={quote}
-              className="flex flex-col rounded-card border border-line bg-surface p-8"
+              className="flex h-full flex-col rounded-card border border-line bg-surface p-6 sm:p-8 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-sm"
             >
               <span
                 aria-hidden="true"
@@ -45,13 +45,10 @@ export function ReviewsBand() {
               >
                 “
               </span>
-              {/* min-h keeps the quote to a 2-line box at every width: the
-                  quotes wrap differently on mobile, which otherwise left the
-                  first card 29px shorter than its siblings. */}
-              <p className="mt-4 flex min-h-[3.5rem] items-start text-lg font-medium leading-relaxed text-ink">
+              <p className="mt-4 text-lg font-medium leading-relaxed text-ink">
                 {quote}
               </p>
-              <p className="mt-auto border-t border-line pt-4 text-meta leading-relaxed text-muted">
+              <p className="mt-auto pt-4 border-t border-line text-meta leading-relaxed text-muted">
                 {note}
               </p>
             </article>
@@ -59,5 +56,6 @@ export function ReviewsBand() {
         </div>
       </Container>
     </section>
+
   );
 }

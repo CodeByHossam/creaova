@@ -1,6 +1,7 @@
 import { Container } from "~/components/Container";
+import { absoluteUrl } from "~/data/constants";
 
-export function meta() { return [{ title: "Terms of Service | Creaova" }, { name: "description", content: "Terms information for visitors to Creaova's website." }]; }
+export function meta() { return [{ title: "Terms of Service | Creaova" }, { name: "description", content: "Terms information for visitors to Creaova's website." }, { tagName: "link", rel: "canonical", href: absoluteUrl("/terms") }]; }
 
 const sections = [["Using this website", "You may use this website to learn about Creaova’s services and contact the studio about a possible project. Do not misuse the website, attempt to disrupt its operation, or submit information you are not authorized to share."], ["Project discussions", "Information on this website is general and does not create a project agreement, service level, estimate, or guarantee. Scope, deliverables, fees, timelines, ownership, confidentiality, and support should be agreed in a signed proposal or contract."], ["Concept work", "Portfolio examples and visual directions labelled as concepts are illustrative. They should not be treated as client work, performance claims, endorsements, or guarantees of a particular result."], ["Intellectual property", "The Creaova name, visual identity, interface design, code, copy, and other original materials remain protected unless ownership is transferred through a written agreement. Third-party marks belong to their respective owners."], ["Contact and updates", "Questions about these draft terms can be sent through the contact page. These terms should be reviewed for Creaova’s actual business structure, jurisdiction, contracts, and applicable requirements before publication."]];
 
