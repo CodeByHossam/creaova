@@ -1,10 +1,11 @@
-import { ArrowUpRight, Code, Palette, Smartphone } from "lucide-react";
-import { Link } from "react-router";
+import { Code, Palette, Smartphone } from "lucide-react";
 
 import { Badge } from "~/components/Badge";
 import { Container } from "~/components/Container";
 import { CTABand } from "~/components/CTABand";
+import { ProcessCard } from "~/components/ProcessCard";
 import { SectionHeading } from "~/components/SectionHeading";
+import { ServiceCard } from "~/components/ServiceCard";
 import { processSteps, services } from "~/data/services";
 
 export function meta() {
@@ -56,62 +57,14 @@ export default function Services() {
               </span>
               <h2 className="text-3xl font-semibold text-ink sm:text-4xl">What we build.</h2>
             </div>
-            <p className="max-w-md text-sm text-muted leading-relaxed">
-              We design and engineer digital products that are built to scale, perform flawlessly, and drive your business forward.
-            </p>
+           
           </div>
 
           {/* Reduced mt-12 to mt-8 so cards appear faster when scrolling */}
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {services.map((service, index) => {
               const Icon = serviceIcons[index];
-              return (
-                <article
-                  id={service.id}
-                  key={service.id}
-                  className="group flex flex-col overflow-hidden rounded-card border border-line bg-surface transition duration-200 ease-out hover:-translate-y-1 hover:border-ink"
-                >
-                  {/* Reduced image aspect ratio slightly to save vertical space (from 16/9 to 4/3 or similar, keeping 16/9 but with less card padding) */}
-                  <div className="relative aspect-[16/9] overflow-hidden">
-                    <img
-                      src={service.image}
-                      alt=""
-                      loading="lazy"
-                      className="size-full object-cover grayscale-[20%] transition-transform duration-200 ease-out group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
-                    <span className="absolute bottom-4 left-5 grid size-12 place-items-center rounded-lg bg-ink text-on-dark transition duration-200 ease-out group-hover:bg-primary group-hover:text-on-primary">
-                      <Icon aria-hidden="true" className="size-5" strokeWidth={1.8} />
-                    </span>
-                  </div>
-                  
-                  {/* Tightened inner card padding: changed p-6 to p-5 */}
-                  <div className="flex flex-1 flex-col p-5">
-                    <span className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
-                      {service.number} / {service.title}
-                    </span>
-                    <h3 className="mt-2 text-xl font-semibold text-ink">{service.title}</h3>
-                    <p className="mt-3 text-sm font-medium leading-relaxed text-ink">
-                      {service.summary}
-                    </p>
-                    <p className="mt-2 flex min-h-[5.75rem] items-start text-sm leading-relaxed text-muted">
-                      {service.details}
-                    </p>
-                    <div className="mt-auto border-t border-line pt-4">
-                      <Link
-                        to="/contact"
-                        className="flex items-center justify-between text-sm font-semibold text-ink transition duration-200 ease-out group-hover:text-primary-text"
-                      >
-                        Discuss
-                        <ArrowUpRight
-                          aria-hidden="true"
-                          className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                        />
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              );
+              return <ServiceCard key={service.id} service={service} Icon={Icon} />;
             })}
           </div>
         </Container>
@@ -154,24 +107,8 @@ export default function Services() {
             lede="From first conversation, through launch, to the follow-up that comes after — a predictable path you can follow step by step."
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {processSteps.map(([number, title, text], index) => (
-              <article
-                key={number}
-                className="flex min-h-56 flex-col rounded-card border border-line bg-surface p-6 transition duration-200 ease-out hover:-translate-y-1 hover:border-ink"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="font-mono text-xl font-medium text-primary-text">
-                    {number}
-                  </span>
-                  <span className="rounded-md border border-line bg-surface-subtle px-2.5 py-1 font-mono text-meta uppercase tracking-wider text-ink">
-                    {index === 0 ? "Discover" : index === 1 ? "Shape" : index === 2 ? "Build" : "Support"}
-                  </span>
-                </div>
-                <h3 className="mt-4 flex min-h-[3.25rem] items-start text-lg font-semibold text-ink">
-                  {title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
-              </article>
+            {processSteps.map(([number, title, text]) => (
+              <ProcessCard key={number} number={number} title={title} text={text} />
             ))}
           </div>
         </Container>

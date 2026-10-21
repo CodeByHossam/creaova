@@ -14,6 +14,8 @@ import { Badge } from "~/components/Badge";
 import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
 import { CTABand } from "~/components/CTABand";
+import { DisciplineCard } from "~/components/DisciplineCard";
+import { ProcessCard } from "~/components/ProcessCard";
 import { ReviewsBand } from "~/components/ReviewsBand";
 import { SectionHeading } from "~/components/SectionHeading";
 import { primaryCta, site } from "~/data/constants";
@@ -315,42 +317,14 @@ export default function Home() {
             {disciplines.map(([label, title, text, tag], index) => {
               const Icon = disciplineIcons[index];
               return (
-                <article
+                <DisciplineCard
                   key={title}
-                  className="group flex flex-col rounded-card border border-line bg-surface p-7 transition duration-200 ease-out hover:-translate-y-1 hover:border-ink"
-                >
-                  <span className="grid size-12 place-items-center rounded-lg bg-ink text-on-dark transition duration-200 ease-out group-hover:bg-primary group-hover:text-on-primary">
-                    <Icon aria-hidden="true" className="size-5" strokeWidth={1.8} />
-                  </span>
-                  <span className="mt-6 block font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
-                    {label}
-                  </span>
-                  {/* min-h reserves two title lines so a wrapping title cannot
-                      push its own body text out of line with its siblings. */}
-                  <h3 className="mt-2.5 flex min-h-[3.25rem] items-start text-xl font-semibold text-ink">
-                    {title}
-                  </h3>
-                  <p className="mt-3 flex min-h-[3.75rem] items-start text-sm leading-relaxed text-muted">
-                    {text}
-                  </p>
-                  {/* Tag + link pinned to the bottom so all three cards end
-                      together no matter how the copy wraps. */}
-                  <div className="mt-auto pt-7">
-                    <span className="inline-block rounded-md border border-line bg-surface-subtle px-2.5 py-1 text-xs font-semibold text-ink">
-                      {tag}
-                    </span>
-                    <Link
-                      to="/services"
-                      className="mt-4 flex items-center justify-between border-t border-line pt-5 text-sm font-semibold text-ink transition duration-200 ease-out group-hover:text-primary-text"
-                    >
-                      Explore
-                      <ArrowUpRight
-                        aria-hidden="true"
-                        className="size-4 transition duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                      />
-                    </Link>
-                  </div>
-                </article>
+                  Icon={Icon}
+                  label={label}
+                  title={title}
+                  text={text}
+                  tag={tag}
+                />
               );
             })}
           </div>
@@ -421,19 +395,7 @@ export default function Home() {
           />
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             {steps.map(([number, title, text]) => (
-              <article
-                key={number}
-                className="flex min-h-56 flex-col rounded-card border border-line bg-surface p-6 transition-[border-color,transform] duration-500 ease-in-out hover:-translate-y-1 hover:border-ink"
-              >
-                <span className="font-mono text-xl font-medium text-primary-text">{number}</span>
-                {/* min-h reserves two title lines: "Understand your requirements"
-                    wraps, its siblings do not, and without this the first card's
-                    body sat 28px lower than the rest. */}
-                <h3 className="mt-5 flex min-h-[3.25rem] items-start text-lg font-semibold text-ink">
-                  {title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
-              </article>
+              <ProcessCard key={number} number={number} title={title} text={text} />
             ))}
           </div>
         </Container>
