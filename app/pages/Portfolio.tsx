@@ -16,7 +16,7 @@ export function meta() {
 export default function Portfolio() {
   return (
     <>
-      <section className="bg-dark py-20 lg:py-28">
+      <section className="bg-dark py-16 sm:py-20 lg:py-28">
         <Container>
           <div className="max-w-2xl">
             <Badge dark>Selected concepts</Badge>

@@ -26,7 +26,7 @@ export default function About() {
   return (
     <>
       {/* ------------------------------ Hero ------------------------------ */}
-      <section className="bg-bg py-20 lg:py-28">
+      <section className="bg-bg py-16 sm:py-20 lg:py-28">
         <Container>
           <div className="mx-auto max-w-4xl space-y-6 text-center">
             <Badge>About Creaova</Badge>
@@ -47,7 +47,7 @@ export default function About() {
       </section>
 
       {/* --------------------------- 01 Principles ------------------------- */}
-      <section className="border-y border-line bg-surface-subtle py-20 lg:py-28">
+      <section className="border-y border-line bg-surface-subtle py-16 sm:py-20 lg:py-28">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
             <SectionHeading
@@ -79,7 +79,7 @@ export default function About() {
       </section>
 
       {/* -------------------------- 02 Working model ----------------------- */}
-      <section className="bg-bg py-20 lg:py-28">
+      <section className="bg-bg py-16 sm:py-20 lg:py-28">
         <Container>
           <SectionHeading
             number="02"
@@ -104,7 +104,7 @@ export default function About() {
       </section>
 
       {/* --------------------------- 03 Point of view ---------------------- */}
-      <section className="bg-dark py-20 lg:py-28">
+      <section className="bg-dark py-16 sm:py-20 lg:py-28">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <SectionHeading

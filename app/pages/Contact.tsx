@@ -27,7 +27,7 @@ const contactDetails: { label: string; value: string; href?: string }[] = [
 
 export default function Contact() {
   return (
-    <section className="bg-bg py-20 lg:py-28">
+    <section className="bg-bg py-16 sm:py-20 lg:py-28">
       <Container>
         <div className="mx-auto max-w-3xl space-y-6 text-center">
           <Badge>Contact</Badge>
