@@ -147,7 +147,7 @@
   @media (min-width: 1024px) and (max-width: 1279px) {
     :target,
     [id] {
-      scroll-margin-top: calc(6rem + 20px); /* 96px + 20px for laptop */
+      scroll-margin-top: 7.5rem; /* 120px for laptop */
     }
   }
 
