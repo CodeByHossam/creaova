@@ -12,6 +12,13 @@
       file and run `npm run sync:site-url`; {{SITE_URL}} is replaced with
       VITE_SITE_URL from .env. The logo must be publicly reachable at
       {{SITE_URL}}/logo.png.
+
+      The graphic is the brand lockup - the mark with the "CREAOVA" wordmark
+      already baked into it - so the name is NOT repeated as live text below.
+      One wordmark, one brand.
+
+      The `?v=` on the image URL busts the mail client's image cache. Keep it in
+      sync with ASSET_VERSION in app/data/constants.ts.
     -->
   </head>
   <body style="margin: 0; padding: 16px; background-color: #ffffff;">
@@ -26,26 +33,22 @@
         <td style="padding: 0 16px 0 0; vertical-align: top;">
           <a href="{{SITE_URL}}" style="border: 0; text-decoration: none;">
             <img
-              src="{{SITE_URL}}/logo.png"
+              src="{{SITE_URL}}/logo.png?v=2026-10-22"
               alt="Creaova Digital Solutions"
-              width="150"
-              style="display: block; width: 150px; height: auto; border: 0;"
+              width="175"
+              height="40"
+              style="display: block; width: 175px; height: 40px; border: 0;"
             />
           </a>
         </td>
         <td style="padding: 0; vertical-align: top;">
           <p
-            style="margin: 0; font-size: 15px; font-weight: bold; color: #16130f; letter-spacing: 0.12em;"
-          >
-            CREAOVA
-          </p>
-          <p
-            style="margin: 4px 0 0; font-size: 11px; color: #57534e; letter-spacing: 0.18em; text-transform: uppercase;"
+            style="margin: 0; font-size: 11px; color: #57534e; letter-spacing: 0.18em; text-transform: uppercase;"
           >
             Digital Solutions [ C DS ]
           </p>
           <p
-            style="margin: 10px 0 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #f97316;"
+            style="margin: 10px 0 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #c2410c;"
           >
             &lt; Creativity meets innovation /&gt;
           </p>

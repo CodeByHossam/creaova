@@ -86,7 +86,9 @@ export function MobileNav() {
       >
         <div className="flex min-h-full flex-col">
           <Container className="flex h-16 shrink-0 items-center justify-between border-b border-line">
-            <Link to="/" aria-label="Creaova home" className="flex items-center gap-3"><Logo className="h-9" /></Link>
+            <Link to="/" aria-label="Creaova home" className="flex items-center gap-3">
+              <Logo className="h-6" />
+            </Link>
             <button
               type="button"
               onClick={() => setOpen(false)}

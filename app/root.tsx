@@ -22,10 +22,15 @@ export function Layout({ children }: { children: ReactNode }) {
       <meta property="og:site_name" content="Creaova Digital Solutions [ CDS ]" />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary_large_image" />
-      <link
-        rel="icon"
-        href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20d='M16.8%208.6C15.8%207.4%2014.3%206.6%2012.6%206.6C9.5%206.6%207%209.1%207%2012.2C7%2015.3%209.5%2017.8%2012.6%2017.8C14.3%2017.8%2015.8%2017%2016.8%2015.8'%20stroke='%23EA580C'%20fill='none'%20stroke-width='2.6'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E"
-      />
+      {/*
+        The `?v=` query is not decoration. Browsers cache favicons per origin
+        and never re-fetch them on a normal reload, so a replaced artwork file
+        keeps serving the old icon. The version comes from `site.assetVersion`
+        - bump it when scripts/prepare-logo.ps1 regenerates the artwork.
+      */}
+      <link rel="icon" type="image/png" sizes="64x64" href={`/favicon.png?v=${site.assetVersion}`} />
+      <link rel="apple-touch-icon" sizes="180x180" href={`/apple-touch-icon.png?v=${site.assetVersion}`} />
+      <link rel="manifest" href="/site.webmanifest" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

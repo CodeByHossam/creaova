@@ -15,7 +15,7 @@ The project is designed to be clear, fast, accessible, and easy to extend as rea
 - Accessible navigation, form labels, focus states, semantic landmarks, and skip-link support.
 - Static prerendering for the public routes.
 - Shared project, service, navigation, contact, and social-link data files.
-- Approved Creaova artwork stored in `app/assets/images/logo/`.
+- Approved Creaova artwork stored in `app/assets/logo/` (the lockup) and `app/assets/icon/` (the mark).
 
 ## Technology
 
@@ -67,9 +67,8 @@ npm run preview
 creaova/
 ├── app/
 │   ├── assets/
-│   │   ├── images/logo/       # Approved Creaova logo artwork
-│   │   ├── logo-icon.svg      # Legacy/local icon asset
-│   │   └── logo-full.svg      # Legacy/local lockup asset
+│   │   ├── icon/icon.png        # The brand mark on its own - app icons + favicon
+│   │   └── logo/logo.png        # The brand lockup - mark + CREAOVA wordmark
 │   ├── components/            # Reusable UI components
 │   ├── data/                  # Site configuration and content data
 │   ├── layout/                # Shared route layout
@@ -138,9 +137,22 @@ Never place private API keys or server secrets in `VITE_` variables; Vite expose
 
 ## Brand assets
 
-The active brand artwork is [Creaova_Logo1.png](app/assets/images/logo/Creaova_Logo1.png). Shared components reference this asset directly from the application bundle. If the artwork changes, update the intrinsic dimensions in `app/data/constants.ts` and verify the header, mobile navigation, and footer at all responsive breakpoints.
+The brand ships two supplied source images:
 
-The logo preparation script is located at `scripts/prepare-logo.ps1` and reads from the new application asset path.
+| Source | What it is | Used for |
+| --- | --- | --- |
+| `app/assets/logo/logo.png` | The horizontal lockup - the orange mark plus the "CREAOVA" wordmark | The site logo (header, drawer, footer) and the email signature |
+| `app/assets/icon/icon.png` | The mark on its own | The browser tab icon and the app icons only |
+
+`scripts/prepare-logo.ps1` derives every shippable raster from them with pure .NET (`System.Drawing`) — no headless browser, no SVG. It writes `public/logo.png` (420×96 colour lockup), `logo-master.png` (841×192), `logo-dark.png` and `logo-inverse.png` (flat ink and flat white), plus `favicon.png` (64, the mark on a **transparent** background), `apple-touch-icon.png` (180) and `icon-192.png` / `icon-512.png` (the mark on the ink canvas).
+
+Both sources are painted on opaque white, so the script turns that white into a real alpha channel and scales the artwork while it is still opaque.
+
+The wordmark is **artwork, not live DOM text** — it is typed in a geometric sans that is not in the site's font stack, so rendering it as text would show two different brands, and two "CREAOVA"s on screen. The brand name is carried by the link label around the image instead.
+
+Every brand raster URL carries a `?v=<version>` query (`ASSET_VERSION` in `app/data/constants.ts`). Browsers cache favicons and app icons per origin and never re-fetch them on a normal reload, so without the query a regenerated artwork keeps serving the old image. **Bump `ASSET_VERSION` whenever `scripts/prepare-logo.ps1` regenerates the artwork** — and keep `scripts/email-signature.template.html` and `public/site.webmanifest` in step with it.
+
+If the artwork changes, update the intrinsic dimensions in `app/data/constants.ts` and verify the header, mobile navigation, footer and browser tab at all responsive breakpoints.
 
 ## Design direction
 

@@ -154,7 +154,7 @@ export function Footer() {
           {/* Row 1: Brand and primary action */}
           <div className="space-y-4 md:col-span-2">
             <Link to="/" aria-label="Creaova home" className="inline-flex">
-              <Logo variant="inverse" alt="Creaova" className="h-9" />
+              <Logo variant="white" className="h-6" />
             </Link>
 
             <p className="max-w-md text-sm leading-relaxed text-on-dark-muted">

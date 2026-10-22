@@ -89,8 +89,25 @@ writeFileSync(join(publicDir, "robots.txt"), robots, "utf8");
 
 // The email signature is a hand-written template with the origin as a token,
 // so it is regenerated rather than patched — no leftover domain can survive.
+//
+// A missing template is not fatal: the signature is an extra, and a build that
+// dies because an optional file was moved is worse than a build that ships the
+// last generated signature.
 const signaturePath = join(publicDir, "email-signature.html");
-const template = readFileSync(join(root, "scripts", "email-signature.template.html"), "utf8");
-writeFileSync(signaturePath, template.replaceAll("{{SITE_URL}}", origin), "utf8");
+const templatePath = join(root, "scripts", "email-signature.template.html");
+
+try {
+  const template = readFileSync(templatePath, "utf8");
+  writeFileSync(signaturePath, template.replaceAll("{{SITE_URL}}", origin), "utf8");
+} catch (error) {
+  if (error.code === "ENOENT") {
+    console.warn(
+      "[sync-site-url] scripts/email-signature.template.html is missing — " +
+        "keeping the existing public/email-signature.html.",
+    );
+  } else {
+    throw error;
+  }
+}
 
 console.log(`[sync-site-url] origin set to ${origin}`);

@@ -33,6 +33,19 @@
 
 import { env } from "./env";
 
+/**
+ * Cache-busting version for the brand raster URLs.
+ *
+ * Browsers cache favicons and app icons per origin and never re-fetch them on
+ * a normal reload - a replaced artwork file keeps serving the old image until
+ * the user hard-refreshes, which is exactly the "the icon did not change"
+ * bug. Every brand raster URL therefore carries `?v=<version>`.
+ *
+ * Bump this whenever `scripts/prepare-logo.ps1` regenerates the artwork.
+ * Keep it in sync with the `?v=` in `scripts/email-signature.template.html`.
+ */
+export const ASSET_VERSION = "2026-10-22";
+
 export type NavItem = {
   label: string;
   to: string;
@@ -106,11 +119,29 @@ export type Site = {
   url: string;
   /** True while any demo value below is still in place. */
   isPlaceholder: boolean;
+  /**
+   * Cache-busting version for the brand raster URLs - see `ASSET_VERSION`.
+   * Bump it when `scripts/prepare-logo.ps1` regenerates the artwork.
+   */
+  assetVersion: string;
   nav: NavItem[];
   socialLinks: SocialLink[];
   logo: {
-    /** Raster lockup (mark + wordmark), two-tone as supplied. */
+    /**
+     * The brand lockup: the orange "C"-and-key mark with the "CREAOVA"
+     * wordmark beside it.
+     *
+     * The wordmark is artwork, not live DOM text. The supplied wordmark is a
+     * bold geometric sans; the site sets its headings in Fraunces, a serif, so
+     * setting the same word as text would show two different brands - and two
+     * "CREAOVA"s on screen. The brand name is announced by the link label
+     * around the image instead.
+     */
     src: string;
+    /** Colour lockup at 841x192, for print, social cards and high-density screens. */
+    masterSrc: string;
+    /** Flat ink variant, for one-colour print and white backgrounds. */
+    darkSrc: string;
     /** Flat white variant, for the dark footer and CTA bands. */
     inverseSrc: string;
     /**
@@ -271,6 +302,7 @@ export const site: Site = {
   // Canonical origin, from .env → VITE_SITE_URL. Never hard-code it here.
   url: env.siteUrl,
   isPlaceholder: stillHasDemoData(),
+  assetVersion: ASSET_VERSION,
 
   nav: [
     { label: "Home", to: "/#home" },
@@ -285,12 +317,17 @@ export const site: Site = {
   socialLinks,
 
   logo: {
-    // Prepared by scripts/prepare-logo.ps1: cropped lockup (mark + wordmark),
-    // 480x278, ~119 KB — versus the 1 MB uncropped source it replaces.
-    src: "/logo.png",
-    inverseSrc: "/logo-inverse.png",
-    width: 480,
-    height: 278,
+    // Prepared by scripts/prepare-logo.ps1 from app/assets/logo/logo.png (the
+    // supplied artwork). The lockup ships with the "CREAOVA" wordmark baked
+    // into the image - never as live text - 420x96 for the web, 841x192 for
+    // print. The `?v=` on every path busts the browser's image cache when the
+    // artwork is regenerated; see ASSET_VERSION above.
+    src: `/logo.png?v=${ASSET_VERSION}`,
+    masterSrc: `/logo-master.png?v=${ASSET_VERSION}`,
+    darkSrc: `/logo-dark.png?v=${ASSET_VERSION}`,
+    inverseSrc: `/logo-inverse.png?v=${ASSET_VERSION}`,
+    width: 420,
+    height: 96,
     alt: "Creaova",
   },
 

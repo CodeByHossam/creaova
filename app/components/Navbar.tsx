@@ -12,8 +12,11 @@ import { primaryCta, site } from "~/data/constants";
  *
  * Reference: plans/UI_UX_ENHANCEMENT_PLAN.md (Phase 2, findings H4/H7).
  *
- * - The logo is the prepared 480x278 lockup at h-10/lg:h-12 — sized to fit the
- *   64/80px bar (the old h-16/lg:h-28 rendered a 112px logo in an 80px bar).
+ * - The logo is the supplied lockup — the orange mark with the "CREAOVA"
+ *   wordmark baked into the artwork — at h-6/lg:h-7, sized to sit quietly in
+ *   the 64/80px bar without competing with the nav links. The wordmark is
+ *   image, not live text: as DOM text it would render in the site's serif and
+ *   put two "CREAOVA"s on the screen.
  * - No per-item icons: they added noise without aiding recognition (Hick's Law),
  *   and the active state is marked by ink text + an orange underline — a
  *   non-colour cue as well as colour (WCAG 1.4.1).
@@ -59,7 +62,7 @@ export function Navbar() {
           aria-label="Creaova Digital Solutions — Home"
           className="group flex shrink-0 items-center rounded-xl"
         >
-          <Logo priority className="h-10 lg:h-12" />
+          <Logo priority className="h-6 lg:h-7" />
         </Link>
 
         {/* Desktop Navigation */}
