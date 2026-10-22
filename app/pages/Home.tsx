@@ -177,10 +177,10 @@ export default function Home() {
           surface-subtle, no border/shadow) rather than by a UI box; rows link
           to the real Services anchors. Hover: number -> burnt orange, label
           shifts, arrow reveals. */}
-      <section id="home" className="bg-bg lg:-scroll-mt-10 xl:-scroll-mt-18">
-        <Container className="py-12 sm:py-16 md:py-18 lg:py-22 xl:py-24">
+      <section id="home" className="bg-bg ">
+        <Container className="py-12 sm:py-16 md:py-12 lg:pt-22  xl:py-25">
           <div className="grid items-center gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 xl:gap-20">
-            <div>
+            <div className=" min-h-150 lg:min-h-0 ">
               <Badge>Digital experience architecture</Badge>
               <h1 className="mt-6 sm:mt-7 text-display font-semibold leading-none text-ink">
                 We build <span className="text-primary-text">websites</span>{" "}
@@ -192,7 +192,7 @@ export default function Home() {
               <p className="mt-6 sm:mt-8 max-w-2xl text-lede text-muted">
                 {site.footer.brandLine}
               </p>
-              <div className="mt-7 sm:mt-9 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-4 min-[390px]:mt-35 sm:mt-15 flex flex-col gap-3 sm:flex-row">
                 <Button to={primaryCta.to} size="lg">
                   {primaryCta.label}
                 </Button>
@@ -200,7 +200,7 @@ export default function Home() {
                   View our work
                 </Button>
               </div>
-              <dl className="mt-10 sm:mt-14 grid max-w-xl grid-cols-1 gap-x-10 gap-y-6 sm:gap-y-7 border-t border-line pt-6 sm:pt-8 sm:grid-cols-2">
+              <dl className="mt-30 lg:mt-14 xl:mt-22 sm:mt-30 grid max-w-xl grid-cols-1 gap-x-10 gap-y-6 sm:gap-y-7 border-t border-line pt-6 sm:pt-8 sm:grid-cols-2">
                 {heroFacts.map(([label, value]) => (
                   <div key={label}>
                     <dt className="font-mono text-meta uppercase tracking-[0.18em] text-muted">

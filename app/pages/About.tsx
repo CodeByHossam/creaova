@@ -28,7 +28,7 @@ export default function About() {
   return (
     <>
       {/* ------------------------------ Hero ------------------------------ */}
-      <section className="bg-bg py-12 sm:py-16 lg:py-20">
+      <section className="bg-bg py-10 sm:py-12 lg:py-16 xl:pb-50 xl:pt-20">
         <Container>
           <div className="mx-auto max-w-4xl space-y-6 text-center">
             <Badge>About Creaova</Badge>

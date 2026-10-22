@@ -60,7 +60,7 @@ export default function Services() {
           removed. Cards sit right under a smaller title so users see what
           you build on first paint, with no scroll required. */}
       <section
-        id="services_hero"
+        id="all-services"
         className="bg-bg pt-14 pb-10 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-14 lg:-scroll-mt-8 xl:-scroll-mt-10"
       >
         <Container>
@@ -147,7 +147,7 @@ export default function Services() {
       {/* ==================================================================== */}
       <section
         id="process"
-        className="bg-bg py-16 sm:py-20 lg:py-24 lg:-scroll-mt-8 xl:-scroll-mt-12"
+        className="bg-bg py-16 sm:py-20 lg:py-24 -scroll-mt-5 md:-scroll-mt-5 lg:-scroll-mt-15 xl:scroll-mt-0"
       >
         <Container>
           <SectionHeading

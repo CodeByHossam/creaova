@@ -274,8 +274,8 @@ export const site: Site = {
 
   nav: [
     { label: "Home", to: "/#home" },
-    { label: "Services", to: "/services#services_hero" },
-    { label: "Portfolio", to: "/portfolio" },
+    { label: "Services", to: "/services#all-services" },
+    { label: "Portfolio", to: "/portfolio/#projects" },
     { label: "Process", to: "/services#process" },
     { label: "Reviews", to: "/#testimonials" },
     { label: "About", to: "/about" },
