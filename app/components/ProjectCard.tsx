@@ -11,6 +11,11 @@ import type { ClientProject } from "~/data/clientProjects";
  * a disabled "Live demo soon" state (when it is `null`) — never a dead link.
  * The cover falls back to a typographic monogram until a screenshot is added,
  * so the grid stays consistent while projects are being documented.
+ *
+ * Screenshots are shown with `object-contain` on a 16:9 cover: every capture is
+ * 1376×768, so the whole UI stays visible instead of being cropped. Status and
+ * category sit in the corners as translucent chips so the screenshot reads
+ * through them.
  */
 export function ProjectCard({ project }: { project: ClientProject }) {
   const isLive = project.status === "live";
@@ -18,7 +23,7 @@ export function ProjectCard({ project }: { project: ClientProject }) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-card border border-dark-line bg-dark-surface p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-on-dark/30 hover:shadow-lg hover:shadow-black/20">
       <div
-        className="relative flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-lg p-5"
+        className="relative aspect-video overflow-hidden rounded-lg"
         style={{ backgroundColor: project.accent }}
       >
         {project.image ? (
@@ -26,7 +31,8 @@ export function ProjectCard({ project }: { project: ClientProject }) {
             src={project.image}
             alt=""
             loading="lazy"
-            className="absolute inset-0 size-full object-cover opacity-90 transition-transform duration-500 ease-out group-hover:scale-105"
+            decoding="async"
+            className="absolute inset-0 size-full object-contain transition-[filter] duration-500 ease-out group-hover:brightness-105"
           />
         ) : (
           <>
@@ -53,30 +59,37 @@ export function ProjectCard({ project }: { project: ClientProject }) {
           </>
         )}
 
-        <div className="relative flex items-start justify-between">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-on-dark/90 px-3 py-1 font-mono text-meta uppercase tracking-wider text-ink transition-colors duration-300 ease-out group-hover:bg-on-dark">
-            <span
-              aria-hidden="true"
-              className={`size-1.5 rounded-full ${
-                isLive ? "bg-success" : "bg-primary"
-              }`}
-            />
-            {isLive ? "Live" : "In build"}
-          </span>
-          <ArrowUpRight
-            aria-hidden="true"
-            className="size-5 text-ink/70 transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-          />
-        </div>
-
-        <span className="relative self-start rounded-full bg-on-dark/90 px-3 py-1 font-mono text-meta uppercase tracking-wider text-ink transition-colors duration-300 ease-out group-hover:bg-on-dark">
+        <span className="absolute bottom-2 left-2 rounded-full border border-white/20 bg-ink/50 px-2.5 py-1 font-mono text-[11px] font-medium uppercase leading-none tracking-[0.14em] text-on-dark backdrop-blur-md">
           {project.category}
         </span>
       </div>
 
       <div className="mt-5 flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-xl font-semibold text-on-dark">{project.title}</h2>
+          <div className="flex flex-wrap items-center gap-2.5">
+            <h2 className="text-xl font-semibold text-on-dark">{project.title}</h2>
+            {project.demoUrl && isLive ? (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/status inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2 py-0.5 font-mono text-[11px] font-medium uppercase leading-none tracking-[0.14em] text-emerald-300 transition-colors duration-200 hover:border-emerald-300/60 hover:bg-emerald-400/20"
+                aria-label={`Visit ${project.title} live demo`}
+              >
+                <span
+                  aria-hidden="true"
+                  className="size-1.5 rounded-full bg-emerald-400 shadow-[0_0_0_3px_rgba(52,211,153,0.12)]"
+                />
+                Live
+                <ArrowUpRight aria-hidden="true" className="size-3 opacity-70 transition-transform duration-200 group-hover/status:-translate-y-0.5 group-hover/status:translate-x-0.5" />
+              </a>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-on-dark/10 bg-on-dark/5 px-2 py-0.5 font-mono text-[11px] font-medium uppercase leading-none tracking-[0.14em] text-on-dark-muted">
+                <span aria-hidden="true" className={`size-1.5 rounded-full ${isLive ? "bg-emerald-400/60" : "bg-primary/70"}`} />
+                {isLive ? "Live" : "In build"}
+              </span>
+            )}
+          </div>
           <p className="mt-1 font-mono text-meta uppercase tracking-wider text-on-dark-muted">
             {project.kind} · {project.year}
           </p>
@@ -101,10 +114,9 @@ export function ProjectCard({ project }: { project: ClientProject }) {
       <div className="mt-auto pt-6">
         {project.demoUrl ? (
           <Button
-            variant="light"
             href={project.demoUrl}
             external
-            className="w-full sm:w-auto"
+            className="w-full justify-center sm:w-auto bg-emerald-400 text-ink shadow-sm transition-colors duration-200 hover:bg-emerald-300"
           >
             {project.demoLabel}
             <ArrowUpRight aria-hidden="true" className="size-4" />
@@ -112,7 +124,10 @@ export function ProjectCard({ project }: { project: ClientProject }) {
           </Button>
         ) : (
           <div>
-            <Button variant="light" disabled className="w-full sm:w-auto">
+            <Button
+              disabled
+              className="w-full justify-center sm:w-auto border border-on-dark/10 bg-on-dark/5 text-on-dark-muted"
+            >
               Live demo soon
             </Button>
             {project.apiUrl ? (

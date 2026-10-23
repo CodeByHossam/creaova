@@ -347,9 +347,9 @@ export default function Home() {
               align="left"
               dark
               number="02"
-              eyebrow="Selected concepts"
+              eyebrow="Selected work"
               title="Clear thinking, made tangible."
-              lede="Explore concept directions that show how we think about product clarity, visual systems, and digital trust."
+              lede="A closer look at recent builds — real products, live systems, and the thinking that shaped them."
             />
             <Link
               to="/portfolio"

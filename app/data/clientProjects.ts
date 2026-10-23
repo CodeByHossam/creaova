@@ -59,7 +59,7 @@ export const clientProjects: ClientProject[] = [
     demoUrl: "https://book-store-api-6pr7.onrender.com/docs",
     demoLabel: "API docs",
     apiUrl: "https://book-store-api-6pr7.onrender.com",
-    image: "/images/projects-images/book-store-api/book-store-api-01.png",
+    image: "/images/projects-images/book-store-api/book-store-api.png",
   },
   {
     slug: "dental-clinic",
@@ -76,7 +76,7 @@ export const clientProjects: ClientProject[] = [
     demoUrl: "https://dental-clinic-app-vgt3.onrender.com",
     demoLabel: "Live demo",
     apiUrl: "https://dental-clinic-backend-enzv.onrender.com/api",
-    image: "/images/projects-images/dental-clinic/dental-clinic-01.png",
+    image: "/images/projects-images/dental-clinic/dental-clinic-home.png",
   },
   {
     slug: "mentora",
@@ -93,7 +93,7 @@ export const clientProjects: ClientProject[] = [
     demoUrl: "https://mentora-courses-app.onrender.com/",
     demoLabel: "Live demo",
     apiUrl: "https://mentora-api-rqbb.onrender.com/api",
-    image: "/images/projects-images/mentora/mentora-01.png",
+    image: "/images/projects-images/mentora/mentora-home.png",
   },
   {
     slug: "flamingo",
@@ -109,7 +109,7 @@ export const clientProjects: ClientProject[] = [
     status: "live",
     demoUrl: "https://il-flamingo.onrender.com/",
     demoLabel: "Live demo",
-    image: "/images/projects-images/flamingo/flamingo-01.png",
+    image: "/images/projects-images/flamingo/flamingo-home.png",
   },
   {
     slug: "flower-shop",
@@ -125,7 +125,7 @@ export const clientProjects: ClientProject[] = [
     status: "live",
     demoUrl: "https://flowershop-qjcl.onrender.com/",
     demoLabel: "Live demo",
-    image: "/images/projects-images/flower-shop/flower-shop-01.png",
+    image: "/images/projects-images/flower-shop/flower-shop-home.png",
   },
   {
     slug: "irrigation-net",
@@ -141,7 +141,7 @@ export const clientProjects: ClientProject[] = [
     status: "live",
     demoUrl: "https://irrigation-net.onrender.com/",
     demoLabel: "Live demo",
-    image: "/images/projects-images/irrigation-net/irrigation-net-01.png",
+    image: "/images/projects-images/irrigation-net/irrigation-net-flow.png",
   },
   {
     slug: "little-rainbow-nursery",
@@ -157,7 +157,7 @@ export const clientProjects: ClientProject[] = [
     status: "live",
     demoUrl: "https://little-rainbow-nursery.onrender.com/",
     demoLabel: "Live demo",
-    image: "/images/projects-images/little-rainbow-nursery/little-rainbow-nursery-01.png",
+    image: "/images/projects-images/little-rainbow-nursery/little-rainbow-home.png",
   },
   {
     slug: "penguino",
@@ -173,7 +173,7 @@ export const clientProjects: ClientProject[] = [
     status: "live",
     demoUrl: "https://penguino-9cwy.onrender.com/",
     demoLabel: "Play demo",
-    image: "/images/projects-images/penguino/penguino-01.png",
+    image: "/images/projects-images/penguino/penguino-level1.png",
   },
   {
     slug: "work-note",
@@ -189,7 +189,7 @@ export const clientProjects: ClientProject[] = [
     status: "live",
     demoUrl: "https://work-note-app.onrender.com/",
     demoLabel: "Live demo",
-    image: "/images/projects-images/work-note/work-note-01.png",
+    image: "/images/projects-images/work-note/work-note-home.png",
   },
   {
     slug: "bomber-man-game",
