@@ -44,6 +44,8 @@ type Props = {
   to?: string;
   /** External URL or mailto: — renders a plain <a>. */
   href?: string;
+  /** Open `href` in a new tab with a safe rel. Ignored for internal `to` links. */
+  external?: boolean;
   type?: "button" | "submit";
   disabled?: boolean;
   /** Swaps in a spinner and disables the control. Used by the contact form. */
@@ -58,6 +60,7 @@ export function Button({
   className = "",
   to,
   href,
+  external = false,
   type = "button",
   disabled = false,
   loading = false,
@@ -90,7 +93,13 @@ export function Button({
 
   if (href) {
     return (
-      <a href={href} className={classes} onClick={onClick}>
+      <a
+        href={href}
+        className={classes}
+        onClick={onClick}
+        target={external ? "_blank" : undefined}
+        rel={external ? "noopener noreferrer" : undefined}
+      >
         {inner}
       </a>
     );

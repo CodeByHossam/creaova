@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 
+import { DeveloperSignature } from "~/components/DeveloperSignature";
 import type { Project } from "~/data/projects";
 
 export function HomeProjectCard({ project }: { project: Project }) {
@@ -23,6 +24,7 @@ export function HomeProjectCard({ project }: { project: Project }) {
       <p className="mt-2 text-sm leading-6 text-on-dark-muted">
         {project.description}
       </p>
+      <DeveloperSignature compact className="mt-auto pt-6" />
     </Link>
 
   );
