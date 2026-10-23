@@ -2,24 +2,24 @@
  * Propagate the canonical origin into the static files that cannot read env
  * vars.
  *
- * Why this exists: `public/` files are copied verbatim at build time, so they
- * cannot import `site.url` from `app/data/constants.ts`. That left three files
- * holding their own copy of the domain:
+ * `public/` files are copied verbatim at build time, so they cannot import
+ * `site.url` from `app/data/constants.ts`. These files hold their own copy of
+ * the domain:
  *
- *   - public/sitemap.xml        every <loc> the search engine reads
- *   - public/robots.txt         the sitemap pointer
- *   - public/email-signature.html  the logo URL pasted into your mail client
+ *   - public/sitemap.xml   every <loc> the search engine reads
+ *   - public/robots.txt    the sitemap pointer
  *
- * Hand-editing those on every domain change is exactly how a site ends up
- * shipping a sitemap full of the old domain. This script regenerates all three
- * from `VITE_SITE_URL`, and `npm run build` runs it first.
+ * An optional email-signature template may also exist under scripts/. When it
+ * does, the generated signature is written to scripts/ (not public/): it is a
+ * tool for the mailbox owner, not a public web page.
  *
  * Usage: node scripts/sync-site-url.mjs
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { readEnv } from "./env.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const publicDir = join(root, "public");
@@ -35,34 +35,32 @@ const ROUTES = [
   { path: "/terms", changefreq: "yearly", priority: "0.3" },
 ];
 
-/** The reserved demo origin. Must never reach a live sitemap. */
-const DEMO_ORIGIN = "https://creaova.example.com";
-
 function readSiteUrl() {
-  const envPath = join(root, ".env");
-  let source = "";
+  const value = readEnv("VITE_SITE_URL");
+  if (!value) {
+    throw new Error("VITE_SITE_URL is not set. Refusing to generate a sitemap with a demo origin.");
+  }
+
+  let url;
   try {
-    source = readFileSync(envPath, "utf8");
+    url = new URL(value);
   } catch {
-    console.warn("[sync-site-url] no .env found — falling back to the demo origin.");
-    return DEMO_ORIGIN;
+    throw new Error("VITE_SITE_URL is not a valid URL.");
   }
 
-  const match = source.match(/^\s*VITE_SITE_URL\s*=\s*(.+)$/m);
-  if (!match) {
-    console.warn("[sync-site-url] VITE_SITE_URL is not set in .env.");
-    return DEMO_ORIGIN;
+  if (url.protocol !== "https:" || url.pathname !== "/" || url.search || url.hash) {
+    throw new Error("VITE_SITE_URL must be an https origin with no path, query, or fragment.");
   }
 
-  return match[1].trim().replace(/\/+$/, "");
+  return url.origin;
 }
 
 const origin = readSiteUrl();
 
-if (origin === DEMO_ORIGIN) {
+if (origin.endsWith(".onrender.com")) {
   console.warn(
-    "[sync-site-url] VITE_SITE_URL is still the reserved demo origin — the " +
-      "generated sitemap points at a domain that cannot resolve.",
+    "[sync-site-url] VITE_SITE_URL uses onrender.com. Generated canonical files " +
+      "will match the deployment, but a custom domain is required before launch.",
   );
 }
 
@@ -87,27 +85,14 @@ Sitemap: ${origin}/sitemap.xml
 writeFileSync(join(publicDir, "sitemap.xml"), sitemap, "utf8");
 writeFileSync(join(publicDir, "robots.txt"), robots, "utf8");
 
-// The email signature is a hand-written template with the origin as a token,
-// so it is regenerated rather than patched — no leftover domain can survive.
-//
-// A missing template is not fatal: the signature is an extra, and a build that
-// dies because an optional file was moved is worse than a build that ships the
-// last generated signature.
-const signaturePath = join(publicDir, "email-signature.html");
 const templatePath = join(root, "scripts", "email-signature.template.html");
-
-try {
+if (existsSync(templatePath)) {
+  const signaturePath = join(root, "scripts", "email-signature.generated.html");
   const template = readFileSync(templatePath, "utf8");
   writeFileSync(signaturePath, template.replaceAll("{{SITE_URL}}", origin), "utf8");
-} catch (error) {
-  if (error.code === "ENOENT") {
-    console.warn(
-      "[sync-site-url] scripts/email-signature.template.html is missing — " +
-        "keeping the existing public/email-signature.html.",
-    );
-  } else {
-    throw error;
-  }
+  console.log(
+    "[sync-site-url] generated scripts/email-signature.generated.html (not published).",
+  );
 }
 
 console.log(`[sync-site-url] origin set to ${origin}`);

@@ -6,14 +6,17 @@
   "description": "Creaova Digital Solutions — multi-page marketing site for a UAE digital studio.",
   "scripts": {
     "dev": "react-router dev",
+    "validate:env": "node scripts/validate-env.mjs",
     "sync:site-url": "node scripts/sync-site-url.mjs",
-    "prebuild": "npm run sync:site-url",
+    "prebuild": "npm run validate:env && npm run sync:site-url",
     "build": "react-router build",
+    "postbuild": "node scripts/apply-security.mjs",
     "preview": "vite preview --outDir build/client",
     "typegen": "react-router typegen",
     "typecheck": "react-router typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@hcaptcha/react-hcaptcha": "^2.2.0",
     "@react-router/node": "8.4.0",
     "isbot": "^5",
     "lucide-react": "^1.59.0",

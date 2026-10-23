@@ -1,17 +1,24 @@
 /**
- * Environment access, validated.
+ * Environment access.
  *
- * Reference: plans/MULTIPAGE_UI_PLAN.md §4.1
+ * Values are inlined by Vite at build time, so every `VITE_*` value is public.
+ * Do not put provider secrets here. The build-time checks in
+ * `scripts/validate-env.mjs` reject placeholder or missing production values
+ * before a deploy can ship them.
  *
- * DESIGN NOTE — why this does not simply throw on a missing variable:
- * failing on `npm run dev` with no `.env` present makes the project hostile to
- * clone. So development falls back to the reserved demo values, while a
- * production build fails fast. Production is where a wrong value actually costs
- * something; development is where friction costs something.
+ * Development deliberately keeps working without a `.env`: it falls back to
+ * RFC 2606 example origins and disables the form. A production build must pass
+ * the validator, so the fallbacks can never reach a live sitemap or bundle.
  */
 
 /** Reserved, non-routable fallbacks (RFC 2606). Safe by construction. */
-const DEMO_SITE_URL = "https://creaova.onrender.com/";
+const DEMO_SITE_URL = "https://example.com";
+
+/**
+ * Web3Forms' public hCaptcha site key for free plans. This is a site key, not
+ * a secret. Paid plans can override it with VITE_FORM_CAPTCHA_SITEKEY.
+ */
+const WEB3FORMS_HCAPTCHA_SITEKEY = "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
 
 /**
  * Reads a VITE_-prefixed env var with trimming and a typed fallback.
@@ -23,16 +30,14 @@ function read(
     | "VITE_SITE_URL"
     | "VITE_FORM_PROVIDER"
     | "VITE_FORM_ENDPOINT"
-    | "VITE_FORM_ACCESS_KEY",
+    | "VITE_FORM_ACCESS_KEY"
+    | "VITE_FORM_CAPTCHA_SITEKEY",
   fallback: string,
 ): string {
   const raw = import.meta.env[key];
   const value = typeof raw === "string" ? raw.trim() : "";
 
   if (value) return value;
-
-  // Keep the starter build runnable on a fresh clone. The demo origin is
-  // non-routable by design; replace it before deployment.
 
   return fallback;
 }
@@ -46,10 +51,10 @@ export const env = {
    *   https://api.web3forms.com/submit
    *
    * Kept as the bare endpoint — the access key travels in the request BODY
-   * (Web3Forms' documented contract), not in the URL. Appending `?access_key=…`
-   * to this string would duplicate the key when the form also sends it in the
-   * body, which Web3Forms rejects. Consumers must POST to this URL AND include
-   * `access_key` in the FormData — see `ContactForm.tsx`.
+   * (Web3Forms' documented contract), not in the URL. Appending
+   * `?access_key=…` to this string would duplicate the key when the form also
+   * sends it in the body, which Web3Forms rejects. Consumers must POST to this
+   * URL AND include `access_key` in the FormData — see `ContactForm.tsx`.
    */
   formEndpoint: read("VITE_FORM_ENDPOINT", ""),
   /**
@@ -59,4 +64,10 @@ export const env = {
    * submit while this is blank.
    */
   formAccessKey: read("VITE_FORM_ACCESS_KEY", ""),
+  /**
+   * hCaptcha site key used by the contact form. Public by design. The free
+   * Web3Forms plan uses the provider's shared site key; paid plans can supply
+   * their own.
+   */
+  formCaptchaSiteKey: read("VITE_FORM_CAPTCHA_SITEKEY", WEB3FORMS_HCAPTCHA_SITEKEY),
 } as const;

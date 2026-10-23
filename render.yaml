@@ -1,0 +1,64 @@
+# Render Blueprint for the Creaova static site.
+#
+# If the existing service is already managed in the Render Dashboard, apply
+# these settings there (or link this Blueprint) before relying on them. The
+# page-level CSP hashes are generated at build time by scripts/apply-security.mjs;
+# this file supplies the header-only controls, including frame-ancestors, which
+# cannot be delivered in a <meta> tag.
+services:
+  - type: web
+    name: creaova
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./build/client
+    envVars:
+      - key: VITE_SITE_URL
+        sync: false
+      - key: VITE_FORM_PROVIDER
+        value: "web3forms"
+      - key: VITE_FORM_ENDPOINT
+        value: "https://api.web3forms.com/submit"
+      - key: VITE_FORM_ACCESS_KEY
+        sync: false
+      - key: VITE_FORM_CAPTCHA_SITEKEY
+        value: "50b2fe65-b00b-4b9e-ad62-3ba471098be2"
+    headers:
+      - path: /*
+        name: Content-Security-Policy
+        value: "frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests"
+      - path: /*
+        name: X-Frame-Options
+        value: "DENY"
+      - path: /*
+        name: X-Content-Type-Options
+        value: "nosniff"
+      - path: /*
+        name: Referrer-Policy
+        value: "strict-origin-when-cross-origin"
+      - path: /*
+        name: Permissions-Policy
+        value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()"
+      - path: /*
+        name: Cross-Origin-Opener-Policy
+        value: "same-origin"
+      - path: /*
+        name: X-Permitted-Cross-Domain-Policies
+        value: "none"
+      - path: /*
+        name: Strict-Transport-Security
+        value: "max-age=31536000"
+      - path: /*
+        name: Cache-Control
+        value: "public, max-age=0, must-revalidate"
+      - path: /site.webmanifest
+        name: Content-Type
+        value: "application/manifest+json"
+      - path: /assets/*
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: /fonts/*
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: /images/*
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"

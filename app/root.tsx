@@ -5,14 +5,28 @@ import { SkipLink } from "~/components/SkipLink";
 import { site } from "~/data/constants";
 import "~/styles/globals.css";
 
+/**
+ * JSON.stringify alone is not enough inside a <script> data block: a string
+ * containing `</script>` or an HTML comment opener can terminate the block
+ * early. Escaping the dangerous characters keeps the JSON-LD inert even if a
+ * content field is changed later.
+ */
+function serializeJsonLd(value: unknown): string {
+  return JSON.stringify(value)
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
+}
+
 export function Layout({ children }: { children: ReactNode }) {
   return <html lang="en">
     <head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="theme-color" content="#16130f" />
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <meta name="referrer" content="strict-origin-when-cross-origin" />
       {/*
         No global <link rel="canonical"> here on purpose. A single canonical in
         the layout would point every route at the homepage, which tells search
@@ -34,7 +48,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: serializeJsonLd({
             "@context": "https://schema.org",
             "@type": "Organization",
             name: site.legalName,

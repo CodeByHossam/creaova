@@ -177,7 +177,7 @@ export default function Home() {
           surface-subtle, no border/shadow) rather than by a UI box; rows link
           to the real Services anchors. Hover: number -> burnt orange, label
           shifts, arrow reveals. */}
-      <section id="home" className="bg-bg ">
+      <section id="home" className="bg-bg lg:-scroll-mt-4 xl:scroll-mt-0 ">
         <Container className="py-12 sm:py-16 md:py-12 lg:pt-22  xl:py-25">
           <div className="grid items-center gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 xl:gap-20">
             <div className=" min-h-150 lg:min-h-0 ">

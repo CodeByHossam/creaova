@@ -29,11 +29,10 @@ import { site } from "~/data/constants";
  *    screen. The word stays in the image and the brand name is announced by the
  *    link label instead.
  */
-export type LogoVariant = "color" | "dark" | "white";
+export type LogoVariant = "color" | "white";
 
 function variantSource(variant: LogoVariant): string {
   if (variant === "white") return site.logo.inverseSrc;
-  if (variant === "dark") return site.logo.darkSrc;
   return site.logo.src;
 }
 

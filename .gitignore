@@ -35,3 +35,5 @@ Thumbs.db
 # Single source of truth: project memory (root *.md) + reusable toolkit (_toolkit/)
 # + preserved reference material. Replaced the old /plans/* and /AI-Base/* folders.
 /ai-base/
+# Generated locally from scripts/email-signature.template.html; never publish
+scripts/email-signature.generated.html

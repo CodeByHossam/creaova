@@ -14,7 +14,7 @@ export const services: Service[] = [
     title: "Web design",
     summary: "Clear, considered interfaces for brands that want to be taken seriously.",
     details: "We turn a rough idea or an outdated site into a focused digital experience — covering content, user journeys, responsive interfaces and a design system.",
-    image: "https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/services/web-design.webp",
   },
   {
     id: "web-development",
@@ -22,7 +22,7 @@ export const services: Service[] = [
     title: "Web development",
     summary: "Fast, secure and search-friendly websites that are easy to maintain.",
     details: "We build in React and TypeScript with clean, secure code and strong performance and SEO foundations, so the site is easy to find and ready to grow.",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/services/web-development.webp",
   },
   {
     id: "mobile-apps",
@@ -30,7 +30,7 @@ export const services: Service[] = [
     title: "Mobile app development",
     summary: "Useful mobile products that make the important action feel effortless.",
     details: "We shape the product, map the core flows, and turn the essential experience into a dependable cross-platform app — then stay involved through release and beyond.",
-    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/services/mobile-apps.webp",
   },
 ];
 
