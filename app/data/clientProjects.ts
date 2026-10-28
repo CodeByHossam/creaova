@@ -12,7 +12,12 @@
  * `https://my-project.onrender.com`) — nothing else needs to change.
  */
 
-export type ClientProjectKind = "Web app" | "Website" | "API" | "Game";
+export type ClientProjectKind =
+  | "Web_app"
+  | "Website"
+  | "API"
+  | "Game"
+  | "Mobile_app";
 
 export type ClientProjectStatus = "live" | "in-development";
 
@@ -65,7 +70,7 @@ export const clientProjects: ClientProject[] = [
     slug: "dental-clinic",
     title: "Dental Clinic",
     initials: "DC",
-    kind: "Web app",
+    kind: "Web_app",
     category: "Healthcare / Operations",
     description:
       "A full-stack clinic management platform spanning appointments, patient records, treatment plans, billing, inventory, and analytics with granular role-based access.",
@@ -82,7 +87,7 @@ export const clientProjects: ClientProject[] = [
     slug: "mentora",
     title: "Mentora Learning",
     initials: "ML",
-    kind: "Web app",
+    kind: "Web_app",
     category: "EdTech / Platform",
     description:
       "A learning management platform with course delivery, live Zoom sessions, Stripe and PayPal payments, instructor payouts, and role-based dashboards.",
@@ -157,7 +162,8 @@ export const clientProjects: ClientProject[] = [
     status: "live",
     demoUrl: "https://little-rainbow-nursery.onrender.com/",
     demoLabel: "Live demo",
-    image: "/images/projects-images/little-rainbow-nursery/little-rainbow-home.png",
+    image:
+      "/images/projects-images/little-rainbow-nursery/little-rainbow-home.png",
   },
   {
     slug: "penguino",
@@ -179,7 +185,7 @@ export const clientProjects: ClientProject[] = [
     slug: "work-note",
     title: "Work Note",
     initials: "WN",
-    kind: "Web app",
+    kind: "Web_app",
     category: "Productivity / Internal tool",
     description:
       "A MERN workspace that replaces paper work notes with searchable, editable digital records, organised around the way a team actually works.",
@@ -206,6 +212,22 @@ export const clientProjects: ClientProject[] = [
     demoUrl: "https://bomber-man-game.onrender.com/",
     demoLabel: "Play demo",
     image: "/images/projects-images/bomber-man-game/bomber-man-level1.png",
+  },
+  {
+    slug: "sipora-cafee-demo",
+    title: "Sipora Cafee",
+    initials: "SC",
+    kind: "Mobile_app",
+    category: "Mobile App",
+    description:
+      "A premium mobile coffee application and company profile built with Expo and React Native, featuring a seamless ordering experience, menu browsing, and user profiles.",
+    stack: ["React Native", "Expo", "TypeScript", "EAS"],
+    year: "2026",
+    accent: "#a66e38",
+    status: "live",
+    demoUrl: "https://sipora-cafee-demo--676nagl21m.expo.app//",
+    demoLabel: "View App",
+    image: "/images/projects-images/Sipora-Cafee/Sipora-Cafee-home.png",
   },
 ];
 
