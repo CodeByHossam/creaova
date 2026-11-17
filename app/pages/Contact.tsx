@@ -33,7 +33,7 @@ export default function Contact() {
       <Container>
         <div className="mx-auto max-w-3xl space-y-6 text-center">
           <Badge>Contact</Badge>
-          <h1 className="text-display font-semibold text-ink">
+          <h1 className="text-display font-medium text-ink">
             Let’s build something you can rely on.
           </h1>
           <p className="mx-auto max-w-2xl text-lede text-muted">

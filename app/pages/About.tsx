@@ -32,7 +32,7 @@ export default function About() {
         <Container>
           <div className="mx-auto max-w-4xl space-y-6 text-center">
             <Badge>About Creaova</Badge>
-            <h1 className="text-display font-semibold text-ink">
+            <h1 className="text-display font-medium text-ink">
               We build digital experiences that earn trust — and make ambitious
               businesses easier to choose.
             </h1>
@@ -67,7 +67,7 @@ export default function About() {
                   <span className="font-mono text-xl font-medium text-primary-text">
                     {number}
                   </span>
-                  <h3 className="mt-6 text-xl font-semibold text-ink">
+                  <h3 className="mt-6 text-xl font-medium text-ink">
                     {title}
                   </h3>
                   <p className="mt-4 text-sm leading-relaxed text-muted">
@@ -99,7 +99,7 @@ export default function About() {
                 <span className="font-mono text-xl font-medium text-primary-text">
                   0{index + 1}
                 </span>
-                <h3 className="mt-5 text-xl font-semibold text-ink">{title}</h3>
+                <h3 className="mt-5 text-xl font-medium text-ink">{title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
               </article>
 

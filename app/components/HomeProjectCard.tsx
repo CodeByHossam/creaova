@@ -26,7 +26,7 @@ export function HomeProjectCard({ project }: { project: Project }) {
           Selected build
         </span>
       </div>
-      <h3 className="mt-5 text-xl font-semibold text-on-dark">{project.title}</h3>
+      <h3 className="mt-5 text-xl font-medium text-on-dark">{project.title}</h3>
       <p className="mt-2 text-sm leading-6 text-on-dark-muted">
         {project.description}
       </p>

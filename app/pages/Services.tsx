@@ -71,7 +71,7 @@ export default function Services() {
             {/* Title reduced a little more: switched from `text-display`
                 to explicit sizes so it's clearly smaller but still the
                 dominant heading. `leading-tight` keeps it from sprawling. */}
-            <h1 className="text-4xl font-semibold leading-tight text-ink sm:text-5xl">
+            <h1 className="text-4xl font-medium leading-tight text-ink sm:text-5xl">
               Web. Product. Mobile.
             </h1>
 
@@ -130,7 +130,7 @@ export default function Services() {
                 <span className="font-mono text-xl font-medium text-primary-text">
                   0{index + 1}
                 </span>
-                <h3 className="mt-4 flex min-h-[3.25rem] items-start text-xl font-semibold text-ink">
+                <h3 className="mt-4 flex min-h-[3.25rem] items-start text-xl font-medium text-ink">
                   {title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">

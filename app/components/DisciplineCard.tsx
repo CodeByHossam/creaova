@@ -33,7 +33,7 @@ export function DisciplineCard({
       </span>
 
       {/* Title */}
-      <h3 className="mt-2 text-lg font-semibold leading-snug text-ink sm:text-xl">
+      <h3 className="mt-2 text-lg font-medium leading-snug text-ink sm:text-xl">
         {title}
       </h3>
 

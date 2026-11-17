@@ -39,7 +39,7 @@ export default function Portfolio() {
         <Container>
           <div className="max-w-3xl">
             <Badge dark>Selected builds</Badge>
-            <h1 className="mt-6 text-display font-semibold text-on-dark">
+            <h1 className="mt-6 text-display font-medium text-on-dark">
               Work that ships — and keeps running.
             </h1>
             <p className="mt-6 max-w-2xl text-lede text-on-dark-muted">

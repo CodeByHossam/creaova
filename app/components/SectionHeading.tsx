@@ -42,7 +42,7 @@ export function SectionHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="mt-4 text-h2 font-semibold">{title}</h2>
+      <h2 className="mt-4 text-h2 font-medium">{title}</h2>
       {lede ? (
         <p
           className={`mt-4 text-lede ${dark ? "text-on-dark-muted" : "text-muted"}`}

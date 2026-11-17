@@ -67,7 +67,7 @@ export function ProjectCard({ project }: { project: ClientProject }) {
       <div className="mt-5 flex items-start justify-between gap-4">
         <div>
           <div className="flex flex-wrap items-center gap-2.5">
-            <h2 className="text-xl font-semibold text-on-dark">{project.title}</h2>
+            <h2 className="text-xl font-medium text-on-dark">{project.title}</h2>
             {project.demoUrl && isLive ? (
               <a
                 href={project.demoUrl}

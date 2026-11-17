@@ -21,7 +21,7 @@ export function CTABand() {
             <div className="flex justify-center">
               <Badge dark>Start a conversation</Badge>
             </div>
-            <h2 className="text-h2 font-semibold text-on-dark">
+            <h2 className="text-h2 font-medium text-on-dark">
               Let’s build something you can rely on.
             </h2>
             <p className="text-base leading-relaxed text-on-dark-muted">

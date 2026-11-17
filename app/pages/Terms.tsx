@@ -88,7 +88,7 @@ export default function Terms() {
         <p className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
           Legal · Terms
         </p>
-        <h1 className="mt-6 text-display font-semibold tracking-tight text-ink">
+        <h1 className="mt-6 text-display font-medium tracking-tight text-ink">
           Terms of service
         </h1>
         <p className="mt-7 text-lede text-muted">
@@ -102,7 +102,7 @@ export default function Terms() {
               <p className="font-mono text-sm text-primary-text">
                 {String(index + 1).padStart(2, "0")}
               </p>
-              <h2 className="mt-3 text-2xl font-semibold text-ink">{section.title}</h2>
+              <h2 className="mt-3 text-2xl font-medium text-ink">{section.title}</h2>
               <div className="mt-3 space-y-3 leading-7 text-muted">
                 {section.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>

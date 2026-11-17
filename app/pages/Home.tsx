@@ -182,7 +182,7 @@ export default function Home() {
           <div className="grid items-center gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 xl:gap-20">
             <div className=" min-h-150 lg:min-h-0 ">
               <Badge>Digital experience architecture</Badge>
-              <h1 className="mt-6 sm:mt-7 text-display font-semibold leading-none text-ink">
+              <h1 className="mt-6 sm:mt-7 text-display font-medium text-ink">
                 We build <span className="text-primary-text">websites</span>{" "}
                 that build your business
               </h1>
@@ -231,7 +231,7 @@ export default function Home() {
                     <span className="font-mono text-meta text-muted transition duration-200 ease-out group-hover:text-primary-text">
                       {number}
                     </span>
-                    <span className="font-display text-lg sm:text-xl font-semibold text-ink transition duration-200 ease-out group-hover:translate-x-1 sm:group-hover:translate-x-1.5">
+                    <span className="font-display text-lg sm:text-xl font-medium text-ink transition duration-200 ease-out group-hover:translate-x-1 sm:group-hover:translate-x-1.5">
                       {label}
                     </span>
                     <ArrowRight
