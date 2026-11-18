@@ -116,7 +116,7 @@ export function ContactForm() {
       {/* Honeypot: hidden field named `botcheck` is a Web3Forms-recognized spam trap.
           If a bot fills it, the submission is rejected silently. We ALSO keep our
           own `company` hidden field as a second trap (harmless, just extra coverage). */}
-      <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
+      <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
       <div className="grid gap-6 sm:grid-cols-2">
         <label className="space-y-2 text-sm font-medium">

@@ -24,7 +24,7 @@ const labelClass =
   "block font-mono text-xs uppercase tracking-[0.12em] text-on-dark-muted";
 
 const valueClass =
-  "mt-1 block break-words text-sm text-on-dark transition-colors duration-200 hover:text-primary";
+  "mt-1 inline-flex min-h-11 items-center break-words text-sm text-on-dark transition-colors duration-200 hover:text-primary";
 
 function FooterHeading({ children }: { children: ReactNode }) {
   return (

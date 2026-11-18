@@ -74,7 +74,7 @@ const disciplines = [
   [
     "Front-End Precision",
     "Digital experience & web architecture",
-    "High-conversion bespoke web platforms on modern infrastructure — fast to load, secure, and built to be found on search.",
+    "Conversion-focused web platforms on modern infrastructure — fast to load, secure, and built to be found on search.",
     "Next.js SSR",
   ],
   [
@@ -245,7 +245,7 @@ export default function Home() {
         className="border-y border-line bg-surface"
       >
         <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 py-4 sm:py-5">
-          <p className="ml-3 sm:ml-4 md:ml-6 lg:ml-8 shrink-0 font-mono text-meta uppercase tracking-[0.18em] text-muted">
+          <p className="relative z-10 ml-4 shrink-0 bg-surface pr-2 font-mono text-meta uppercase tracking-[0.18em] text-muted md:ml-6 lg:ml-8">
             Built with
           </p>
           <div className="marquee-viewport relative min-w-0 flex-1">
@@ -394,10 +394,11 @@ export default function Home() {
                 eyebrow="Built for confidence"
                 title="A stronger digital foundation starts with clarity."
                 lede="We work as a partner, not a vendor: direct communication, decisions you can see at every step, and work grounded in what your customers actually need."
+                ledeClassName="text-ink/90"
               />
               <Link
                 to="/about"
-                className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ink transition duration-200 ease-out hover:text-primary-text"
+                className="group mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ink transition duration-200 ease-out hover:text-primary-text"
               >
                 How we work
                 <ArrowUpRight

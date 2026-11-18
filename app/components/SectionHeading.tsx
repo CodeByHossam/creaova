@@ -17,6 +17,7 @@ export function SectionHeading({
   lede,
   align = "center",
   dark = false,
+  ledeClassName = "",
 }: {
   /** Zero-padded step number, e.g. "01". Rendered before the eyebrow. */
   number?: string;
@@ -25,6 +26,8 @@ export function SectionHeading({
   lede?: ReactNode;
   align?: "center" | "left";
   dark?: boolean;
+  /** Override the lede colour where the section ground needs a darker ink. */
+  ledeClassName?: string;
 }) {
   const centered = align === "center";
   return (
@@ -46,7 +49,9 @@ export function SectionHeading({
       <h2 className="mt-4 text-h2 font-medium">{title}</h2>
       {lede ? (
         <p
-          className={`mt-4 text-lede ${dark ? "text-on-dark-muted" : "text-muted"}`}
+          className={`mt-4 text-lede ${
+            ledeClassName || (dark ? "text-on-dark-muted" : "text-muted")
+          }`}
         >
           {lede}
         </p>

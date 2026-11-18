@@ -17,7 +17,7 @@ export function SkipLink() {
   return (
     <a
       href="#main"
-      className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:inline-flex focus:min-h-11 focus:items-center focus:rounded-control focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-on-dark"
+      className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-20 focus:z-[60] focus:inline-flex focus:min-h-11 focus:items-center focus:rounded-control focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-on-dark"
     >
       Skip to content
     </a>

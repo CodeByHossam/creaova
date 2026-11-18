@@ -40,6 +40,7 @@ Thumbs.db
 # These are IDE/CLI skills, configs and critique snapshots, not business logic.
 /.gemini/
 /.impeccable/
+/.taste-skill
 /PRODUCT.md
 
 # Generated locally from scripts/email-signature.template.html; never publish
