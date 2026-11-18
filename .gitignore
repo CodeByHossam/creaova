@@ -35,5 +35,12 @@ Thumbs.db
 # Single source of truth: project memory (root *.md) + reusable toolkit (_toolkit/)
 # + preserved reference material. Replaced the old /plans/* and /AI-Base/* folders.
 /ai-base/
+
+# AI assistant tooling and its local state — never published to GitHub.
+# These are IDE/CLI skills, configs and critique snapshots, not business logic.
+/.gemini/
+/.impeccable/
+/PRODUCT.md
+
 # Generated locally from scripts/email-signature.template.html; never publish
 scripts/email-signature.generated.html
