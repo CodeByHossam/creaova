@@ -4,29 +4,27 @@ import { Link } from "react-router";
 /**
  * The one button in the system.
  *
- * Reference: plans/UI_UX_ENHANCEMENT_PLAN.md (Phase 1), MULTIPAGE_UI_PLAN §4.3
+ * Two visual languages only: filled primary and outline secondary. `light` is
+ * the outline secondary skin for dark grounds, not a third action style.
  *
- * Colour rule that this file exists to enforce: orange is a FILL, never text on
- * a light background. `primary` pairs `bg-primary` (#EA580C) with
- * `text-on-primary` (ink, 5.2:1) — and the resting state is ink, with orange
- * arriving only on hover, so the single primary action never fights the page.
- * No shadows and no glow anywhere (plan M6): separation is hairlines + space.
+ * Colour rule: orange is a FILL, never text on a light background. `primary`
+ * pairs `bg-primary` (#EA580C) with `text-on-primary` (ink, 5.2:1) — and the
+ * resting state is ink, with orange arriving only on hover. No shadows and no
+ * glow anywhere (plan M6): separation is hairlines + space.
  */
 
-type Variant = "primary" | "secondary" | "ghost" | "dark" | "light";
+type Variant = "primary" | "secondary" | "light";
 type Size = "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-lg font-semibold whitespace-nowrap transition duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 rounded-lg font-semibold whitespace-nowrap transition duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:translate-y-px active:scale-[0.99] active:brightness-95 disabled:cursor-not-allowed disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
   primary: "bg-ink text-on-dark hover:-translate-y-0.5 hover:bg-primary hover:text-on-primary",
-  // Outline style: ink text on ink hairline. On hover it inverts rather than
-  // turning orange, so the orange stays reserved for the single primary action.
-  secondary: "border border-ink text-ink hover:bg-ink hover:text-on-dark",
-  ghost: "text-primary-text hover:text-ink",
-  dark: "bg-ink text-on-dark hover:-translate-y-0.5 hover:bg-primary hover:text-on-primary",
-  light: "bg-surface text-ink hover:bg-primary hover:text-on-primary",
+  secondary:
+    "border border-ink text-ink hover:-translate-y-0.5 hover:bg-ink hover:text-on-dark",
+  light:
+    "border border-on-dark text-on-dark hover:-translate-y-0.5 hover:bg-on-dark hover:text-ink",
 };
 
 // h-11 = 44px, the minimum touch target from §9 (the old h-10 = 40px missed it).

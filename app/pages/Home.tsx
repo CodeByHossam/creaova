@@ -19,6 +19,7 @@ import { HomeProjectCard } from "~/components/HomeProjectCard";
 import { QualityCard } from "~/components/QualityCard";
 import { ConfidenceCard } from "~/components/ConfidenceCard";
 import { SectionHeading } from "~/components/SectionHeading";
+import { TextLink } from "~/components/TextLink";
 import { primaryCta, site, absoluteUrl } from "~/data/constants";
 import { projects } from "~/data/projects";
 import { services } from "~/data/services";
@@ -115,10 +116,6 @@ const confidenceItems = [
   },
 ] as const;
 
-// Truthful, non-numeric facts only (plan C2): heritage and engagement pace —
-// the old 99.8% NPS / 4.2x ROI / 120+ products row was invented. The old "What
-// we build" column was also dropped (user request): the services index card in
-// the hero already names the three disciplines, so the row repeated them.
 const heroFacts = [
   ["Established in", site.footer.location],
   ["How we start", "Start in days, not months"],
@@ -154,10 +151,12 @@ export default function Home() {
       {/* "Editorial Index" hero: statement column on the left, an index of the
           three real services on the right. The card is separated by tone (warm
           surface-subtle, no border/shadow) rather than by a UI box; rows link
-          to the real Services anchors. Hover: number -> burnt orange, label
+          to the real Services anchors. This is an index panel, not one of the
+          page's cards: same 12px corner radius, but no border and the hero's
+          display face for its row labels. Hover: number -> burnt orange, label
           shifts, arrow reveals. */}
       <section id="home" className="bg-bg lg:-scroll-mt-4 xl:scroll-mt-0 ">
-        <Container className="py-12 sm:py-16 md:py-12 lg:pt-22  xl:py-25">
+        <Container className="py-12 sm:py-16 lg:py-20 xl:py-25">
           <div className="grid items-center gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 xl:gap-20">
             <div>
               <Badge>Digital experience architecture</Badge>
@@ -195,7 +194,7 @@ export default function Home() {
 
             <nav
               aria-label="Services index"
-              className="rounded-card bg-surface-subtle p-5 sm:p-6 md:p-8 lg:p-10"
+              className="rounded-xl bg-surface-subtle p-5 sm:p-6 md:p-8 lg:p-10"
             >
               <p className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
                 Index — what we build
@@ -222,12 +221,13 @@ export default function Home() {
               </div>
               <div className="mt-5 sm:mt-6 flex items-center justify-between border-t border-line pt-5 sm:pt-6 font-mono text-meta uppercase tracking-[0.18em]">
                 <span className="text-muted">A UAE studio</span>
-                <Link
+                <TextLink
                   to="/services"
-                  className="text-primary-text transition-colors duration-200 ease-out hover:text-primary-text-hover"
+                  tone="light"
+                  className="font-mono text-meta uppercase tracking-[0.18em]"
                 >
                   All services
-                </Link>
+                </TextLink>
               </div>
             </nav>
           </div>
@@ -239,22 +239,23 @@ export default function Home() {
       {/* A short, client-facing ticker. The list is rendered twice — the second
           copy is aria-hidden so a screen reader hears it once — and the CSS
           translate moves exactly -50%, so the loop has no visible jump. Hovering
-          pauses it; reduced-motion and narrow screens show it statically. */}
+          pauses it. Below 640px the track turns into a static wrapped list, so
+          the inner lists wrap too and every technology stays readable. */}
       <section
         aria-label="Technologies we build with"
         className="border-y border-line bg-surface"
       >
-        <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 py-4 sm:py-5">
-          <p className="relative z-10 ml-4 shrink-0 bg-surface pr-2 font-mono text-meta uppercase tracking-[0.18em] text-muted md:ml-6 lg:ml-8">
+        <div className="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:gap-6 sm:py-5 md:gap-8 lg:gap-10">
+          <p className="relative z-10 ml-4 shrink-0 bg-surface pr-2 font-mono text-meta uppercase tracking-[0.18em] text-muted sm:ml-6 lg:ml-8">
             Built with
           </p>
-          <div className="marquee-viewport relative min-w-0 flex-1">
+          <div className="marquee-viewport relative ml-4 min-w-0 flex-1 sm:ml-0">
             <div className="marquee-track flex w-max items-center">
-              <ul className="flex items-center">
+              <ul className="flex min-w-0 flex-wrap items-center sm:flex-nowrap">
                 {stack.map((item) => (
                   <li
                     key={item}
-                    className="flex shrink-0 items-center gap-6 sm:gap-7 md:gap-8 pr-6 sm:pr-7 md:pr-8 text-sm font-semibold whitespace-nowrap text-ink"
+                    className="flex shrink-0 items-center gap-3 pr-3 text-xs font-semibold whitespace-nowrap text-ink sm:gap-7 sm:pr-7 sm:text-sm md:gap-8 md:pr-8"
                   >
                     {item}
                     <span
@@ -264,11 +265,11 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <ul aria-hidden="true" className="flex items-center">
+              <ul aria-hidden="true" className="flex min-w-0 flex-wrap items-center sm:flex-nowrap">
                 {stack.map((item) => (
                   <li
                     key={item}
-                    className="flex shrink-0 items-center gap-6 sm:gap-7 md:gap-8 pr-6 sm:pr-7 md:pr-8 text-sm font-semibold whitespace-nowrap text-ink"
+                    className="flex shrink-0 items-center gap-3 pr-3 text-xs font-semibold whitespace-nowrap text-ink sm:gap-7 sm:pr-7 sm:text-sm md:gap-8 md:pr-8"
                   >
                     {item}
                     <span
@@ -287,7 +288,7 @@ export default function Home() {
       {/* ---------------------------- 01 Services -------------------------- */}
       <section
         id="services"
-        className="bg-bg pt-12 pb-14 sm:pt-16 sm:pb-18 md:pt-20 md:pb-22 lg:pt-24 lg:pb-24 xl:pt-28 xl:pb-28"
+        className="bg-bg py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28"
       >
         <Container>
           <SectionHeading
@@ -319,7 +320,7 @@ export default function Home() {
 
 
       {/* ------------------------------ 02 Work ---------------------------- */}
-      <section id="work" className="bg-dark py-16 sm:py-20 lg:py-28">
+      <section id="work" className="bg-dark py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28">
         <Container>
           <div className="flex flex-col justify-between gap-7 md:flex-row md:items-end">
             <SectionHeading
@@ -330,16 +331,17 @@ export default function Home() {
               title="Clear thinking, made tangible."
               lede="A closer look at concept builds — the thinking behind each one and what it explores."
             />
-            <Link
+            <TextLink
               to="/portfolio"
-              className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-on-dark-muted transition-colors duration-300 ease-out hover:text-on-dark"
+              tone="dark"
+              className="shrink-0 gap-1.5 text-sm font-semibold"
             >
               View portfolio
               <ArrowUpRight
                 aria-hidden="true"
-                className="size-4 transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-focus-visible:-translate-y-0.5 group-focus-visible:translate-x-0.5"
               />
-            </Link>
+            </TextLink>
           </div>
 
           <ul className="mt-12 mx-auto max-w-6xl grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -381,12 +383,9 @@ export default function Home() {
 
 
       {/* -------------------------- 04 Confidence -------------------------- */}
-      <section
-        
-        className="border-t border-line bg-surface-subtle py-16 sm:py-20 lg:py-28 "
-      >
+      <section className="border-t border-line bg-surface-subtle py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28">
         <Container>
-          <div className="grid items-end gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+          <div className="grid items-end gap-10 xl:grid-cols-[0.85fr_1.15fr] xl:gap-16">
             <div>
               <SectionHeading
                 align="left"
@@ -396,18 +395,19 @@ export default function Home() {
                 lede="We work as a partner, not a vendor: direct communication, decisions you can see at every step, and work grounded in what your customers actually need."
                 ledeClassName="text-ink/90"
               />
-              <Link
+              <TextLink
                 to="/about"
-                className="group mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ink transition duration-200 ease-out hover:text-primary-text"
+                tone="light"
+                className="mt-8 min-h-11 gap-2 text-sm font-semibold"
               >
                 How we work
                 <ArrowUpRight
                   aria-hidden="true"
-                  className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-focus-visible:-translate-y-0.5 group-focus-visible:translate-x-0.5"
                 />
-              </Link>
+              </TextLink>
             </div>
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5 xl:grid-cols-3">
+            <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-5">
               {confidenceItems.map(({ title, text, meta, icon: Icon }) => (
                 <li key={title} className="h-full">
                   <ConfidenceCard title={title} text={text} meta={meta} Icon={Icon} />

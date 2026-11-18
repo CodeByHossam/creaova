@@ -13,26 +13,28 @@ export function ServiceCard({
   return (
     <article
       id={service.id}
-      className="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-sm focus-within:-translate-y-1 focus-within:border-ink focus-within:shadow-sm"
+      className="flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface"
     >
       <div className="relative aspect-[16/9] overflow-hidden">
         <img
           src={service.image}
           alt=""
           loading="lazy"
-          className="size-full object-cover grayscale-[20%] transition-transform duration-500 ease-out group-hover:scale-105 group-focus-within:scale-105"
+          className="size-full object-cover grayscale-[20%]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
-        <span className="absolute bottom-3 left-3 grid size-9 place-items-center rounded-lg bg-ink text-on-dark transition-all duration-300 ease-out group-hover:bg-primary group-hover:text-on-primary group-focus-within:bg-primary group-focus-within:text-on-primary">
-          <Icon aria-hidden="true" className="size-4" strokeWidth={1.8} />
+        <span className="absolute bottom-3 left-3 grid size-10 place-items-center rounded-lg bg-ink text-on-dark">
+          <Icon aria-hidden="true" className="size-[18px]" strokeWidth={1.8} />
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <span className="font-mono text-xs uppercase tracking-[0.14em] text-primary-text">
+      <div className="flex flex-1 flex-col p-5">
+        <span className="font-mono text-meta uppercase tracking-[0.12em] text-primary-text">
           {service.number}
         </span>
-        <h3 className="mt-1.5 text-lg font-medium leading-tight text-ink">{service.title}</h3>
+        <h3 className="mt-1.5 font-sans text-lg font-medium leading-snug text-ink">
+          {service.title}
+        </h3>
         <p className="mt-2 text-sm font-medium leading-snug text-ink">
           {service.summary}
         </p>
@@ -43,17 +45,16 @@ export function ServiceCard({
         <div className="mt-4 border-t border-line pt-4">
           <Link
             to="/contact"
-            className="flex items-center justify-between text-sm font-medium text-ink transition-all duration-300 ease-out group-hover:text-primary-text group-focus-within:text-primary-text"
+            className="group/link flex items-center justify-between text-sm font-medium text-ink transition-all duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text active:translate-y-px"
           >
             Start a project
             <ArrowUpRight
               aria-hidden="true"
-              className="size-4 transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-focus-within:-translate-y-0.5 group-focus-within:translate-x-0.5"
+              className="size-4 shrink-0 transition-transform duration-200 ease-out group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-focus/link:-translate-y-0.5 group-focus/link:translate-x-0.5"
             />
           </Link>
         </div>
       </div>
     </article>
-
   );
 }

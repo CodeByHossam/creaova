@@ -28,7 +28,7 @@ export default function About() {
   return (
     <>
       {/* ------------------------------ Hero ------------------------------ */}
-      <section className="bg-bg py-10 sm:py-12 lg:py-16 xl:pb-50 xl:pt-20">
+      <section className="bg-bg py-10 sm:py-12 lg:py-16 xl:py-20">
         <Container>
           <div className="mx-auto max-w-4xl space-y-6 text-center">
             <Badge>About Creaova</Badge>
@@ -51,18 +51,18 @@ export default function About() {
       {/* --------------------------- 01 Principles ------------------------- */}
       <section className="border-y border-line bg-surface-subtle py-16 sm:py-20 lg:py-28">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+          <div className="mx-auto max-w-5xl">
             <SectionHeading
               align="left"
               number="01"
               eyebrow="What guides us"
               title="A focused studio for meaningful digital work."
             />
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {principles.map(([number, title, text]) => (
                 <article
                   key={number}
-                  className="flex h-full flex-col rounded-card border border-line bg-surface p-6"
+                  className="flex h-full flex-col rounded-card border border-line bg-surface p-7"
                 >
                   <span className="font-mono text-xl font-medium text-primary-text">
                     {number}
@@ -77,7 +77,6 @@ export default function About() {
 
               ))}
             </div>
-
           </div>
         </Container>
       </section>

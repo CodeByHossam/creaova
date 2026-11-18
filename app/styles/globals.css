@@ -461,9 +461,7 @@
   #work article,
   #work a,
   #process article,
-  #process a,
-  #testimonials article,
-  #testimonials a {
+  #process a {
     animation: none;
   }
 }

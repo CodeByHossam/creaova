@@ -1,8 +1,10 @@
+import { ArrowUpRight } from "lucide-react";
+
 import { Badge } from "~/components/Badge";
-import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
 import { CTABand } from "~/components/CTABand";
 import { ProjectCard } from "~/components/ProjectCard";
+import { TextLink } from "~/components/TextLink";
 import { clientProjects } from "~/data/clientProjects";
 import { absoluteUrl } from "~/data/constants";
 
@@ -51,7 +53,7 @@ export default function Portfolio() {
 
           <ul
             id="work"
-            className="mt-14 mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-14 mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
           >
             {clientProjects.map((project) => (
               <li key={project.slug} className="h-full">
@@ -61,9 +63,17 @@ export default function Portfolio() {
           </ul>
 
           <div className="mt-12 text-center">
-            <Button variant="light" to="/contact">
+            <TextLink
+              to="/contact"
+              tone="dark"
+              className="min-h-11 gap-2 text-sm font-semibold"
+            >
               Discuss a product direction
-            </Button>
+              <ArrowUpRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-focus-visible:-translate-y-0.5 group-focus-visible:translate-x-0.5"
+              />
+            </TextLink>
           </div>
         </Container>
       </section>

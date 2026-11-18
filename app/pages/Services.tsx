@@ -31,47 +31,53 @@ export function meta() {
 // Icons mapped by index to `services` — order must match the data array.
 const serviceIcons = [Palette, Code, Smartphone] as const;
 
-// "How we work together" content for the Engagement section.
+// "How we work together" content for the Engagement section. The numbered
+// shape matches `processSteps` so both sections can share one card grammar.
 const engagement = [
   [
+    "01",
     "We understand your requirements",
     "We start by listening — your business, your customers, and the outcome you need — so every decision stays grounded.",
   ],
   [
+    "02",
     "A partner, not a vendor",
     "Direct communication and clear priorities let you review and approve each step of the work with real confidence.",
   ],
   [
+    "03",
     "Support after launch",
     "We stay involved after go-live with genuine follow-up — fixes, guidance, and the next useful improvement for you.",
   ],
-];
+] as const;
 
 /* -------------------------------------------------------------------------- */
 /*                                  COMPONENT                                 */
 /* -------------------------------------------------------------------------- */
+
+/**
+ * Two deliberate card grammars live on this page:
+ *   1. `ServiceCard` — image-led offerings, each with one real link to Contact.
+ *   2. `ProcessCard` — quiet numbered notes, used by both Engagement and Process.
+ * Card-level hover is reserved for the image cards' actual link; the editorial
+ * cards stay static so nothing looks clickable when it is not.
+ */
 export default function Services() {
   return (
     <>
       {/* ==================================================================== */}
       {/* HERO                                                                 */}
       {/* ==================================================================== */}
-      {/* The ONLY place services are rendered — the old duplicate section was
-          removed. Cards sit right under a smaller title so users see what
-          you build on first paint, with no scroll required. */}
       <section
         id="all-services"
-        className="bg-bg pt-14 pb-10 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-14 lg:-scroll-mt-8 xl:-scroll-mt-10"
+        className="scroll-mt-0 bg-bg pt-14 pb-10 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-14"
       >
         <Container>
           {/* Compact header — tighter vertical rhythm so cards come up fast. */}
           <div className="mx-auto max-w-3xl space-y-4 text-center">
             <Badge>High-performance disciplines</Badge>
 
-            {/* Title reduced a little more: switched from `text-display`
-                to explicit sizes so it's clearly smaller but still the
-                dominant heading. `leading-tight` keeps it from sprawling. */}
-            <h1 className="text-4xl font-medium leading-tight text-ink sm:text-5xl">
+            <h1 className="text-display font-medium text-ink">
               Web. Product. Mobile.
             </h1>
 
@@ -82,16 +88,12 @@ export default function Services() {
           </div>
 
           {/* Services grid — the one and only rendering of ServiceCard.
-              The `id="services"` lives here so #services links still work
-              now that the separate section is gone.
-              - Negative scroll margin pulls the anchor target up so the
-                cards sit higher when navigated to.
-              - `mt-8` keeps them close to the header; slight downscale on
-                mobile/tablet, full size on lg. */}
-          <div
-            id="services"
-            className="mx-auto mt-8 max-w-5xl scroll-mt-[-4rem] sm:mt-10"
-          >
+              The `id="services"` lives here so #services links still work now
+              that the separate section is gone. `scroll-mt-0` cancels the global
+              target margin so the container's `scroll-padding-top` alone lands
+              the cards just under the sticky header — no negative offsets.
+              `mt-8` keeps them close; `sm:mt-10` opens up on tablet. */}
+          <div id="services" className="mx-auto mt-8 max-w-5xl scroll-mt-0 sm:mt-10">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
               {services.map((service, index) => {
                 const Icon = serviceIcons[index];
@@ -114,22 +116,12 @@ export default function Services() {
             eyebrow="Working together"
             title="A partnership, one clear step at a time."
           />
+          {/* Engagement notes reuse the ProcessCard grammar: same p-6 shell,
+              same 20px editorial title tier, same orange mono number, no
+              whole-card hover. */}
           <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {engagement.map(([title, text], index) => (
-              <article
-                key={title}
-                className="flex h-full flex-col rounded-card border border-line bg-surface p-6 transition duration-200 ease-out hover:-translate-y-1 hover:border-ink"
-              >
-                <span className="font-mono text-xl font-medium text-primary-text">
-                  0{index + 1}
-                </span>
-                <h3 className="mt-4 flex min-h-[3.25rem] items-start text-xl font-medium text-ink">
-                  {title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
-                  {text}
-                </p>
-              </article>
+            {engagement.map(([number, title, text]) => (
+              <ProcessCard key={number} number={number} title={title} text={text} />
             ))}
           </div>
         </Container>
@@ -140,7 +132,7 @@ export default function Services() {
       {/* ==================================================================== */}
       <section
         id="process"
-        className="bg-bg py-16 sm:py-20 lg:py-24 -scroll-mt-5 md:-scroll-mt-5 lg:-scroll-mt-15 xl:scroll-mt-0"
+        className="scroll-mt-0 bg-bg py-16 sm:py-20 lg:py-24"
       >
         <Container>
           <SectionHeading
@@ -149,6 +141,8 @@ export default function Services() {
             title="Our four-step process."
             lede="From first conversation, through launch, to the follow-up that comes after — a predictable path you can follow step by step."
           />
+          {/* Same editorial grammar as Engagement; the four-step sequence is
+              carried by the numbers, not by a different card treatment. */}
           <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {processSteps.map(([number, title, text]) => (
               <ProcessCard

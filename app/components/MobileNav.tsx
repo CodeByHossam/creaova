@@ -150,7 +150,8 @@ export function MobileNav() {
                 )
                 .map((channel) => (
                   <div key={channel.id} className="flex items-start gap-3">
-                    <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-line text-primary-text">
+                    {/* Same 36px chip as Contact and Footer; 32px was a lone outlier. */}
+                    <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line text-primary-text">
                       <ContactIcon id={channel.id} className="size-4" />
                     </span>
                     <div className="min-w-0">

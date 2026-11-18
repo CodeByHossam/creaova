@@ -3,15 +3,6 @@ import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
 import { primaryCta } from "~/data/constants";
 
-/**
- * The one conversion band above the footer (plan H7 + the approved
- * "slim single-CTA band" decision).
- *
- * It used to carry a second email/scope form that duplicated Contact's page —
- * plus #111111/#F97316 raw hex, shadow-2xl, and an 11px trust strip of
- * promises we cannot verify. Now it is chip + heading + one link to the real
- * form, entirely on tokens.
- */
 export function CTABand() {
   return (
     <section id="quote" className="border-t border-line bg-bg py-16 sm:py-20 lg:py-28">

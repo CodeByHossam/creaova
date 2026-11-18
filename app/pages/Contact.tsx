@@ -12,24 +12,11 @@ export function meta() {
   ];
 }
 
-/**
- * Contact — paper hero + the site's single real form (the CTABand duplicate
- * was removed in plan H7). Light by design: `form-input` and the Button
- * tokens are built for paper, and the old floating #111111 card with
- * shadow-2xl belonged to the pre-token system.
- *
- * Every detail here is read from `contactChannels`, so the page shows the real
- * routes — email, phone, WhatsApp, hours, location — rather than a subset of
- * them, and shows the same ones the footer does. Each row carries the glyph
- * of its channel (mail, phone, WhatsApp, clock, map pin) so the list is
- * scannable at a glance; the glyphs are decorative, the label says what the
- * row is. A `href` of `null` means that route has no confirmed destination
- * yet, and the value renders as plain text instead of a link that leads
- * nowhere.
- */
 export default function Contact() {
   return (
-    <section className="bg-bg py-10 sm:py-14 lg:py-16">
+    <section className="bg-bg py-16 sm:py-20 lg:py-24">
+      {/* Same band rhythm as the other interior pages — this is the site's
+          closing conversion surface, not a deliberately compact exception. */}
       <Container>
         <div className="mx-auto max-w-3xl space-y-6 text-center">
           <Badge>Contact</Badge>
@@ -48,7 +35,9 @@ export default function Contact() {
             <ContactForm />
           </div>
 
-          <aside className="grid content-start gap-7 border-t border-line pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-2">
+          {/* `lg:pt-10` matches the form's `sm:p-10`, so the first channel row
+              starts on the same line as the first form field. */}
+          <aside className="grid content-start gap-7 border-t border-line pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-10">
             <ul className="grid content-start gap-7">
               {contactChannels.map((channel) => (
                 <li key={channel.id} className="flex items-start gap-3">
