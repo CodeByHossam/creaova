@@ -96,14 +96,7 @@ export default function Services() {
               {services.map((service, index) => {
                 const Icon = serviceIcons[index];
                 return (
-                  // `origin-top` anchors the scale so layout stays tight;
-                  // scale resets on lg where the cards render full-size.
-                  <div
-                    key={service.id}
-                    className="origin-top scale-95 lg:scale-100"
-                  >
-                    <ServiceCard service={service} Icon={Icon} />
-                  </div>
+                  <ServiceCard key={service.id} service={service} Icon={Icon} />
                 );
               })}
             </div>
@@ -121,7 +114,7 @@ export default function Services() {
             eyebrow="Working together"
             title="A partnership, one clear step at a time."
           />
-          <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+          <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {engagement.map(([title, text], index) => (
               <article
                 key={title}

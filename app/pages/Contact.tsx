@@ -49,28 +49,30 @@ export default function Contact() {
           </div>
 
           <aside className="grid content-start gap-7 border-t border-line pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-2">
-            {contactChannels.map((channel) => (
-              <div key={channel.id} className="flex items-start gap-3">
-                <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line bg-surface-subtle text-primary-text">
-                  <ContactIcon id={channel.id} className="size-4" />
-                </span>
-                <div className="min-w-0">
-                  <p className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
-                    {channel.label}
-                  </p>
-                  {channel.href ? (
-                    <a
-                      href={channel.href}
-                      className="mt-1 inline-block text-sm font-medium text-ink underline underline-offset-4 transition-colors duration-200 ease-out hover:text-primary-text"
-                    >
-                      {channel.value}
-                    </a>
-                  ) : (
-                    <p className="mt-1 text-sm font-medium text-ink">{channel.value}</p>
-                  )}
-                </div>
-              </div>
-            ))}
+            <ul className="grid content-start gap-7">
+              {contactChannels.map((channel) => (
+                <li key={channel.id} className="flex items-start gap-3">
+                  <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line bg-surface-subtle text-primary-text">
+                    <ContactIcon id={channel.id} className="size-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
+                      {channel.label}
+                    </p>
+                    {channel.href ? (
+                      <a
+                        href={channel.href}
+                        className="mt-1 inline-block text-sm font-medium text-ink underline underline-offset-4 transition-colors duration-200 ease-out hover:text-primary-text"
+                      >
+                        {channel.value}
+                      </a>
+                    ) : (
+                      <p className="mt-1 text-sm font-medium text-ink">{channel.value}</p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
 
             {site.socialLinks.some((social) => social.href) ? (
               <div className="border-t border-line pt-6">

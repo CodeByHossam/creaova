@@ -101,7 +101,15 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={submit} className="space-y-6" noValidate>
+    <form
+      onSubmit={submit}
+      aria-labelledby="contact-form-heading"
+      className="space-y-6"
+      noValidate
+    >
+      <h2 id="contact-form-heading" className="sr-only">
+        Project enquiry form
+      </h2>
       {/* Web3Forms uses `subject` to set the email subject in the notification. */}
       <input type="hidden" name="subject" value="New Creaova project enquiry" />
 

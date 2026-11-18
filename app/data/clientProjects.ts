@@ -1,15 +1,16 @@
 /**
- * Central portfolio data — the single source of truth for Creaova's live work.
+ * Central portfolio data — the single source of truth for Creaova's concept work.
  *
- * Add or update a project here and the /portfolio grid, the Live Demo button,
- * the status pill and the developer signature all update together.
+ * Add or update a project here and the /portfolio grid, the demo action and
+ * the Concept badge all update together.
  *
- * `demoUrl: null` means the build is not publicly hosted yet. The card renders
- * a disabled "Live demo soon" control instead of a dead link, so a placeholder
- * can never pretend to be a working demo.
+ * Every entry is a concept build, never a shipped client product.
+ * `demoAvailable` records whether a public demo exists; `demoUrl: null` means
+ * the build is not publicly hosted yet and the card renders a disabled
+ * "Demo soon" control instead of a dead link.
  *
- * To publish a project, replace `null` with its URL (for example
- * `https://my-project.onrender.com`) — nothing else needs to change.
+ * To publish a demo, replace `null` with its URL (for example
+ * `https://my-project.onrender.com`) and set `demoAvailable: true`.
  */
 
 export type ClientProjectKind =
@@ -19,7 +20,7 @@ export type ClientProjectKind =
   | "Game"
   | "Mobile_app";
 
-export type ClientProjectStatus = "live" | "in-development";
+export type ClientProjectStatus = "concept";
 
 export type ClientProject = {
   /** URL-safe id, also used as the React key. */
@@ -34,15 +35,18 @@ export type ClientProject = {
   year: string;
   /** Light accent used behind the monogram on the dark card. */
   accent: string;
+  /** Every portfolio entry is a concept build, never a shipped client product. */
   status: ClientProjectStatus;
+  /** Whether a public demo has been published for this concept. */
+  demoAvailable: boolean;
   /**
-   * Public demo URL. `null` renders a disabled "Live demo soon" state.
+   * Public demo URL. `null` renders a disabled "Demo soon" state.
    * Prefer the running product; for API-only work link the API docs.
    */
   demoUrl: string | null;
-  /** Label for the demo action (e.g. "API docs"). */
+  /** Label for the demo action (e.g. "View concept demo"). */
   demoLabel: string;
-  /** Optional API base URL shown as a secondary detail. */
+  /** Optional API base URL kept for reference; not presented as a live claim. */
   apiUrl?: string;
   /** Optional screenshot; the monogram cover is used while absent. */
   image?: string;
@@ -60,9 +64,10 @@ export const clientProjects: ClientProject[] = [
     stack: ["Node.js", "Express", "MongoDB", "JWT", "Joi"],
     year: "2026",
     accent: "#e9d8c1",
-    status: "live",
+    status: "concept",
+    demoAvailable: true,
     demoUrl: "https://book-store-api-6pr7.onrender.com/docs",
-    demoLabel: "API docs",
+    demoLabel: "View concept API",
     apiUrl: "https://book-store-api-6pr7.onrender.com",
     image: "/images/projects-images/book-store-api/book-store-api.png",
   },
@@ -77,9 +82,10 @@ export const clientProjects: ClientProject[] = [
     stack: ["React", "Express", "MongoDB", "Redux Toolkit", "Tailwind"],
     year: "2026",
     accent: "#c5d8d0",
-    status: "live",
+    status: "concept",
+    demoAvailable: true,
     demoUrl: "https://dental-clinic-app-vgt3.onrender.com",
-    demoLabel: "Live demo",
+    demoLabel: "View concept demo",
     apiUrl: "https://dental-clinic-backend-enzv.onrender.com/api",
     image: "/images/projects-images/dental-clinic/dental-clinic-home.png",
   },
@@ -94,9 +100,10 @@ export const clientProjects: ClientProject[] = [
     stack: ["React", "Express", "MongoDB", "Stripe", "PayPal"],
     year: "2026",
     accent: "#d2d9e7",
-    status: "live",
+    status: "concept",
+    demoAvailable: true,
     demoUrl: "https://mentora-courses-app.onrender.com/",
-    demoLabel: "Live demo",
+    demoLabel: "View concept demo",
     apiUrl: "https://mentora-api-rqbb.onrender.com/api",
     image: "/images/projects-images/mentora/mentora-home.png",
   },
@@ -111,9 +118,10 @@ export const clientProjects: ClientProject[] = [
     stack: ["HTML5", "CSS3", "JavaScript", "PHP", "AOS"],
     year: "2026",
     accent: "#e8cfc7",
-    status: "live",
+    status: "concept",
+    demoAvailable: true,
     demoUrl: "https://il-flamingo.onrender.com/",
-    demoLabel: "Live demo",
+    demoLabel: "View concept demo",
     image: "/images/projects-images/flamingo/flamingo-home.png",
   },
   {
@@ -127,9 +135,10 @@ export const clientProjects: ClientProject[] = [
     stack: ["React", "Vite", "Tailwind", "Three.js", "GSAP"],
     year: "2026",
     accent: "#e5dfca",
-    status: "live",
+    status: "concept",
+    demoAvailable: true,
     demoUrl: "https://flowershop-qjcl.onrender.com/",
-    demoLabel: "Live demo",
+    demoLabel: "View concept demo",
     image: "/images/projects-images/flower-shop/flower-shop-home.png",
   },
   {
@@ -143,9 +152,10 @@ export const clientProjects: ClientProject[] = [
     stack: ["HTML5", "CSS3", "JavaScript", "Engineering math"],
     year: "2026",
     accent: "#cfe0c4",
-    status: "live",
+    status: "concept",
+    demoAvailable: true,
     demoUrl: "https://irrigation-net.onrender.com/",
-    demoLabel: "Live demo",
+    demoLabel: "View concept demo",
     image: "/images/projects-images/irrigation-net/irrigation-net-flow.png",
   },
   {
@@ -159,9 +169,10 @@ export const clientProjects: ClientProject[] = [
     stack: ["React", "Vite", "Tailwind", "AOS"],
     year: "2026",
     accent: "#f3d9c4",
-    status: "live",
+    status: "concept",
+    demoAvailable: true,
     demoUrl: "https://little-rainbow-nursery.onrender.com/",
-    demoLabel: "Live demo",
+    demoLabel: "View concept demo",
     image:
       "/images/projects-images/little-rainbow-nursery/little-rainbow-home.png",
   },
@@ -176,9 +187,10 @@ export const clientProjects: ClientProject[] = [
     stack: ["Phaser 3", "TypeScript", "Vite", "Tiled"],
     year: "2026",
     accent: "#cfe0e8",
-    status: "live",
+    status: "concept",
+    demoAvailable: true,
     demoUrl: "https://penguino-9cwy.onrender.com/",
-    demoLabel: "Play demo",
+    demoLabel: "View concept demo",
     image: "/images/projects-images/penguino/penguino-level1.png",
   },
   {
@@ -192,9 +204,10 @@ export const clientProjects: ClientProject[] = [
     stack: ["React", "Express", "MongoDB", "Redux Toolkit"],
     year: "2026",
     accent: "#d8d2e8",
-    status: "live",
+    status: "concept",
+    demoAvailable: true,
     demoUrl: "https://work-note-app.onrender.com/",
-    demoLabel: "Live demo",
+    demoLabel: "View concept demo",
     image: "/images/projects-images/work-note/work-note-home.png",
   },
   {
@@ -208,9 +221,10 @@ export const clientProjects: ClientProject[] = [
     stack: ["Phaser 3", "JavaScript", "HTML5", "CSS3"],
     year: "2026",
     accent: "#f0c98c",
-    status: "live",
+    status: "concept",
+    demoAvailable: true,
     demoUrl: "https://bomber-man-game.onrender.com/",
-    demoLabel: "Play demo",
+    demoLabel: "View concept demo",
     image: "/images/projects-images/bomber-man-game/bomber-man-level1.png",
   },
   {
@@ -224,14 +238,15 @@ export const clientProjects: ClientProject[] = [
     stack: ["React Native", "Expo", "TypeScript", "EAS"],
     year: "2026",
     accent: "#a66e38",
-    status: "live",
+    status: "concept",
+    demoAvailable: true,
     demoUrl: "https://sipora-cafee-demo--676nagl21m.expo.app//",
-    demoLabel: "View App",
+    demoLabel: "View concept demo",
     image: "/images/projects-images/Sipora-Cafee/Sipora-Cafee-home.png",
   },
 ];
 
-/** Number of projects with a working public demo — used by the portfolio hero. */
-export const liveProjectCount = clientProjects.filter(
-  (project) => project.demoUrl !== null,
+/** Number of concept builds with a public demo — used by the portfolio hero. */
+export const conceptDemoCount = clientProjects.filter(
+  (project) => project.demoAvailable,
 ).length;

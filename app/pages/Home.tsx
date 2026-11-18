@@ -207,15 +207,15 @@ export default function Home() {
                     to={to}
                     className="group flex items-baseline gap-3 sm:gap-4 border-t border-line py-4 sm:py-5 first:border-t-0"
                   >
-                    <span className="font-mono text-meta text-muted transition duration-200 ease-out group-hover:text-primary-text">
+                    <span className="font-mono text-meta text-muted transition duration-200 ease-out group-hover:text-primary-text group-focus-within:text-primary-text">
                       {number}
                     </span>
-                    <span className="font-display text-lg sm:text-xl font-medium text-ink transition duration-200 ease-out group-hover:translate-x-1 sm:group-hover:translate-x-1.5">
+                    <span className="font-display text-lg sm:text-xl font-medium text-ink transition duration-200 ease-out group-hover:translate-x-1 group-focus-within:translate-x-1 sm:group-hover:translate-x-1.5 sm:group-focus-within:translate-x-1.5">
                       {label}
                     </span>
                     <ArrowRight
                       aria-hidden="true"
-                      className="ml-auto size-4 self-center -translate-x-2 text-primary-text opacity-0 transition duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100"
+                      className="ml-auto size-4 self-center -translate-x-2 text-primary-text opacity-0 transition duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-within:translate-x-0 group-focus-within:opacity-100"
                     />
                   </Link>
                 ))}
@@ -297,21 +297,22 @@ export default function Home() {
             title="Engineered for impact. Built for the next stage."
             lede="Design, engineering and ongoing support in one place — a secure, fast, search-friendly foundation your business can grow on."
           />
-          <div className="mt-6 mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-5 md:gap-6 lg:grid-cols-3 lg:mt-12">
+          <ul className="mt-6 mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-5 md:gap-6 lg:grid-cols-3 lg:mt-12">
             {disciplines.map(([label, title, text, tag], index) => {
               const Icon = disciplineIcons[index];
               return (
-                <DisciplineCard
-                  key={title}
-                  Icon={Icon}
-                  label={label}
-                  title={title}
-                  text={text}
-                  tag={tag}
-                />
+                <li key={title} className="h-full">
+                  <DisciplineCard
+                    Icon={Icon}
+                    label={label}
+                    title={title}
+                    text={text}
+                    tag={tag}
+                  />
+                </li>
               );
             })}
-          </div>
+          </ul>
         </Container>
       </section>
 
@@ -341,16 +342,11 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* 
-      FIXED: 
-      1. Changed xl:grid-cols-3 to lg:grid-cols-3 (forces 3 columns on laptops).
-      2. Added max-w-6xl mx-auto to keep the 3 cards from stretching too wide on huge screens.
-    */}
-          <div className="mt-12 mx-auto max-w-6xl grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-12 mx-auto max-w-6xl grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {projects.slice(0, 3).map((project) => (
               <HomeProjectCard key={project.slug} project={project} />
             ))}
-          </div>
+          </ul>
 
         </Container>
       </section>
@@ -367,16 +363,18 @@ export default function Home() {
             title="Secure, clean, and delivered on time."
             lede="We focus on the details that matter — secure foundations, clean code, efficient delivery, and long-term value without unnecessary cost."
           />
-          <div className="mt-8 sm:mt-10 md:mt-12 grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2 sm:gap-4 lg:gap-5 xl:gap-6 xl:grid-cols-4">
+          <ul className="mt-8 sm:mt-10 md:mt-12 grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2 sm:gap-4 lg:gap-5 xl:gap-6 xl:grid-cols-4">
             {[
               ["03.1", "Secure by design", "Thoughtful security practices from day one — clean structure, safe forms, and a stable foundation you can rely on."],
               ["03.2", "Clean, professional code", "Readable, maintainable code that scales with your business and keeps future updates simple and cost-effective."],
               ["03.3", "Optimized performance & SEO-friendly", "Built for speed and discoverability — optimized performance and SEO best practices to help your site rank and load fast."],
               ["03.4", "On-time, reliable delivery", "Clear timelines, direct communication, and a smooth handoff — with support ready when you need it."],
             ].map(([number, title, text]) => (
-              <QualityCard key={number} number={number} title={title} text={text} />
+              <li key={number} className="h-full">
+                <QualityCard number={number} title={title} text={text} />
+              </li>
             ))}
-          </div>
+          </ul>
         </Container>
       </section>
 
@@ -408,11 +406,13 @@ export default function Home() {
                 />
               </Link>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5 xl:grid-cols-3">
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5 xl:grid-cols-3">
               {confidenceItems.map(({ title, text, meta, icon: Icon }) => (
-                <ConfidenceCard key={title} title={title} text={text} meta={meta} Icon={Icon} />
+                <li key={title} className="h-full">
+                  <ConfidenceCard title={title} text={text} meta={meta} Icon={Icon} />
+                </li>
               ))}
-            </div>
+            </ul>
 
           </div>
         </Container>

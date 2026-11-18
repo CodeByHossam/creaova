@@ -49,14 +49,16 @@ export default function Portfolio() {
             </p>
           </div>
 
-          <div
+          <ul
             id="work"
             className="mt-14 mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {clientProjects.map((project) => (
-              <ProjectCard key={project.slug} project={project} />
+              <li key={project.slug} className="h-full">
+                <ProjectCard project={project} />
+              </li>
             ))}
-          </div>
+          </ul>
 
           <div className="mt-12 text-center">
             <Button variant="light" to="/contact">

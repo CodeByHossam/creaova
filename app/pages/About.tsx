@@ -62,7 +62,7 @@ export default function About() {
               {principles.map(([number, title, text]) => (
                 <article
                   key={number}
-                  className="group flex h-full flex-col rounded-card border border-line bg-surface p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-sm"
+                  className="flex h-full flex-col rounded-card border border-line bg-surface p-6"
                 >
                   <span className="font-mono text-xl font-medium text-primary-text">
                     {number}
@@ -90,11 +90,11 @@ export default function About() {
             eyebrow="Our working model"
             title="Small enough to stay close. Structured enough to move."
           />
-          <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+          <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {workingModel.map(([title, text], index) => (
               <article
                 key={title}
-                className="group flex h-full flex-col rounded-card border border-line bg-surface p-7 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-sm"
+                className="flex h-full flex-col rounded-card border border-line bg-surface p-7"
               >
                 <span className="font-mono text-xl font-medium text-primary-text">
                   0{index + 1}
