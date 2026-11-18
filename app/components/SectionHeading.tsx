@@ -6,8 +6,9 @@ import type { ReactNode } from "react";
  * an optional lede. Replaces the hand-rolled heading blocks that were copied
  * into every section of Home, Services and About (plan M3 / H3).
  *
- * Title always renders in the Fraunces display face with the token type ramp
- * (`text-h2`), sentence case, weight 600 — never the old 900 extrabold.
+ * Title always renders in the Roboto Slab display face with the token type ramp
+ * (`text-h2`), sentence case, weight 500 (`font-medium`) — never the old 900
+ * extrabold.
  */
 export function SectionHeading({
   number,

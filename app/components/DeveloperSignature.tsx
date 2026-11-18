@@ -3,7 +3,7 @@
  *
  * Visual language matches the "Editorial Studio" system:
  *   - warm paper / ink surfaces, hairlines instead of heavy borders
- *   - Fraunces italic for the name (a human, signed-off feel)
+ *   - Roboto Slab italic for the name (a human, signed-off feel)
  *   - JetBrains Mono for the small uppercase metadata
  *   - a single burnt-orange accent used as a fill, never as light-on-light text
  *
@@ -40,7 +40,7 @@ export function DeveloperSignature({
         {/* Monogram seal: orange fill + ink text, matching the Button rule. */}
         <span
           aria-hidden="true"
-          className="relative grid size-8 shrink-0 place-items-center rounded-full bg-primary font-mono text-[10px] font-bold tracking-tight text-on-primary"
+          className="relative grid size-8 shrink-0 place-items-center rounded-full bg-primary font-mono text-xs font-bold tracking-tight text-on-primary"
         >
           CDS
           <svg
@@ -65,7 +65,7 @@ export function DeveloperSignature({
 
         <div className="min-w-0">
           <p
-            className={`font-mono text-[10px] uppercase tracking-[0.2em] ${meta}`}
+            className={`font-mono text-xs uppercase tracking-[0.12em] ${meta}`}
           >
             Designed &amp; built by
           </p>
@@ -92,7 +92,7 @@ export function DeveloperSignature({
 
       {compact ? null : (
         <span
-          className={`hidden shrink-0 rounded-full border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] sm:inline-block ${
+          className={`hidden shrink-0 rounded-full border px-2.5 py-1 font-mono text-xs uppercase tracking-[0.12em] sm:inline-block ${
             isDark
               ? "border-on-dark/15 bg-on-dark/5 text-on-dark-muted"
               : "border-line bg-surface-subtle text-muted"

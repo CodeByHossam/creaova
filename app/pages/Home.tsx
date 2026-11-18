@@ -18,7 +18,6 @@ import { DisciplineCard } from "~/components/DisciplineCard";
 import { HomeProjectCard } from "~/components/HomeProjectCard";
 import { QualityCard } from "~/components/QualityCard";
 import { ConfidenceCard } from "~/components/ConfidenceCard";
-import { ReviewsBand } from "~/components/ReviewsBand";
 import { SectionHeading } from "~/components/SectionHeading";
 import { primaryCta, site, absoluteUrl } from "~/data/constants";
 import { projects } from "~/data/projects";
@@ -64,7 +63,7 @@ export function meta() {
  * The homepage in the "Editorial Studio" system (plan Phase 3):
  * one honest single-column hero (no mock dashboards, no invented metrics),
  * numbered sections 01-04 via SectionHeading, one shared card language, and a
- * static strip of technologies the studio actually ships with.
+ * short, client-facing technology ticker.
  *
  * Load-bearing markup: every id/element pair below (#services article,
  * #work a, #process article) is keyed by the staggered entry animation in
@@ -99,19 +98,19 @@ const confidenceItems = [
   {
     title: "A partner, not a vendor",
     text: "We stay close after launch and keep supporting the work, so the site keeps serving you long after go-live.",
-    meta: "01 / Partnership",
+    meta: "04.1 / Partnership",
     icon: Target,
   },
   {
     title: "Secure & professional",
     text: "Clean, well-structured code and considered security practices give you a foundation you can rely on.",
-    meta: "02 / Trust",
+    meta: "04.2 / Trust",
     icon: Accessibility,
   },
   {
     title: "Fast & easy to find",
     text: "Strong performance and search foundations mean the site loads quickly and reaches the people who matter to you.",
-    meta: "03 / Performance",
+    meta: "04.3 / Performance",
     icon: Settings2,
   },
 ] as const;
@@ -135,37 +134,17 @@ const heroIndex = services.map((service) => [
   `/services#${service.id}`,
 ]);
 
-// The studio's full working toolset — front end, back end, data, infrastructure
-// and tooling — shown as a continuously scrolling ticker in the technology band.
+// A short, client-facing selection of the technologies behind the work. The
+// full 28-tool inventory was noise in a ticker and has been retired.
 const stack = [
   "React",
-  "TypeScript",
-  "JavaScript",
   "React Native",
+  "TypeScript",
   "Node.js",
-  "Express.js",
   "MongoDB",
-  "MySQL",
-  "Redux Toolkit",
-  "RTK Query",
-  "Tailwind CSS",
-  "HTML5",
-  "CSS3",
   "REST APIs",
   "AWS",
   "Docker",
-  "Git",
-  "GitHub",
-  "Vite",
-  "Vitest",
-  "Jest",
-  "JWT",
-  "Cloudinary",
-  "Amazon S3",
-  "Amazon RDS",
-  "Stripe",
-  "Postman",
-  "npm",
 ] as const;
 
 export default function Home() {
@@ -180,19 +159,19 @@ export default function Home() {
       <section id="home" className="bg-bg lg:-scroll-mt-4 xl:scroll-mt-0 ">
         <Container className="py-12 sm:py-16 md:py-12 lg:pt-22  xl:py-25">
           <div className="grid items-center gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 xl:gap-20">
-            <div className=" min-h-150 lg:min-h-0 ">
+            <div>
               <Badge>Digital experience architecture</Badge>
               <h1 className="mt-6 sm:mt-7 text-display font-medium text-ink">
                 We build <span className="text-primary-text">websites</span>{" "}
                 that build your business
               </h1>
-              <p className="mt-4 sm:mt-5 font-mono text-sm tracking-widest text-muted md:text-base">
+              <p className="mt-4 sm:mt-5 font-mono text-sm tracking-[0.12em] text-muted md:text-base">
                 Creativity meets innovation
               </p>
               <p className="mt-6 sm:mt-8 max-w-2xl text-lede text-muted">
                 {site.footer.brandLine}
               </p>
-              <div className="mt-4 min-[390px]:mt-35 sm:mt-15 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-6 sm:mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button to={primaryCta.to} size="lg">
                   {primaryCta.label}
                 </Button>
@@ -200,7 +179,7 @@ export default function Home() {
                   View our work
                 </Button>
               </div>
-              <dl className="mt-30 lg:mt-14 xl:mt-22 sm:mt-30 grid max-w-xl grid-cols-1 gap-x-10 gap-y-6 sm:gap-y-7 border-t border-line pt-6 sm:pt-8 sm:grid-cols-2">
+              <dl className="mt-8 sm:mt-10 lg:mt-12 grid max-w-xl grid-cols-1 gap-x-10 gap-y-6 sm:gap-y-7 border-t border-line pt-6 sm:pt-8 sm:grid-cols-2">
                 {heroFacts.map(([label, value]) => (
                   <div key={label}>
                     <dt className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
@@ -257,11 +236,10 @@ export default function Home() {
 
 
       {/* ---------------------------- Technology --------------------------- */}
-      {/* Continuously scrolling "news ticker" band: the whole toolset moves
-          right-to-left and loops seamlessly. The list is rendered twice — the
-          second copy is aria-hidden so a screen reader hears it once — and the
-          CSS translate moves exactly -50%, so the loop has no visible jump.
-          Hovering pauses it, and reduced-motion stops the animation entirely. */}
+      {/* A short, client-facing ticker. The list is rendered twice — the second
+          copy is aria-hidden so a screen reader hears it once — and the CSS
+          translate moves exactly -50%, so the loop has no visible jump. Hovering
+          pauses it; reduced-motion and narrow screens show it statically. */}
       <section
         aria-label="Technologies we build with"
         className="border-y border-line bg-surface"
@@ -349,7 +327,7 @@ export default function Home() {
               number="02"
               eyebrow="Selected work"
               title="Clear thinking, made tangible."
-              lede="A closer look at recent builds — real products, live systems, and the thinking that shaped them."
+              lede="A closer look at concept builds — the thinking behind each one and what it explores."
             />
             <Link
               to="/portfolio"
@@ -377,7 +355,7 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ---------------------------- 03 Process --------------------------- */}
+      {/* ---------------------------- 03 Quality -------------------------- */}
       <section
         id="process"
         className="bg-bg py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28 scroll-mt-16 lg:scroll-mt-20"
@@ -391,10 +369,10 @@ export default function Home() {
           />
           <div className="mt-8 sm:mt-10 md:mt-12 grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2 sm:gap-4 lg:gap-5 xl:gap-6 xl:grid-cols-4">
             {[
-              ["01", "Secure by design", "Thoughtful security practices from day one — clean structure, safe forms, and a stable foundation you can rely on."],
-              ["02", "Clean, professional code", "Readable, maintainable code that scales with your business and keeps future updates simple and cost-effective."],
-              ["03", "Optimized performance & SEO-friendly", "Built for speed and discoverability — optimized performance and SEO best practices to help your site rank and load fast."],
-              ["04", "On-time, reliable delivery", "Clear timelines, direct communication, and a smooth handoff — with support ready when you need it."],
+              ["03.1", "Secure by design", "Thoughtful security practices from day one — clean structure, safe forms, and a stable foundation you can rely on."],
+              ["03.2", "Clean, professional code", "Readable, maintainable code that scales with your business and keeps future updates simple and cost-effective."],
+              ["03.3", "Optimized performance & SEO-friendly", "Built for speed and discoverability — optimized performance and SEO best practices to help your site rank and load fast."],
+              ["03.4", "On-time, reliable delivery", "Clear timelines, direct communication, and a smooth handoff — with support ready when you need it."],
             ].map(([number, title, text]) => (
               <QualityCard key={number} number={number} title={title} text={text} />
             ))}
@@ -440,7 +418,6 @@ export default function Home() {
         </Container>
       </section>
 
-      <ReviewsBand />
       <CTABand />
     </>
   );

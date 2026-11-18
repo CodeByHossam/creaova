@@ -39,7 +39,7 @@ export function ContactForm() {
     // Guard: if either the endpoint or the access key is missing, don't even
     // attempt the fetch — fail fast with a helpful message.
     if (!env.formEndpoint || !env.formAccessKey) {
-      setErrorMessage("Form is not configured. Please email us directly.");
+      setErrorMessage("The contact form isn't available right now.");
       setStatus("error");
       return;
     }
@@ -47,7 +47,7 @@ export function ContactForm() {
     // hCaptcha must be completed before sending. The provider-side check is
     // still authoritative; this only avoids a pointless round trip.
     if (env.formCaptchaSiteKey && !captchaToken) {
-      setErrorMessage("Please complete the anti-bot check before sending.");
+      setErrorMessage("Please complete the hCaptcha check, then send your enquiry again.");
       setStatus("error");
       return;
     }
@@ -87,17 +87,15 @@ export function ContactForm() {
       setCaptchaToken("");
       setStatus("success");
     } catch (err) {
-      // Keep the message generic for security; log the real error in dev.
+      // Name the user-visible outcome ("your enquiry wasn't sent") without
+      // exposing provider wording, which can be an internal code or a key
+      // problem the visitor cannot act on. The real error stays in dev logs.
       if (import.meta.env.DEV) {
         console.error("[ContactForm] submission failed:", err);
       }
       captchaRef.current?.resetCaptcha();
       setCaptchaToken("");
-      setErrorMessage(
-        err instanceof Error && err.message && err.message !== "Submission failed. Please try again."
-          ? err.message
-          : "Something went wrong. Please try again, or email us directly.",
-      );
+      setErrorMessage("Your enquiry couldn't be sent. Please try again.");
       setStatus("error");
     }
   }
@@ -166,9 +164,13 @@ export function ContactForm() {
           rows={6}
           minLength={20}
           maxLength={5000}
+          aria-describedby="project-details-hint"
           className="form-input resize-y"
           placeholder="What are you trying to make, improve, or launch?"
         />
+        <span id="project-details-hint" className="block text-xs leading-5 text-muted">
+          A few sentences is plenty — please write at least 20 characters.
+        </span>
       </label>
 
       {/* Spam traps — not visible, not focusable, not read by screen readers. */}
@@ -193,7 +195,7 @@ export function ContactForm() {
           onError={() => setCaptchaToken("")}
         />
         <p className="text-xs leading-5 text-muted">
-          Protected by hCaptcha. Its challenge is subject to{" "}
+          This form uses hCaptcha to block spam. See{" "}
           <a
             className="underline"
             href="https://www.hcaptcha.com/privacy"
@@ -217,18 +219,19 @@ export function ContactForm() {
 
       <div className="flex flex-wrap items-center gap-5">
         <Button type="submit" disabled={status === "sending"} loading={status === "sending"}>
-          Send enquiry
+          {status === "sending" ? "Sending enquiry…" : "Send enquiry"}
         </Button>
 
         {status === "success" && (
           <p className="text-sm text-success" role="status">
-            Thanks — your enquiry is on its way. We&apos;ll reply within one business day.
+            Thanks — we&apos;ve received your enquiry. We&apos;ll reply within one
+            business day.
           </p>
         )}
 
         {status === "error" && (
           <p className="max-w-md text-sm text-error" role="alert">
-            {errorMessage || "Something went wrong."} You can also email{" "}
+            {errorMessage || "Your enquiry couldn't be sent."} Reach us directly at{" "}
             <a className="underline" href={`mailto:${site.contact.email}`}>
               {site.contact.email}
             </a>

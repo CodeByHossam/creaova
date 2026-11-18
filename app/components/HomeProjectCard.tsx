@@ -22,8 +22,8 @@ export function HomeProjectCard({ project }: { project: Project }) {
             className="absolute inset-0 size-full object-contain transition-[filter] duration-500 ease-out group-hover:brightness-105"
           />
         ) : null}
-        <span className="absolute bottom-2 left-2 rounded-full border border-white/20 bg-ink/50 px-2.5 py-1 font-mono text-[11px] font-medium uppercase leading-none tracking-[0.14em] text-on-dark backdrop-blur-md">
-          Selected build
+        <span className="absolute bottom-2 left-2 rounded-full border border-white/20 bg-ink/50 px-2.5 py-1 font-mono text-xs font-medium uppercase leading-none tracking-[0.12em] text-on-dark backdrop-blur-md">
+          Concept
         </span>
       </div>
       <h3 className="mt-5 text-xl font-medium text-on-dark">{project.title}</h3>

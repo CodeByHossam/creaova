@@ -24,7 +24,7 @@ import { site } from "~/data/constants";
  *
  * 3. **The wordmark is artwork, not text.** The supplied lockup types "CREAOVA"
  *    in a geometric sans that is not in the site's font stack - the site sets
- *    its headings in Fraunces, a serif. Setting the same word as live DOM text
+ *    its headings in Roboto Slab, a serif. Setting the same word as live DOM text
  *    would put two different brands side by side, and two "CREAOVA"s on the
  *    screen. The word stays in the image and the brand name is announced by the
  *    link label instead.

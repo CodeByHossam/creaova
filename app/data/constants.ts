@@ -1,10 +1,10 @@
 /**
- * Site-wide configuration â€” the single source of truth for identity, navigation,
+ * Site-wide configuration — the single source of truth for identity, navigation,
  * footer structure and contact details.
  *
- * Reference: plans/MULTIPAGE_UI_PLAN.md Â§3.2, Â§15b
+ * Reference: plans/MULTIPAGE_UI_PLAN.md §3.2, §15b
  *
- * âš ï¸  DEMO DATA. Every value below is deliberately non-routable:
+ * ⚠️  DEMO DATA. Every value below is deliberately non-routable:
  *
  *   - `.example.com` / `example.com` are reserved by RFC 2606 and can never
  *     resolve or receive mail.
@@ -14,13 +14,13 @@
  *     person. Components render these as plain text while `href` is null, so a
  *     placeholder can never dial or open a chat.
  *
- * Replacing these before launch is a RELEASE BLOCKER (Â§16).
+ * Replacing these before launch is a RELEASE BLOCKER (§16).
  *
- * â”€â”€ HOW TO PATCH IN THE REAL DATA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+ * ── HOW TO PATCH IN THE REAL DATA ─────────────────────────────────────────
  * Everything that varies per business lives in the two blocks below:
  *
- *   1. `contact`  â€” email, phone, WhatsApp, hours, address.
- *   2. `socialLinks` â€” the real profile URLs.
+ *   1. `contact`  — email, phone, WhatsApp, hours, address.
+ *   2. `socialLinks` — the real profile URLs.
  *
  * The canonical origin lives in `.env` as `VITE_SITE_URL` and reaches
  * `site.url` through `env.siteUrl`; `npm run sync:site-url` propagates it into
@@ -55,7 +55,7 @@ export type NavItem = {
  * The brand mark that belongs to a social profile.
  *
  * lucide-react has no brand icons, so the marks are inlined in
- * `~/components/BrandIcon.tsx` and picked by id â€” a profile can never end up
+ * `~/components/BrandIcon.tsx` and picked by id — a profile can never end up
  * with a URL but no glyph.
  */
 export type SocialIconId = "instagram" | "linkedin" | "behance";
@@ -63,7 +63,7 @@ export type SocialIconId = "instagram" | "linkedin" | "behance";
 export type SocialLink = {
   label: string;
   /**
-   * `null` when the profile has not been supplied yet â†’ the footer renders it
+   * `null` when the profile has not been supplied yet → the footer renders it
    * as plain text rather than a link to a platform homepage, which would look
    * like a working contact route but lead nowhere.
    */
@@ -95,10 +95,10 @@ export type ContactChannel = {
 
 /**
  * A footer link is one of three things, and the shape says which:
- *   - `to`            internal route â†’ react-router <Link>
- *   - `href`          external / mailto: â†’ plain <a>
+ *   - `to`            internal route → react-router <Link>
+ *   - `href`          external / mailto: → plain <a>
  *   - `href: null`    segment disabled because the data is still a placeholder
- *                     â†’ renders as non-interactive text, never a dead link
+ *                     → renders as non-interactive text, never a dead link
  */
 export type FooterLink = {
   label: string;
@@ -142,7 +142,7 @@ export type Site = {
     inverseSrc: string;
     /**
      * Intrinsic pixels. These exist to reserve layout space and prevent CLS.
-     * They must match the real file â€” regenerate with scripts/prepare-logo.ps1
+     * They must match the real file — regenerate with scripts/prepare-logo.ps1
      * if the artwork changes.
      */
     width: number;
@@ -153,16 +153,16 @@ export type Site = {
     email: string;
     /** Display form. Always present. */
     phoneDisplay: string;
-    /** `null` disables the link entirely â€” see the note above. */
+    /** `null` disables the link entirely — see the note above. */
     phoneHref: string | null;
     whatsappDisplay: string;
-    /** `null` disables the link entirely â€” see the note above. */
+    /** `null` disables the link entirely — see the note above. */
     whatsappHref: string | null;
     hours: string;
     address: {
       /**
        * The studio serves the whole country rather than from one base city,
-       * so the address names the country â€” the site never claims a city it
+       * so the address names the country — the site never claims a city it
        * does not state anywhere else.
        */
       region: string;
@@ -219,9 +219,9 @@ const contact: Site["contact"] = {
   email: "creaova.co@gmail.com",
   // One number produces all four values. Swap `null` for the real number
   // (e.g. "+971501234567") and the display text, the `tel:` link and the
-  // `wa.me` link all update together â€” they can no longer drift apart.
+  // `wa.me` link all update together — they can no longer drift apart.
   ...phoneDetails("+97152525982", "+971 52 525 982"),
-  hours: "Sunâ€“Thu, 9amâ€“6pm (GST)",
+  hours: "Sun–Thu, 9am–6pm (GST)",
   address: {
     region: "United Arab Emirates",
   },
@@ -229,7 +229,7 @@ const contact: Site["contact"] = {
 
 export const socialLinks: SocialLink[] = [
   { label: "Instagram", href: "https://www.instagram.com/creaova.co/", icon: "instagram" },
-  // Profiles not supplied yet â€” `href: null` keeps them off the link list
+  // Profiles not supplied yet — `href: null` keeps them off the link list
   // until the real URLs are confirmed. See `stillHasDemoData` below.
   { label: "LinkedIn", href: null, icon: "linkedin" },
   { label: "Behance", href: null, icon: "behance" },
@@ -239,7 +239,7 @@ export const socialLinks: SocialLink[] = [
  * Every way to reach the studio, in one list.
  *
  * The footer column and the contact page aside both read from here, so an
- * email, a number or an opening hour is written once and rendered twice â€”
+ * email, a number or an opening hour is written once and rendered twice —
  * with the same icon in both places.
  */
 export const contactChannels: ContactChannel[] = [
@@ -280,7 +280,7 @@ export const contactChannels: ContactChannel[] = [
  *
  * Derived instead of hand-set on purpose: the flag flips to false only once
  * every placeholder is genuinely gone, so it can never drift out of date and
- * leave the launch checklist (Â§16) reading "done" when it is not.
+ * leave the launch checklist (§16) reading "done" when it is not.
  */
 function stillHasDemoData(): boolean {
   return (
@@ -295,7 +295,7 @@ export const site: Site = {
   name: "Creaova",
   legalName: "Creaova Digital Solutions",
   tagline: "Creativity meets innovation.",
-  // Canonical origin, from .env â†’ VITE_SITE_URL. Never hard-code it here.
+  // Canonical origin, from .env → VITE_SITE_URL. Never hard-code it here.
   url: env.siteUrl,
   isPlaceholder: stillHasDemoData(),
   assetVersion: ASSET_VERSION,
@@ -305,7 +305,6 @@ export const site: Site = {
     { label: "Services", to: "/services#all-services" },
     { label: "Portfolio", to: "/portfolio/#projects" },
     { label: "Process", to: "/services#process" },
-    { label: "Reviews", to: "/#testimonials" },
     { label: "About", to: "/about" },
     { label: "Contact", to: "/contact" },
   ],
@@ -329,10 +328,10 @@ export const site: Site = {
 
   footer: {
     brandLine:
-      "An established digital studio in the UAE. We design and build secure, high-performing websites and apps â€” and stay with you as a partner after launch.",
+      "An established digital studio in the UAE. We design and build secure, high-performing websites and apps — and stay with you as a partner after launch.",
     location: "United Arab Emirates",
 
-    // Three quick-access groups, kept deliberately short (Â§3.2). Every footer
+    // Three quick-access groups, kept deliberately short (§3.2). Every footer
     // link is a second chance to navigate, but each one also costs attention.
     // The contact routes are NOT here: they have their own band in the footer,
     // built from `contactChannels`.
@@ -356,7 +355,6 @@ export const site: Site = {
       {
         title: "Company",
         links: [
-          { label: "Reviews", to: "/#testimonials" },
           { label: "Contact", to: "/contact" },
           { label: "Home", to: "/#home" },
         ],

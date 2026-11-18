@@ -21,7 +21,7 @@ const iconClass =
   "inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-dark-line text-primary";
 
 const labelClass =
-  "block font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-on-dark-muted";
+  "block font-mono text-xs uppercase tracking-[0.12em] text-on-dark-muted";
 
 const valueClass =
   "mt-1 block break-words text-sm text-on-dark transition-colors duration-200 hover:text-primary";

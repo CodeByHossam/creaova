@@ -89,8 +89,8 @@ export function ErrorBoundary() {
 
   return <main className="mx-auto flex min-h-screen w-full max-w-page flex-col items-start justify-center px-5 py-24 sm:px-8">
     <p className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">{isNotFound ? "404" : "Error"}</p>
-    <h1 className="mt-4 font-display text-h2 text-ink">{isNotFound ? "That page doesn’t exist." : "Something went wrong."}</h1>
-    <p className="mt-4 max-w-[var(--measure)] text-lede text-muted">{isNotFound ? "The link may be out of date, or the page may have moved." : "This page failed to load. Try again, or head back to the homepage."}</p>
+    <h1 className="mt-4 font-display text-h2 text-ink">{isNotFound ? "We couldn’t find that page." : "Something went wrong."}</h1>
+    <p className="mt-4 max-w-[var(--measure)] text-lede text-muted">{isNotFound ? "The link may be out of date, or the page may have moved." : "This page failed to load. Reload to try again, or head back to the homepage."}</p>
     <a href="/" className="mt-8 inline-flex min-h-11 items-center rounded-control bg-ink px-6 py-3 text-sm font-semibold text-on-dark transition-colors duration-200 ease-out hover:bg-primary hover:text-on-primary">Back to homepage</a>
   </main>;
 }

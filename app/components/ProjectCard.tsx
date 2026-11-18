@@ -59,7 +59,7 @@ export function ProjectCard({ project }: { project: ClientProject }) {
           </>
         )}
 
-        <span className="absolute bottom-2 left-2 rounded-full border border-white/20 bg-ink/50 px-2.5 py-1 font-mono text-[11px] font-medium uppercase leading-none tracking-[0.14em] text-on-dark backdrop-blur-md">
+        <span className="absolute bottom-2 left-2 rounded-full border border-white/20 bg-ink/50 px-2.5 py-1 font-mono text-xs font-medium uppercase leading-none tracking-[0.12em] text-on-dark backdrop-blur-md">
           {project.category}
         </span>
       </div>
@@ -73,7 +73,7 @@ export function ProjectCard({ project }: { project: ClientProject }) {
                 href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/status inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2 py-0.5 font-mono text-[11px] font-medium uppercase leading-none tracking-[0.14em] text-emerald-300 transition-colors duration-200 hover:border-emerald-300/60 hover:bg-emerald-400/20"
+                className="group/status inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2 py-0.5 font-mono text-xs font-medium uppercase leading-none tracking-[0.12em] text-emerald-300 transition-colors duration-200 hover:border-emerald-300/60 hover:bg-emerald-400/20"
                 aria-label={`Visit ${project.title} live demo`}
               >
                 <span
@@ -84,7 +84,7 @@ export function ProjectCard({ project }: { project: ClientProject }) {
                 <ArrowUpRight aria-hidden="true" className="size-3 opacity-70 transition-transform duration-200 group-hover/status:-translate-y-0.5 group-hover/status:translate-x-0.5" />
               </a>
             ) : (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-on-dark/10 bg-on-dark/5 px-2 py-0.5 font-mono text-[11px] font-medium uppercase leading-none tracking-[0.14em] text-on-dark-muted">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-on-dark/10 bg-on-dark/5 px-2 py-0.5 font-mono text-xs font-medium uppercase leading-none tracking-[0.12em] text-on-dark-muted">
                 <span aria-hidden="true" className={`size-1.5 rounded-full ${isLive ? "bg-emerald-400/60" : "bg-primary/70"}`} />
                 {isLive ? "Live" : "In build"}
               </span>
@@ -131,7 +131,7 @@ export function ProjectCard({ project }: { project: ClientProject }) {
               Live demo soon
             </Button>
             {project.apiUrl ? (
-              <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-on-dark-muted">
+              <p className="mt-2 font-mono text-xs uppercase tracking-[0.12em] text-on-dark-muted">
                 API is live —{" "}
                 <a
                   href={project.apiUrl}
