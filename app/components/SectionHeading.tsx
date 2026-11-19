@@ -28,7 +28,7 @@ export function SectionHeading({
   lede?: ReactNode;
   align?: "center" | "left";
   dark?: boolean;
-  /** Use the locked 600 display weight (Mockup 01 / Home hierarchy). */
+  /** Use the locked 600 display weight (Mockup 01 editorial hierarchy, site-wide). */
   bold?: boolean;
   /** Override the lede colour where the section ground needs a darker ink. */
   ledeClassName?: string;
