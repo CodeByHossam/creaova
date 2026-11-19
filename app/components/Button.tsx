@@ -7,10 +7,11 @@ import { Link } from "react-router";
  * Two visual languages only: filled primary and outline secondary. `light` is
  * the outline secondary skin for dark grounds, not a third action style.
  *
- * Colour rule: orange is a FILL, never text on a light background. `primary`
- * pairs `bg-primary` (#EA580C) with `text-on-primary` (ink, 5.2:1) — and the
- * resting state is ink, with orange arriving only on hover. No shadows and no
- * glow anywhere (plan M6): separation is hairlines + space.
+ * Colour rule (Mockup 01): orange is a FILL, never text on a light background.
+ * `primary` pairs `bg-primary` (#FD6E00) with `text-on-primary` (#241000,
+ * 6.45:1). On the darker hover fill (#A94A00) the label inverts to
+ * `text-on-dark` (#FFF8F2, 5.5:1); keeping ink there would fall to 3.2:1.
+ * No shadows and no glow anywhere: separation comes from surface steps and space.
  */
 
 type Variant = "primary" | "secondary" | "light";
@@ -20,7 +21,7 @@ const base =
   "inline-flex items-center justify-center gap-2 rounded-lg font-semibold whitespace-nowrap transition duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:translate-y-px active:scale-[0.99] active:brightness-95 disabled:cursor-not-allowed disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-ink text-on-dark hover:-translate-y-0.5 hover:bg-primary hover:text-on-primary",
+  primary: "bg-primary text-on-primary hover:-translate-y-0.5 hover:bg-primary-hover hover:text-on-dark",
   secondary:
     "border border-ink text-ink hover:-translate-y-0.5 hover:bg-ink hover:text-on-dark",
   light:

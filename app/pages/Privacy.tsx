@@ -27,7 +27,7 @@ const sections: Section[] = [
         Emirates. For the purposes of applicable data-protection law, Creaova is
         the controller of the personal information described in this policy.
         Questions or requests can be sent to{" "}
-        <a className="underline" href={`mailto:${email}`}>
+        <a className="underline underline-offset-4 text-ink transition-colors duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text" href={`mailto:${email}`}>
           {email}
         </a>
         .
@@ -79,7 +79,7 @@ const sections: Section[] = [
       <>
         The form is delivered through{" "}
         <a
-          className="underline"
+          className="underline underline-offset-4 text-ink transition-colors duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text"
           href="https://web3forms.com/privacy"
           target="_blank"
           rel="noreferrer"
@@ -89,7 +89,7 @@ const sections: Section[] = [
         , which processes the submission and forwards it to our business inbox.
         The form is protected by{" "}
         <a
-          className="underline"
+          className="underline underline-offset-4 text-ink transition-colors duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text"
           href="https://www.hcaptcha.com/privacy"
           target="_blank"
           rel="noreferrer"
@@ -110,7 +110,7 @@ const sections: Section[] = [
       <>
         The site is hosted by{" "}
         <a
-          className="underline"
+          className="underline underline-offset-4 text-ink transition-colors duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text"
           href="https://render.com/privacy"
           target="_blank"
           rel="noreferrer"
@@ -119,7 +119,7 @@ const sections: Section[] = [
         </a>{" "}
         and protected by{" "}
         <a
-          className="underline"
+          className="underline underline-offset-4 text-ink transition-colors duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text"
           href="https://www.cloudflare.com/privacypolicy/"
           target="_blank"
           rel="noreferrer"
@@ -193,7 +193,7 @@ const sections: Section[] = [
         of processing, portability, or object to certain processing. You may also
         withdraw consent and lodge a complaint with the UAE Data Office or another
         competent authority. To exercise a right, email{" "}
-        <a className="underline" href={`mailto:${email}`}>
+        <a className="underline underline-offset-4 text-ink transition-colors duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text" href={`mailto:${email}`}>
           {email}
         </a>
         . We may need to verify your identity before acting on a request.
@@ -237,32 +237,42 @@ const sections: Section[] = [
 
 export default function Privacy() {
   return (
-    <Container className="py-16 sm:py-20 lg:py-28">
-      <div className="max-w-3xl">
-        <p className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
-          Legal · Privacy
-        </p>
-        <h1 className="mt-6 text-display font-medium tracking-tight text-ink">
-          Privacy policy
-        </h1>
-        <p className="mt-7 text-lede text-muted">
-          This policy explains how Creaova Digital Solutions handles personal
-          information when you visit this website or contact us.
-        </p>
-        <p className="mt-3 text-sm text-muted">Effective 23 October 2026.</p>
+    <>
+      {/* Compact ink band, then the light reading ground — the Home 60/30/10
+          rhythm applied to a text-led page. */}
+      <section className="bg-ink">
+        <Container className="py-10 sm:py-12 lg:py-14">
+          <div className="max-w-3xl">
+            <p className="font-mono text-meta font-medium uppercase tracking-[0.18em] text-on-dark-muted">
+              Legal · Privacy
+            </p>
+            <h1 className="mt-5 sm:mt-6 text-display font-semibold text-on-dark">
+              Privacy policy
+            </h1>
+            <p className="mt-5 sm:mt-6 max-w-2xl text-lede text-on-dark-muted">
+              This policy explains how Creaova Digital Solutions handles personal
+              information when you visit this website or contact us.
+            </p>
+            <p className="mt-3 text-sm text-on-dark-muted">Effective 23 October 2026.</p>
+          </div>
+        </Container>
+      </section>
 
-        <div className="mt-14 space-y-10">
+      <Container className="py-12 sm:py-16 lg:py-20">
+        <div className="max-w-3xl space-y-10">
           {sections.map((section, index) => (
             <section key={section.title} className="border-t border-line pt-7">
-              <p className="font-mono text-sm text-primary-text">
+              <p className="font-mono text-meta font-medium uppercase tracking-[0.12em] text-primary-text">
                 {String(index + 1).padStart(2, "0")}
               </p>
-              <h2 className="mt-3 text-2xl font-medium text-ink">{section.title}</h2>
-              <div className="mt-3 leading-7 text-muted">{section.body}</div>
+              <h2 className="mt-3 font-sans text-h3 font-semibold text-ink">
+                {section.title}
+              </h2>
+              <div className="mt-2 text-sm leading-relaxed text-muted">{section.body}</div>
             </section>
           ))}
         </div>
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 }

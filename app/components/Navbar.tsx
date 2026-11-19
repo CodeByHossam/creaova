@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
 
-import { Button } from "~/components/Button";
+import { ArrowUpRight } from "lucide-react";
+
 import { Container } from "~/components/Container";
 import { Logo } from "~/components/Logo";
 import { MobileNav } from "~/components/MobileNav";
-import { primaryCta, site } from "~/data/constants";
+import { NavIcon } from "~/components/NavIcon";
+import { TextLink } from "~/components/TextLink";
+import { navCta, site } from "~/data/constants";
+import { useHydratedLocationHash } from "~/hooks/useHydratedLocationHash";
 
 /**
  * Site header — sticky, hairline-separated, editorial text-only links.
@@ -17,13 +21,15 @@ import { primaryCta, site } from "~/data/constants";
  *   the 64/80px bar without competing with the nav links. The wordmark is
  *   image, not live text: as DOM text it would render in the site's serif and
  *   put two "CREAOVA"s on the screen.
- * - No per-item icons: they added noise without aiding recognition (Hick's Law),
- *   and the active state is marked by ink text + an orange underline — a
- *   non-colour cue as well as colour (WCAG 1.4.1).
- * - The CTA is the shared Button, so it keeps the system's contrast rule.
+ * - Small decorative icons precede each label, using the glyph vocabulary from
+ *   Mockup 01. They are `aria-hidden`, so the text still names the destination.
+ *   The active state is marked by ink text + an orange underline — a non-colour
+ *   cue as well as colour (WCAG 1.4.1).
+ * - The CTA is a quiet TextLink ("Say hello"); the hero owns the one primary
+ *   "Start a project" button, so the header does not repeat the same action.
  */
 function navLinkClass({ isActive }: { isActive: boolean }) {
-  return `relative inline-flex items-center rounded-lg px-3 py-2 font-body font-medium text-sm transition-colors duration-200 ease-out ${
+  return `relative inline-flex items-center gap-2 rounded-lg px-3 py-2 font-body font-medium text-sm transition-colors duration-200 ease-out ${
     isActive
       ? "text-ink underline decoration-primary decoration-2 underline-offset-[6px]"
       : "text-muted hover:text-ink"
@@ -39,6 +45,7 @@ function isNavItemActive(to: string, pathname: string, hash: string) {
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const hash = useHydratedLocationHash();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -69,11 +76,12 @@ export function Navbar() {
         <nav aria-label="Primary" className="hidden lg:block">
           <ul className="flex items-center gap-1">
             {site.nav.map((item) => {
-              const isActive = isNavItemActive(item.to, location.pathname, location.hash);
+              const isActive = isNavItemActive(item.to, location.pathname, hash);
 
               return (
                 <li key={item.to}>
                   <NavLink to={item.to} end className={() => navLinkClass({ isActive })}>
+                    <NavIcon id={item.icon} className="size-4 shrink-0" />
                     {item.label}
                   </NavLink>
                 </li>
@@ -84,12 +92,16 @@ export function Navbar() {
 
         {/* Action Area */}
         <div className="flex items-center gap-1">
-          {/* Wrapped so `hidden` can't fight the Button's own `inline-flex`
-              (different elements → the media query wins cleanly). */}
+          {/* A quiet text invitation, not a second orange button — the hero
+              keeps the single primary action on this page. */}
           <span className="hidden sm:block">
-            <Button to={primaryCta.to} variant="primary" size="md">
-              {primaryCta.label}
-            </Button>
+            <TextLink
+              to={navCta.to}
+              className="min-h-11 gap-1.5 rounded-lg px-3 text-sm font-semibold"
+            >
+              {navCta.label}
+              <ArrowUpRight aria-hidden="true" className="size-4" />
+            </TextLink>
           </span>
 
           {/* Mobile Navigation Trigger */}

@@ -8,6 +8,7 @@ export function DisciplineCard({
   text,
   tag,
   to = "/services",
+  actionLabel = "Explore",
 }: {
   Icon: any;
   label: string;
@@ -15,6 +16,7 @@ export function DisciplineCard({
   text: string;
   tag: string;
   to?: string;
+  actionLabel?: string;
 }) {
   return (
     <article className="flex h-full min-w-0 flex-col rounded-card border border-line bg-surface p-5">
@@ -26,7 +28,7 @@ export function DisciplineCard({
         {label}
       </span>
 
-      <h3 className="mt-2 font-sans text-lg font-medium leading-snug text-ink">
+      <h3 className="mt-2 font-sans text-h3 font-semibold text-ink">
         {title}
       </h3>
 
@@ -39,9 +41,9 @@ export function DisciplineCard({
 
         <Link
           to={to}
-          className="group/link mt-4 flex items-center justify-between border-t border-line pt-3 text-sm font-semibold text-ink transition-all duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text active:translate-y-px"
+          className="group/link mt-4 flex min-h-11 items-center justify-between border-t border-line pt-3 text-sm font-semibold text-ink transition-all duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text active:translate-y-px"
         >
-          Explore
+          {actionLabel}
           <ArrowUpRight
             aria-hidden="true"
             className="size-4 shrink-0 transition-transform duration-200 ease-out group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-focus/link:-translate-y-0.5 group-focus/link:translate-x-0.5"

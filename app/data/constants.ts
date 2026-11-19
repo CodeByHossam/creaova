@@ -49,7 +49,18 @@ export const ASSET_VERSION = "2026-10-22";
 export type NavItem = {
   label: string;
   to: string;
+  /** Decorative glyph for the primary nav; see `NavIcon.tsx`. */
+  icon?: NavIconId;
 };
+
+/** Primary-nav glyphs — ids live next to the destinations they belong to. */
+export type NavIconId =
+  | "home"
+  | "services"
+  | "portfolio"
+  | "process"
+  | "about"
+  | "contact";
 
 /**
  * The brand mark that belongs to a social profile.
@@ -301,12 +312,12 @@ export const site: Site = {
   assetVersion: ASSET_VERSION,
 
   nav: [
-    { label: "Home", to: "/#home" },
-    { label: "Services", to: "/services#all-services" },
-    { label: "Portfolio", to: "/portfolio/#projects" },
-    { label: "Process", to: "/services#process" },
-    { label: "About", to: "/about" },
-    { label: "Contact", to: "/contact" },
+    { label: "Home", to: "/#home", icon: "home" },
+    { label: "Services", to: "/services#all-services", icon: "services" },
+    { label: "Portfolio", to: "/portfolio/#projects", icon: "portfolio" },
+    { label: "Process", to: "/services#process", icon: "process" },
+    { label: "About", to: "/about", icon: "about" },
+    { label: "Contact", to: "/contact", icon: "contact" },
   ],
 
   socialLinks,
@@ -370,6 +381,9 @@ export const site: Site = {
 
 /** The primary header call to action, used by both Navbar and MobileNav. */
 export const primaryCta: NavItem = { label: "Start a project", to: "/contact" };
+
+/** Quiet header substitute — same destination, a softer invitation than the hero button. */
+export const navCta: NavItem = { label: "Say hello", to: "/contact" };
 
 /**
  * Absolute URL for a route, built from the canonical origin in `.env`

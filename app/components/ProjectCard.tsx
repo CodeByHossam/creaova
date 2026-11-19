@@ -37,7 +37,7 @@ export function ProjectCard({ project }: { project: ClientProject }) {
               style={{
                 backgroundColor: project.accent,
                 backgroundImage:
-                  "radial-gradient(circle at 1px 1px, rgb(22 19 15 / 16%) 1px, transparent 0)",
+                  "radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-ink) 16%, transparent) 1px, transparent 0)",
                 backgroundSize: "16px 16px",
               }}
             />
@@ -50,7 +50,7 @@ export function ProjectCard({ project }: { project: ClientProject }) {
           </>
         )}
 
-        <span className="absolute bottom-2 left-2 rounded-full border border-on-dark/20 bg-ink/90 px-2.5 py-1 font-mono text-meta font-medium uppercase leading-none tracking-[0.12em] text-on-dark">
+        <span className="absolute bottom-2 left-2 rounded-md border border-dark-line bg-ink px-2.5 py-1 font-mono text-meta font-medium uppercase leading-none tracking-[0.12em] text-on-dark">
           {project.category}
         </span>
       </div>
@@ -58,11 +58,11 @@ export function ProjectCard({ project }: { project: ClientProject }) {
       <div className="mt-5 flex items-start justify-between gap-4">
         <div>
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-            <h2 className="font-sans text-lg font-medium leading-snug text-on-dark">
+            <h2 className="font-sans text-h3 font-semibold leading-snug text-on-dark">
               {project.title}
             </h2>
-            <span className="inline-flex shrink-0 items-center gap-1.5 self-center rounded-full border border-on-dark/15 bg-on-dark/5 px-2 py-0.5 font-mono text-meta font-medium uppercase leading-none tracking-[0.12em] text-on-dark-muted">
-              <span aria-hidden="true" className="size-1.5 rounded-full bg-primary/70" />
+            <span className="inline-flex shrink-0 items-center gap-1.5 self-center rounded-md border border-dark-line bg-dark-surface px-2 py-0.5 font-mono text-xs font-medium uppercase leading-none tracking-[0.12em] text-on-dark-muted">
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-primary" />
               Concept
             </span>
           </div>

@@ -4,8 +4,8 @@
   "description": "Creativity meets innovation.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#16130f",
-  "theme_color": "#16130f",
+  "background_color": "#FFF8F2",
+  "theme_color": "#241000",
   "icons": [
     {
       "src": "/icon-192.png?v=2026-10-22",

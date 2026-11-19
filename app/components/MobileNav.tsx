@@ -6,7 +6,9 @@ import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
 import { ContactIcon } from "~/components/ContactIcon";
 import { Logo } from "~/components/Logo";
-import { contactChannels, primaryCta, site } from "~/data/constants";
+import { NavIcon } from "~/components/NavIcon";
+import { contactChannels, navCta, site } from "~/data/constants";
+import { useHydratedLocationHash } from "~/hooks/useHydratedLocationHash";
 
 function isNavItemActive(to: string, pathname: string, hash: string) {
   const [path, targetHash] = to.split("#");
@@ -36,6 +38,7 @@ export function MobileNav() {
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const location = useLocation();
+  const hash = useHydratedLocationHash();
 
   // Drive the native dialog from React state, and keep them from disagreeing.
   useEffect(() => {
@@ -111,15 +114,18 @@ export function MobileNav() {
                       className={() =>
                         [
                           "flex min-h-14 items-center justify-between gap-4 py-4 font-display text-h3 transition-colors duration-200 ease-out",
-                          isNavItemActive(item.to, location.pathname, location.hash) ? "text-ink" : "text-muted hover:text-ink",
+                          isNavItemActive(item.to, location.pathname, hash) ? "text-ink" : "text-muted hover:text-ink",
                         ].join(" ")
                       }
                     >
                       {() => (
                         <>
-                          <span>{item.label}</span>
+                          <span className="inline-flex items-center gap-3">
+                            <NavIcon id={item.icon} className="size-5 shrink-0" />
+                            <span>{item.label}</span>
+                          </span>
                           {/* Non-colour cue: active state must not rely on colour alone (WCAG 1.4.1). */}
-                          {isNavItemActive(item.to, location.pathname, location.hash) ? (
+                          {isNavItemActive(item.to, location.pathname, hash) ? (
                             <span className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
                               Current
                             </span>
@@ -134,12 +140,12 @@ export function MobileNav() {
 
             <div className="mt-8">
               <Button
-                to={primaryCta.to}
+                to={navCta.to}
                 size="lg"
                 className="w-full"
                 onClick={() => setOpen(false)}
               >
-                {primaryCta.label}
+                {navCta.label}
               </Button>
             </div>
 

@@ -22,20 +22,20 @@ export function ServiceCard({
           loading="lazy"
           className="size-full object-cover grayscale-[20%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
         <span className="absolute bottom-3 left-3 grid size-10 place-items-center rounded-lg bg-ink text-on-dark">
           <Icon aria-hidden="true" className="size-[18px]" strokeWidth={1.8} />
         </span>
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <span className="font-mono text-meta uppercase tracking-[0.12em] text-primary-text">
+        <span className="font-mono text-meta font-medium uppercase tracking-[0.12em] text-primary-text">
           {service.number}
         </span>
-        <h3 className="mt-1.5 font-sans text-lg font-medium leading-snug text-ink">
+        <h3 className="mt-1.5 font-sans text-h3 font-semibold leading-snug text-ink">
           {service.title}
         </h3>
-        <p className="mt-2 text-sm font-medium leading-snug text-ink">
+        <p className="mt-2 text-sm font-semibold leading-snug text-ink">
           {service.summary}
         </p>
         <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">
@@ -45,7 +45,7 @@ export function ServiceCard({
         <div className="mt-4 border-t border-line pt-4">
           <Link
             to="/contact"
-            className="group/link flex items-center justify-between text-sm font-medium text-ink transition-all duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text active:translate-y-px"
+            className="group/link flex min-h-11 items-center justify-between text-sm font-semibold text-ink transition-all duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text active:translate-y-px"
           >
             Start a project
             <ArrowUpRight

@@ -2,7 +2,7 @@ import { Badge } from "~/components/Badge";
 import { Container } from "~/components/Container";
 import { CTABand } from "~/components/CTABand";
 import { SectionHeading } from "~/components/SectionHeading";
-import { absoluteUrl } from "~/data/constants";
+import { absoluteUrl, site } from "~/data/constants";
 
 export function meta() {
   return [
@@ -28,15 +28,18 @@ export default function About() {
   return (
     <>
       {/* ------------------------------ Hero ------------------------------ */}
-      <section className="bg-bg py-10 sm:py-12 lg:py-16 xl:py-20">
+      <section className="bg-bg py-10 sm:py-12 lg:py-12 xl:py-14">
         <Container>
-          <div className="mx-auto max-w-4xl space-y-6 text-center">
+          <div className="mx-auto max-w-4xl text-center">
             <Badge>About Creaova</Badge>
-            <h1 className="text-display font-medium text-ink">
+            <h1 className="mt-5 sm:mt-6 text-display font-semibold text-ink">
               We build digital experiences that earn trust — and make ambitious
               businesses easier to choose.
             </h1>
-            <p className="mx-auto max-w-2xl text-lede text-muted">
+            <p className="mt-3 sm:mt-4 font-mono text-sm tracking-[0.12em] text-muted">
+              {site.tagline}
+            </p>
+            <p className="mx-auto mt-5 sm:mt-6 max-w-2xl text-lede text-muted">
               Creaova Digital Solutions{" "}
               <span className="font-mono tracking-[0.18em] text-primary-text">[CDS]</span>{" "}
               is an established digital studio in the
@@ -49,77 +52,80 @@ export default function About() {
       </section>
 
       {/* --------------------------- 01 Principles ------------------------- */}
-      <section className="border-y border-line bg-surface-subtle py-16 sm:py-20 lg:py-28">
-        <Container>
-          <div className="mx-auto max-w-5xl">
+      <section className="bg-bg">
+        <div className="bg-ink">
+          <Container className="py-8 sm:py-10 lg:py-12">
             <SectionHeading
+              dark
+              bold
               align="left"
               number="01"
               eyebrow="What guides us"
               title="A focused studio for meaningful digital work."
             />
-            <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {principles.map(([number, title, text]) => (
-                <article
-                  key={number}
-                  className="flex h-full flex-col rounded-card border border-line bg-surface p-7"
-                >
-                  <span className="font-mono text-xl font-medium text-primary-text">
-                    {number}
-                  </span>
-                  <h3 className="mt-6 text-xl font-medium text-ink">
-                    {title}
-                  </h3>
-                  <p className="mt-4 text-sm leading-relaxed text-muted">
-                    {text}
-                  </p>
-                </article>
-
-              ))}
-            </div>
+          </Container>
+        </div>
+        <Container className="py-10 sm:py-12 lg:py-16">
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
+            {principles.map(([number, title, text]) => (
+              <article
+                key={number}
+                className="flex h-full flex-col rounded-card border border-line bg-surface p-5"
+              >
+                <span className="font-mono text-meta font-medium uppercase tracking-[0.12em] text-primary-text">
+                  {number}
+                </span>
+                <h3 className="mt-3 font-sans text-h3 font-semibold text-ink">
+                  {title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {text}
+                </p>
+              </article>
+            ))}
           </div>
         </Container>
       </section>
 
       {/* -------------------------- 02 Working model ----------------------- */}
-      <section className="bg-bg py-16 sm:py-20 lg:py-28">
+      <section className="bg-bg py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28">
         <Container>
           <SectionHeading
+            bold
             number="02"
             eyebrow="Our working model"
             title="Small enough to stay close. Structured enough to move."
           />
-          <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto mt-8 sm:mt-10 md:mt-12 grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:gap-5 lg:grid-cols-3">
             {workingModel.map(([title, text], index) => (
               <article
                 key={title}
-                className="flex h-full flex-col rounded-card border border-line bg-surface p-7"
+                className="flex h-full flex-col rounded-card border border-line bg-surface p-5"
               >
-                <span className="font-mono text-xl font-medium text-primary-text">
+                <span className="font-mono text-meta font-medium uppercase tracking-[0.12em] text-primary-text">
                   0{index + 1}
                 </span>
-                <h3 className="mt-5 text-xl font-medium text-ink">{title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{text}</p>
+                <h3 className="mt-3 font-sans text-h3 font-semibold text-ink">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{text}</p>
               </article>
-
             ))}
           </div>
-
         </Container>
       </section>
 
       {/* --------------------------- 03 Point of view ---------------------- */}
-      <section className="bg-dark py-16 sm:py-20 lg:py-28">
+      <section className="bg-dark py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <SectionHeading
               align="left"
               dark
+              bold
               number="03"
               eyebrow="Our point of view"
               title="No inflated claims. Just careful making and clear next steps."
             />
-            <div className="space-y-6 text-base leading-relaxed text-on-dark-muted">
+            <div className="space-y-6 text-lede text-on-dark-muted">
               <p>
                 We keep the process direct, the collaboration thoughtful, and the
                 output honest. Every decision should make the experience more coherent

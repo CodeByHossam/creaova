@@ -17,6 +17,7 @@ export function SectionHeading({
   lede,
   align = "center",
   dark = false,
+  bold = false,
   ledeClassName = "",
   as = "h2",
 }: {
@@ -27,6 +28,8 @@ export function SectionHeading({
   lede?: ReactNode;
   align?: "center" | "left";
   dark?: boolean;
+  /** Use the locked 600 display weight (Mockup 01 / Home hierarchy). */
+  bold?: boolean;
   /** Override the lede colour where the section ground needs a darker ink. */
   ledeClassName?: string;
   /** Page title (`h1`) or section title (`h2`). Drives the type tier. */
@@ -52,7 +55,9 @@ export function SectionHeading({
           {eyebrow}
         </p>
       ) : null}
-      <Heading className={`mt-4 ${headingTier} font-medium`}>{title}</Heading>
+      <Heading className={`mt-4 ${headingTier} ${bold ? "font-semibold" : "font-medium"}`}>
+        {title}
+      </Heading>
       {lede ? (
         <p
           className={`mt-4 text-lede ${

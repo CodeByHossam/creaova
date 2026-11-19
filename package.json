@@ -10,7 +10,7 @@
     "sync:site-url": "node scripts/sync-site-url.mjs",
     "prebuild": "npm run validate:env && npm run sync:site-url",
     "build": "react-router build",
-    "postbuild": "node scripts/apply-security.mjs",
+    "postbuild": "node scripts/inject-static-css.mjs && node scripts/apply-security.mjs",
     "preview": "vite preview --outDir build/client",
     "typegen": "react-router typegen",
     "typecheck": "react-router typegen && tsc --noEmit"

@@ -83,27 +83,36 @@ const sections: Section[] = [
 
 export default function Terms() {
   return (
-    <Container className="py-16 sm:py-20 lg:py-28">
-      <div className="max-w-3xl">
-        <p className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
-          Legal · Terms
-        </p>
-        <h1 className="mt-6 text-display font-medium tracking-tight text-ink">
-          Terms of service
-        </h1>
-        <p className="mt-7 text-lede text-muted">
-          These terms govern your use of the Creaova Digital Solutions website.
-        </p>
-        <p className="mt-3 text-sm text-muted">Effective 23 October 2026.</p>
+    <>
+      {/* Same ink band + light ground rhythm as Privacy and the Home sections. */}
+      <section className="bg-ink">
+        <Container className="py-10 sm:py-12 lg:py-14">
+          <div className="max-w-3xl">
+            <p className="font-mono text-meta font-medium uppercase tracking-[0.18em] text-on-dark-muted">
+              Legal · Terms
+            </p>
+            <h1 className="mt-5 sm:mt-6 text-display font-semibold text-on-dark">
+              Terms of service
+            </h1>
+            <p className="mt-5 sm:mt-6 max-w-2xl text-lede text-on-dark-muted">
+              These terms govern your use of the Creaova Digital Solutions website.
+            </p>
+            <p className="mt-3 text-sm text-on-dark-muted">Effective 23 October 2026.</p>
+          </div>
+        </Container>
+      </section>
 
-        <div className="mt-14 space-y-10">
+      <Container className="py-12 sm:py-16 lg:py-20">
+        <div className="max-w-3xl space-y-10">
           {sections.map((section, index) => (
             <section key={section.title} className="border-t border-line pt-7">
-              <p className="font-mono text-sm text-primary-text">
+              <p className="font-mono text-meta font-medium uppercase tracking-[0.12em] text-primary-text">
                 {String(index + 1).padStart(2, "0")}
               </p>
-              <h2 className="mt-3 text-2xl font-medium text-ink">{section.title}</h2>
-              <div className="mt-3 space-y-3 leading-7 text-muted">
+              <h2 className="mt-3 font-sans text-h3 font-semibold text-ink">
+                {section.title}
+              </h2>
+              <div className="mt-2 space-y-3 text-sm leading-relaxed text-muted">
                 {section.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -111,7 +120,7 @@ export default function Terms() {
             </section>
           ))}
         </div>
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 }

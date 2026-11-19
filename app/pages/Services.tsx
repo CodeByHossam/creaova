@@ -7,7 +7,7 @@ import { ProcessCard } from "~/components/ProcessCard";
 import { SectionHeading } from "~/components/SectionHeading";
 import { ServiceCard } from "~/components/ServiceCard";
 import { processSteps, services } from "~/data/services";
-import { absoluteUrl } from "~/data/constants";
+import { absoluteUrl, site } from "~/data/constants";
 
 /* -------------------------------------------------------------------------- */
 /*                                    META                                    */
@@ -59,8 +59,10 @@ const engagement = [
  * Two deliberate card grammars live on this page:
  *   1. `ServiceCard` — image-led offerings, each with one real link to Contact.
  *   2. `ProcessCard` — quiet numbered notes, used by both Engagement and Process.
- * Card-level hover is reserved for the image cards' actual link; the editorial
- * cards stay static so nothing looks clickable when it is not.
+ * Both share the Home card shell: `rounded-card border-line bg-surface p-5`,
+ * mono 0.12em meta and the 20px / 600 title tier. Card-level hover is reserved
+ * for the image cards' actual link; editorial cards stay static so nothing
+ * looks clickable when it is not.
  */
 export default function Services() {
   return (
@@ -70,18 +72,19 @@ export default function Services() {
       {/* ==================================================================== */}
       <section
         id="all-services"
-        className="scroll-mt-0 bg-bg pt-14 pb-10 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-14"
+        className="scroll-mt-0 bg-bg py-10 sm:py-12 lg:py-12 xl:py-14"
       >
         <Container>
-          {/* Compact header — tighter vertical rhythm so cards come up fast. */}
-          <div className="mx-auto max-w-3xl space-y-4 text-center">
+          {/* Compact header — the Home hero rhythm, so cards come up fast. */}
+          <div className="mx-auto max-w-3xl text-center">
             <Badge>High-performance disciplines</Badge>
-
-            <h1 className="text-display font-medium text-ink">
+            <h1 className="mt-5 sm:mt-6 text-display font-semibold text-ink">
               Web. Product. Mobile.
             </h1>
-
-            <p className="mx-auto max-w-2xl text-lede text-muted">
+            <p className="mt-3 sm:mt-4 font-mono text-sm tracking-[0.12em] text-muted">
+              {site.tagline}
+            </p>
+            <p className="mx-auto mt-5 sm:mt-6 max-w-2xl text-lede text-muted">
               Design and engineering under one roof — secure, fast,
               search-friendly builds, with real support after launch.
             </p>
@@ -109,17 +112,24 @@ export default function Services() {
       {/* ==================================================================== */}
       {/* 02 — ENGAGEMENT                                                      */}
       {/* ==================================================================== */}
-      <section className="border-y border-line bg-surface-subtle py-16 sm:py-20 lg:py-24">
-        <Container>
-          <SectionHeading
-            number="02"
-            eyebrow="Working together"
-            title="A partnership, one clear step at a time."
-          />
-          {/* Engagement notes reuse the ProcessCard grammar: same p-6 shell,
-              same 20px editorial title tier, same orange mono number, no
+      <section className="bg-surface-subtle">
+        <div className="bg-ink">
+          <Container className="py-8 sm:py-10 lg:py-12">
+            <SectionHeading
+              dark
+              bold
+              align="left"
+              number="02"
+              eyebrow="Working together"
+              title="A partnership, one clear step at a time."
+            />
+          </Container>
+        </div>
+        <Container className="py-10 sm:py-12 lg:py-16">
+          {/* Engagement notes reuse the ProcessCard grammar: the Home p-5 shell,
+              the 20px / 600 editorial title tier, an orange mono number and no
               whole-card hover. */}
-          <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
             {engagement.map(([number, title, text]) => (
               <ProcessCard key={number} number={number} title={title} text={text} />
             ))}
@@ -132,10 +142,11 @@ export default function Services() {
       {/* ==================================================================== */}
       <section
         id="process"
-        className="scroll-mt-0 bg-bg py-16 sm:py-20 lg:py-24"
+        className="scroll-mt-0 bg-bg py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28"
       >
         <Container>
           <SectionHeading
+            bold
             number="03"
             eyebrow="Our approach"
             title="Our four-step process."

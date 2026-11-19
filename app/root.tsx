@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from "react-router";
+import { isRouteErrorResponse, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from "react-router";
 
 import { SkipLink } from "~/components/SkipLink";
 import { site } from "~/data/constants";
@@ -25,7 +25,7 @@ export function Layout({ children }: { children: ReactNode }) {
     <head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="theme-color" content="#16130f" />
+      <meta name="theme-color" content="#241000" />
       <meta name="referrer" content="strict-origin-when-cross-origin" />
       {/*
         No global <link rel="canonical"> here on purpose. A single canonical in
@@ -45,10 +45,26 @@ export function Layout({ children }: { children: ReactNode }) {
       <link rel="icon" type="image/png" sizes="64x64" href={`/favicon.png?v=${site.assetVersion}`} />
       <link rel="apple-touch-icon" sizes="180x180" href={`/apple-touch-icon.png?v=${site.assetVersion}`} />
       <link rel="manifest" href="/site.webmanifest" />
-      <script
-        type="application/ld+json"
+      {/*
+        React Router's <Links /> is intentionally omitted. This static site has
+        one stylesheet, and scripts/inject-static-css.mjs adds it directly to the
+        prerendered HTML. Rendering it through React made the head order differ
+        on direct hash deep links, which triggered hydration error #418.
+      */}
+      <Meta />
+    </head>
+    <body>
+      {/*
+        JSON-LD stays in the delivered HTML, but it is written through
+        dangerouslySetInnerHTML instead of as a React <script> node. React 19
+        does not hydrate script elements, so a script in the head made the
+        prerendered markup differ from the client tree and triggered #418.
+      */}
+      <div
+        hidden
+        aria-hidden="true"
         dangerouslySetInnerHTML={{
-          __html: serializeJsonLd({
+          __html: `<script type="application/ld+json">${serializeJsonLd({
             "@context": "https://schema.org",
             "@type": "Organization",
             name: site.legalName,
@@ -69,13 +85,14 @@ export function Layout({ children }: { children: ReactNode }) {
               telephone: site.contact.phoneDisplay,
             },
             sameAs: site.socialLinks.map((link) => link.href).filter(Boolean),
-          }),
+          })}</script>`,
         }}
       />
-      <Meta />
-      <Links />
-    </head>
-    <body><SkipLink />{children}<ScrollRestoration /><Scripts /></body>
+      <SkipLink />
+      {children}
+      <ScrollRestoration />
+      <Scripts />
+    </body>
   </html>;
 }
 
@@ -89,7 +106,7 @@ export function ErrorBoundary() {
 
   return <main className="mx-auto flex min-h-screen w-full max-w-page flex-col items-start justify-center px-5 py-24 sm:px-8">
     <p className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">{isNotFound ? "404" : "Error"}</p>
-    <h1 className="mt-4 font-display text-h2 text-ink">{isNotFound ? "We couldn’t find that page." : "Something went wrong."}</h1>
+    <h1 className="mt-4 font-display text-h2 font-semibold text-ink">{isNotFound ? "We couldn’t find that page." : "Something went wrong."}</h1>
     <p className="mt-4 max-w-[var(--measure)] text-lede text-muted">{isNotFound ? "The link may be out of date, or the page may have moved." : "This page failed to load. Reload to try again, or head back to the homepage."}</p>
     <a href="/" className="mt-8 inline-flex min-h-11 items-center rounded-control bg-ink px-6 py-3 text-sm font-semibold text-on-dark transition-colors duration-200 ease-out hover:bg-primary hover:text-on-primary">Back to homepage</a>
   </main>;

@@ -2,7 +2,6 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router";
 
-import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
 import { ContactIcon, SocialIcon } from "~/components/ContactIcon";
 import { Logo } from "~/components/Logo";
@@ -12,10 +11,10 @@ import type {
   FooterLink,
   SocialLink,
 } from "~/data/constants";
-import { contactChannels, primaryCta, site } from "~/data/constants";
+import { contactChannels, site } from "~/data/constants";
 
 const linkClass =
-  "text-on-dark-muted transition-colors duration-200 hover:text-primary";
+  "inline-flex min-h-11 items-center text-on-dark-muted transition-colors duration-200 hover:text-primary";
 
 const iconClass =
   "inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-dark-line text-primary";
@@ -24,13 +23,13 @@ const labelClass =
   "block font-mono text-xs uppercase tracking-[0.12em] text-on-dark-muted";
 
 const valueClass =
-  "mt-1 inline-flex min-h-11 items-center break-words text-sm text-on-dark transition-colors duration-200 hover:text-primary";
+  "mt-1 inline-flex min-h-11 items-center break-words text-sm text-on-dark-muted transition-colors duration-200 hover:text-primary";
 
 function FooterHeading({ children }: { children: ReactNode }) {
   return (
-    <h2 className="font-mono text-meta font-medium uppercase tracking-[0.18em] text-primary">
+    <h3 className="font-mono text-meta font-medium uppercase tracking-[0.18em] text-primary">
       {children}
-    </h2>
+    </h3>
   );
 }
 
@@ -151,7 +150,7 @@ export function Footer() {
       <Container>
         <div className="grid grid-cols-1 gap-y-10 md:grid-cols-3 md:gap-x-10">
 
-          {/* Row 1: Brand and primary action */}
+          {/* Row 1: Brand */}
           <div className="space-y-4 md:col-span-2">
             <Link to="/" aria-label="Creaova home" className="inline-flex">
               <Logo variant="white" className="h-6" />
@@ -160,12 +159,6 @@ export function Footer() {
             <p className="max-w-md text-sm leading-relaxed text-on-dark-muted">
               {site.footer.brandLine}
             </p>
-          </div>
-
-          <div className="flex items-center md:justify-start">
-            <Button to={primaryCta.to} variant="light" size="md">
-              {primaryCta.label}
-            </Button>
           </div>
 
           {/* Row 2: Contact information */}

@@ -4,7 +4,7 @@ export function QualityCard({ number, title, text }: { number: string; title: st
       <span className="font-mono text-meta font-medium uppercase tracking-[0.12em] text-primary-text">
         {number}
       </span>
-      <h3 className="mt-3 font-sans text-lg font-medium leading-snug text-ink">{title}</h3>
+      <h3 className="mt-3 font-sans text-h3 font-semibold text-ink">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-muted">{text}</p>
     </article>
   );
