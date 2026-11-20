@@ -62,8 +62,8 @@ export function meta() {
 
 /**
  * The homepage in the locked "Editorial Studio" system: an honest editorial
- * hero, four numbered sections (01–04) with one shared card language, and a
- * closing conversation band. No invented proof and no technology ticker.
+ * hero, four sections with one shared card language, and a closing
+ * conversation band. No invented proof and no technology ticker.
  */
 
 const disciplines = [
@@ -100,19 +100,19 @@ const confidenceItems = [
   {
     title: "A partner, not a vendor",
     text: "We stay close after launch and keep supporting the work, so the site keeps serving you long after go-live.",
-    meta: "04.1 / Partnership",
+    meta: "Partnership",
     icon: Target,
   },
   {
     title: "Secure & professional",
     text: "Clean, well-structured code and considered security practices give you a foundation you can rely on.",
-    meta: "04.2 / Trust",
+    meta: "Trust",
     icon: Accessibility,
   },
   {
     title: "Fast & easy to find",
     text: "Strong performance and search foundations mean the site loads quickly and reaches the people who matter to you.",
-    meta: "04.3 / Performance",
+    meta: "Performance",
     icon: Settings2,
   },
 ] as const;
@@ -123,11 +123,10 @@ const heroFacts = [
 ] as const;
 
 // The hero index card (chosen "Editorial Index" hero): the three real service
-// rows, derived from the Services page data — number + title + anchor id — so
-// the card cannot drift from what the site actually offers. Hover: number -> burnt
-// orange, label shift, arrow reveal.
+// rows, derived from the Services page data — title + anchor id — so the card
+// cannot drift from what the site actually offers. Hover: label shifts and an
+// arrow reveals; the row is a link to the real Services anchor.
 const heroIndex = services.map((service) => [
-  service.number,
   service.title,
   `/services#${service.id}`,
 ]);
@@ -141,19 +140,27 @@ export default function Home() {
           surface-subtle, no border/shadow) rather than by a UI box; rows link
           to the real Services anchors. This is an index panel, not one of the
           page's cards: same 12px corner radius, but no border and the hero's
-          display face for its row labels. Hover: number -> burnt orange, label
-          shifts, arrow reveals. */}
-      <section id="home" className="bg-bg">
-        <Container className="py-10 sm:py-12 lg:py-12 xl:py-14">
-          <div className="grid items-center gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 xl:gap-20">
-            <div>
+          display face for its row labels. Hover: label shifts, arrow reveals. */}
+      <section
+        id="home"
+        className="flex min-h-[calc(100vh-4rem)] flex-col bg-bg sm:min-h-[calc(100vh-4.5rem)] lg:min-h-[calc(100vh-5rem)]"
+      >
+        {/* Desktop-only rebalance: more top padding opens the nav-to-hero gap,
+            less bottom padding brings the facts strip close to the fold. */}
+        <Container className="flex flex-1 flex-col py-10 sm:py-12 lg:pb-6 lg:pt-14 xl:pt-16">
+          {/* Desktop only: share the hero's free space with the facts strip, so
+              the statement sits closer to it while gaining nav clearance. */}
+          <div className="grid items-center gap-10 sm:gap-12 md:gap-14 lg:mt-auto lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 xl:gap-20">
+            {/* Completes the desktop optical rebalance (container padding plus
+                the shared auto margin); none of it applies below lg. */}
+            <div className="lg:translate-y-2">
               <Badge>Digital experience architecture</Badge>
               <h1 className="mt-5 sm:mt-6 text-display font-semibold text-ink">
                 We build <span className="text-primary-text">websites</span>{" "}
                 that build your business
               </h1>
               <p className="mt-3 sm:mt-4 font-mono text-sm tracking-[0.12em] text-muted">
-                {site.tagline}
+                Secure, fast, search-friendly websites and apps.
               </p>
               <p className="mt-5 sm:mt-6 max-w-2xl text-lede text-muted">
                 {site.footer.brandLine}
@@ -166,18 +173,6 @@ export default function Home() {
                   View our work
                 </Button>
               </div>
-              <dl className="mt-6 sm:mt-7 lg:mt-8 grid max-w-xl grid-cols-1 gap-x-10 gap-y-6 sm:gap-y-7 border-t border-line pt-5 sm:pt-6 sm:grid-cols-2">
-                {heroFacts.map(([label, value]) => (
-                  <div key={label}>
-                    <dt className="font-mono text-meta uppercase tracking-[0.18em] text-muted">
-                      {label}
-                    </dt>
-                    <dd className="mt-1.5 sm:mt-2 text-base font-semibold text-ink">
-                      {value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
             </div>
 
             <nav
@@ -188,15 +183,12 @@ export default function Home() {
                 Index — what we build
               </p>
               <div className="mt-4 sm:mt-5">
-                {heroIndex.map(([number, label, to]) => (
+                {heroIndex.map(([label, to]) => (
                   <Link
                     key={to}
                     to={to}
                     className="group flex items-baseline gap-3 sm:gap-4 border-t border-dark-line py-4 sm:py-5 first:border-t-0"
                   >
-                    <span className="font-mono text-meta text-on-dark-muted transition duration-200 ease-out group-hover:text-primary group-focus-within:text-primary">
-                      {number}
-                    </span>
                     <span className="font-display text-lg sm:text-xl font-medium text-on-dark transition duration-200 ease-out group-hover:translate-x-1 group-focus-within:translate-x-1 sm:group-hover:translate-x-1.5 sm:group-focus-within:translate-x-1.5">
                       {label}
                     </span>
@@ -219,6 +211,23 @@ export default function Home() {
               </div>
             </nav>
           </div>
+
+          {/* Facts close the hero as a full-width strip, pinned to the bottom
+              so Section 01 never peeks in when the hero is the active target. */}
+          <div className="mt-auto pt-8 sm:pt-10 lg:pt-12 laptop:pt-9">
+            <dl className="grid grid-cols-1 gap-x-10 gap-y-6 border-t border-line pt-5 sm:grid-cols-2 sm:gap-y-7 sm:pt-6 laptop:gap-x-8 laptop:gap-y-5 laptop:pt-4">
+              {heroFacts.map(([label, value]) => (
+                <div key={label}>
+                  <dt className="font-mono text-meta uppercase tracking-[0.18em] text-muted laptop:text-xs laptop:tracking-[0.14em]">
+                    {label}
+                  </dt>
+                  <dd className="mt-1.5 sm:mt-2 text-base font-semibold text-ink laptop:mt-1.5 laptop:text-sm">
+                    {value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </Container>
       </section>
 
@@ -230,7 +239,6 @@ export default function Home() {
               dark
               bold
               align="left"
-              number="01"
               eyebrow="Services"
               title="Web, mobile, and the support behind them."
               lede="Design, engineering and ongoing support in one place, with clear decisions at every step."
@@ -267,7 +275,6 @@ export default function Home() {
               align="left"
               dark
               bold
-              number="02"
               eyebrow="Selected work"
               title="Concept builds, shown end to end."
               lede="A closer look at what each concept explores, and the thinking behind it."
@@ -301,20 +308,19 @@ export default function Home() {
         <Container>
           <SectionHeading
             bold
-            number="03"
             eyebrow="Built for quality"
             title="Secure, clean, and delivered on time."
             lede="We focus on the details that matter — secure foundations, clean code, efficient delivery, and long-term value without unnecessary cost."
           />
           <ul className="mt-8 sm:mt-10 md:mt-12 grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2 sm:gap-4 lg:gap-5 xl:gap-6 xl:grid-cols-4">
             {[
-              ["03.1", "Secure by design", "Thoughtful security practices from day one — clean structure, safe forms, and a stable foundation you can rely on."],
-              ["03.2", "Clean, professional code", "Readable, maintainable code that scales with your business and keeps future updates simple and cost-effective."],
-              ["03.3", "Optimized performance & SEO-friendly", "Built for speed and discoverability — optimized performance and SEO best practices to help your site rank and load fast."],
-              ["03.4", "On-time, reliable delivery", "Clear timelines, direct communication, and a smooth handoff — with support ready when you need it."],
-            ].map(([number, title, text]) => (
-              <li key={number} className="h-full">
-                <QualityCard number={number} title={title} text={text} />
+              ["Secure by design", "Thoughtful security practices from day one — clean structure, safe forms, and a stable foundation you can rely on."],
+              ["Clean, professional code", "Readable, maintainable code that scales with your business and keeps future updates simple and cost-effective."],
+              ["Optimized performance & SEO-friendly", "Built for speed and discoverability — optimized performance and SEO best practices to help your site rank and load fast."],
+              ["On-time, reliable delivery", "Clear timelines, direct communication, and a smooth handoff — with support ready when you need it."],
+            ].map(([title, text]) => (
+              <li key={title} className="h-full">
+                <QualityCard title={title} text={text} />
               </li>
             ))}
           </ul>
@@ -330,7 +336,6 @@ export default function Home() {
                 dark
                 bold
                 align="left"
-                number="04"
                 eyebrow="Built for confidence"
                 title="A stronger digital foundation starts with clarity."
                 lede="We stay with you after launch: direct communication, decisions you can see at every step, and work grounded in what your customers actually need."

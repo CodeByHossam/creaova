@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 /**
  * The editorial section header — the "Editorial Studio" signature move:
- * a mono, numbered eyebrow (`01 — SERVICES`) above a display title and
+ * a mono eyebrow with a small orange marker above a display title and
  * an optional lede. Replaces hand-rolled heading blocks that had copied
  * into every section of Home, Services and About.
  *
@@ -11,7 +11,6 @@ import type { ReactNode } from "react";
  * visibly above its section headings instead of collapsing to the same size.
  */
 export function SectionHeading({
-  number,
   eyebrow,
   title,
   lede,
@@ -21,8 +20,6 @@ export function SectionHeading({
   ledeClassName = "",
   as = "h2",
 }: {
-  /** Zero-padded step number, e.g. "01". Rendered before the eyebrow. */
-  number?: string;
   eyebrow?: ReactNode;
   title: ReactNode;
   lede?: ReactNode;
@@ -47,11 +44,11 @@ export function SectionHeading({
     >
       {eyebrow ? (
         <p
-          className={`inline-flex items-center gap-3 font-mono text-meta font-medium uppercase tracking-[0.18em] ${
+          className={`inline-flex items-center gap-2 font-mono text-meta font-medium uppercase tracking-[0.18em] ${
             dark ? "text-primary" : "text-primary-text"
           }`}
         >
-          {number ? <span className="tabular-nums">{number} —</span> : null}
+          <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-primary" />
           {eyebrow}
         </p>
       ) : null}

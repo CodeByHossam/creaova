@@ -216,6 +216,9 @@
   --color-on-dark: #fff8f2;
   --color-on-dark-muted: #e8c9ac;
 
+  /* Focus ring adapts to its ground: ink on light, canvas on dark. */
+  --focus-ring: var(--color-ink);
+
   /* --- Status (form feedback only) -------------------------------------- */
   --color-success: #15803d;
   --color-error: #b91c1c;
@@ -275,6 +278,9 @@
   /* --- Motion ----------------------------------------------------------- */
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+/* Laptop range: tighten hero facts without changing the desktop layout. */
+@custom-variant laptop (@media (min-width: 1280px) and (max-width: 1535px));
 
 @layer utilities {
   /* Keep the desktop reference compact: large headings should not dominate the fold. */
@@ -370,12 +376,27 @@
   }
 
   /* Visible focus on everything, always. Never `outline: none` alone.
-     Orange (#EA580C) rather than ink: it stays visible on BOTH paper (3.6:1)
-     and the dark panels (5.2:1), where an ink ring would disappear. */
+     Ink on light surfaces (14:1 on #FFF8F2); canvas on dark surfaces
+     (14:1 on #241000). An orange #FD6E00 ring is only ~2.7:1 on the paper
+     ground and fails WCAG 2.4.11, so it is never used as the focus ring. */
   :focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
     border-radius: 2px;
+  }
+
+  /* Dark grounds flip the ring to canvas; a light panel inside a dark band
+     flips it back to ink so the ring stays visible in both directions. */
+  .bg-dark,
+  .bg-ink,
+  .bg-dark-surface {
+    --focus-ring: var(--color-bg);
+  }
+
+  .bg-bg,
+  .bg-surface,
+  .bg-surface-subtle {
+    --focus-ring: var(--color-ink);
   }
 
   /* Real typographic characters, not straight quotes or three dots. */
@@ -422,15 +443,35 @@
     transition: border-color 150ms ease, outline-color 150ms ease;
   }
 
-  /* Affordance on hover; the ring stays orange so it also reads on the dark
-     contact panel, where an ink outline would be invisible. */
+  /* The portfolio's category filter stays one swipeable row on phones.
+     The scrollbar is drawn from the same dark-band tokens as the chips. */
+  .filter-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-dark-line) transparent;
+  }
+
+  .filter-scroll::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .filter-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .filter-scroll::-webkit-scrollbar-thumb {
+    border-radius: var(--radius-control);
+    background: var(--color-dark-line);
+  }
+
+  /* Affordance on hover; focus uses the same ground-adaptive ring as the rest
+     of the site, so it reads on the dark contact panel too. */
   .form-input:hover {
     border-color: var(--color-muted);
   }
 
   .form-input:focus {
     border-color: var(--color-ink);
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
 

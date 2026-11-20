@@ -125,7 +125,6 @@ export type FooterColumn = {
 export type Site = {
   name: string;
   legalName: string;
-  tagline: string;
   /** Canonical origin, no trailing slash. */
   url: string;
   /** True while any demo value below is still in place. */
@@ -143,8 +142,8 @@ export type Site = {
      * wordmark beside it.
      *
      * The wordmark is artwork, not live DOM text. The supplied wordmark is a
-     * bold geometric sans; the site sets its headings in Fraunces, a serif, so
-     * setting the same word as text would show two different brands - and two
+     * bold geometric sans; the site sets its headings in Roboto Slab, a slab
+     * serif, so setting the same word as text would show two different brands - and two
      * "CREAOVA"s on screen. The brand name is announced by the link label
      * around the image instead.
      */
@@ -305,7 +304,6 @@ function stillHasDemoData(): boolean {
 export const site: Site = {
   name: "Creaova",
   legalName: "Creaova Digital Solutions",
-  tagline: "Creativity meets innovation.",
   // Canonical origin, from .env → VITE_SITE_URL. Never hard-code it here.
   url: env.siteUrl,
   isPlaceholder: stillHasDemoData(),
@@ -314,8 +312,8 @@ export const site: Site = {
   nav: [
     { label: "Home", to: "/#home", icon: "home" },
     { label: "Services", to: "/services#all-services", icon: "services" },
-    { label: "Portfolio", to: "/portfolio/#projects", icon: "portfolio" },
-    { label: "Process", to: "/services#process", icon: "process" },
+    { label: "Portfolio", to: "/portfolio#projects", icon: "portfolio" },
+    { label: "Our approach", to: "/services#process", icon: "process" },
     { label: "About", to: "/about", icon: "about" },
     { label: "Contact", to: "/contact", icon: "contact" },
   ],
@@ -360,7 +358,7 @@ export const site: Site = {
         links: [
           { label: "Portfolio", to: "/portfolio" },
           { label: "About", to: "/about" },
-          { label: "Process", to: "/services#process" },
+          { label: "Our approach", to: "/services#process" },
         ],
       },
       {
@@ -383,7 +381,7 @@ export const site: Site = {
 export const primaryCta: NavItem = { label: "Start a project", to: "/contact" };
 
 /** Quiet header substitute — same destination, a softer invitation than the hero button. */
-export const navCta: NavItem = { label: "Say hello", to: "/contact" };
+export const navCta: NavItem = { label: "Inquiries", to: "/contact" };
 
 /**
  * Absolute URL for a route, built from the canonical origin in `.env`

@@ -9,10 +9,6 @@ export function ConfidenceCard({
   meta: string;
   Icon: any;
 }) {
-  // "04.1 / Partnership" -> two fixed lines, so every card's header breaks
-  // identically regardless of how much room the row has.
-  const [number, label] = meta.split(" / ");
-
   return (
     <article className="flex h-full flex-col justify-between rounded-card border border-line bg-surface p-5">
       <div>
@@ -25,8 +21,7 @@ export function ConfidenceCard({
             />
           </span>
           <span className="min-w-0 font-mono text-meta uppercase leading-tight tracking-[0.12em] text-muted">
-            <span className="block tabular-nums">{number} /</span>
-            <span className="block">{label}</span>
+            {meta}
           </span>
         </div>
         <h3 className="mt-6 font-sans text-h3 font-semibold text-ink">{title}</h3>

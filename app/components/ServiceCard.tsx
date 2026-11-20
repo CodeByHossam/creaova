@@ -29,10 +29,7 @@ export function ServiceCard({
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <span className="font-mono text-meta font-medium uppercase tracking-[0.12em] text-primary-text">
-          {service.number}
-        </span>
-        <h3 className="mt-1.5 font-sans text-h3 font-semibold leading-snug text-ink">
+        <h3 className="font-sans text-h3 font-semibold leading-snug text-ink">
           {service.title}
         </h3>
         <p className="mt-2 text-sm font-semibold leading-snug text-ink">

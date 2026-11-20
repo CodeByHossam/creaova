@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router";
+import { Menu, Send, X } from "lucide-react";
 
 import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
@@ -9,12 +9,7 @@ import { Logo } from "~/components/Logo";
 import { NavIcon } from "~/components/NavIcon";
 import { contactChannels, navCta, site } from "~/data/constants";
 import { useHydratedLocationHash } from "~/hooks/useHydratedLocationHash";
-
-function isNavItemActive(to: string, pathname: string, hash: string) {
-  const [path, targetHash] = to.split("#");
-  if (targetHash) return pathname === path && hash === `#${targetHash}`;
-  return path === "/" ? pathname === "/" && !hash : pathname === path || pathname.startsWith(`${path}/`);
-}
+import { getActiveNavHref } from "~/utils/navigation";
 
 /**
  * The mobile navigation drawer.
@@ -30,8 +25,8 @@ function isNavItemActive(to: string, pathname: string, hash: string) {
  *
  * On top of that this component handles two things `<dialog>` does not:
  *   - locking body scroll while open;
- *   - closing if the viewport grows past the `md` breakpoint. Without that, the
- *     dialog would become `display: none` (it is `md:hidden`) while still being
+ *   - closing if the viewport grows past the `lg` breakpoint. Without that, the
+ *     dialog would become `display: none` (it is `lg:hidden`) while still being
  *     modal, which leaves the page in a state the user cannot escape.
  */
 export function MobileNav() {
@@ -39,6 +34,7 @@ export function MobileNav() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const location = useLocation();
   const hash = useHydratedLocationHash();
+  const activeNavHref = getActiveNavHref(site.nav, location.pathname, hash);
 
   // Drive the native dialog from React state, and keep them from disagreeing.
   useEffect(() => {
@@ -76,7 +72,7 @@ export function MobileNav() {
         aria-expanded={open}
         aria-controls="mobile-nav"
         aria-label="Open menu"
-        className="inline-flex size-10 items-center justify-center rounded-full border border-line text-ink transition-colors duration-200 ease-out hover:border-ink lg:hidden"
+        className="inline-flex size-11 items-center justify-center rounded-full border border-line text-ink transition-colors duration-200 ease-out hover:border-ink lg:hidden"
       >
         <Menu aria-hidden="true" className="size-5" strokeWidth={1.75} />
       </button>
@@ -89,14 +85,14 @@ export function MobileNav() {
       >
         <div className="flex min-h-full flex-col">
           <Container className="flex h-16 shrink-0 items-center justify-between border-b border-line">
-            <Link to="/" aria-label="Creaova home" className="flex items-center gap-3">
+            <Link to="/" aria-label="Creaova home" className="flex min-h-11 min-w-11 items-center gap-3">
               <Logo className="h-6" />
             </Link>
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close menu"
-              className="inline-flex size-10 items-center justify-center rounded-full border border-line text-ink transition-colors duration-200 ease-out hover:border-ink"
+              className="inline-flex size-11 items-center justify-center rounded-full border border-line text-ink transition-colors duration-200 ease-out hover:border-ink"
             >
               <X aria-hidden="true" className="size-5" strokeWidth={1.75} />
             </button>
@@ -107,32 +103,33 @@ export function MobileNav() {
               <ul className="flex flex-col">
                 {site.nav.map((item) => (
                   <li key={item.to} className="border-b border-line last:border-0">
-                    <NavLink
+                    {/* A plain Link keeps aria-current in sync with the shared
+                        hash-aware helper used by the text and "Current" cue;
+                        NavLink's pathname-only rule marks two /services items. */}
+                    <Link
                       to={item.to}
-                      end={item.to === "/"}
-                      onClick={() => setOpen(false)}
-                      className={() =>
-                        [
-                          "flex min-h-14 items-center justify-between gap-4 py-4 font-display text-h3 transition-colors duration-200 ease-out",
-                          isNavItemActive(item.to, location.pathname, hash) ? "text-ink" : "text-muted hover:text-ink",
-                        ].join(" ")
+                      aria-current={
+                        item.to === activeNavHref
+                          ? "page"
+                          : undefined
                       }
+                      onClick={() => setOpen(false)}
+                      className={[
+                        "flex min-h-14 items-center justify-between gap-4 py-4 font-display text-h3 transition-colors duration-200 ease-out",
+                        item.to === activeNavHref ? "text-ink" : "text-muted hover:text-ink",
+                      ].join(" ")}
                     >
-                      {() => (
-                        <>
-                          <span className="inline-flex items-center gap-3">
-                            <NavIcon id={item.icon} className="size-5 shrink-0" />
-                            <span>{item.label}</span>
-                          </span>
-                          {/* Non-colour cue: active state must not rely on colour alone (WCAG 1.4.1). */}
-                          {isNavItemActive(item.to, location.pathname, hash) ? (
-                            <span className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
-                              Current
-                            </span>
-                          ) : null}
-                        </>
-                      )}
-                    </NavLink>
+                      <span className="inline-flex items-center gap-3">
+                        <NavIcon id={item.icon} className="size-5 shrink-0" />
+                        <span>{item.label}</span>
+                      </span>
+                      {/* Non-colour cue: active state must not rely on colour alone (WCAG 1.4.1). */}
+                      {item.to === activeNavHref ? (
+                        <span className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">
+                          Current
+                        </span>
+                      ) : null}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -145,6 +142,7 @@ export function MobileNav() {
                 className="w-full"
                 onClick={() => setOpen(false)}
               >
+                <Send aria-hidden="true" className="size-4 shrink-0" />
                 {navCta.label}
               </Button>
             </div>

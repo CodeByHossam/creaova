@@ -232,8 +232,7 @@ export function ContactForm() {
 
         {status === "success" && (
           <p className="text-sm text-success" role="status">
-            Thanks — we&apos;ve received your enquiry. We&apos;ll reply within one
-            business day.
+            Thanks — your enquiry has been submitted. We&apos;ll be in touch soon.
           </p>
         )}
 

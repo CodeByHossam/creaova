@@ -16,14 +16,25 @@ import type { ClientProject } from "~/data/clientProjects";
  * there is no letterboxed panel or shadow behind them. Category sits in a
  * corner chip; the Concept badge sits beside the title.
  */
-export function ProjectCard({ project }: { project: ClientProject }) {
+type CardHeadingTag = "h3" | "h4";
+
+export function ProjectCard({
+  project,
+  headingTag = "h3",
+}: {
+  project: ClientProject;
+  /** Grouped cards use h4 beneath their category's h3. */
+  headingTag?: CardHeadingTag;
+}) {
+  const Heading = headingTag;
+
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-card border border-dark-line bg-dark-surface p-5">
       <div className="relative aspect-video overflow-hidden rounded-lg">
         {project.image ? (
           <img
             src={project.image}
-            alt=""
+            alt={`Preview of the ${project.title} concept — ${project.category}`}
             loading="lazy"
             decoding="async"
             className="absolute inset-0 size-full rounded-lg object-cover"
@@ -58,9 +69,10 @@ export function ProjectCard({ project }: { project: ClientProject }) {
       <div className="mt-5 flex items-start justify-between gap-4">
         <div>
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-            <h2 className="font-sans text-h3 font-semibold leading-snug text-on-dark">
+            {/* Card titles sit under the page's h2, matching Home's work cards. */}
+            <Heading className="font-sans text-h3 font-semibold leading-snug text-on-dark">
               {project.title}
-            </h2>
+            </Heading>
             <span className="inline-flex shrink-0 items-center gap-1.5 self-center rounded-md border border-dark-line bg-dark-surface px-2 py-0.5 font-mono text-xs font-medium uppercase leading-none tracking-[0.12em] text-on-dark-muted">
               <span aria-hidden="true" className="size-1.5 rounded-full bg-primary" />
               Concept

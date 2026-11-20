@@ -15,7 +15,7 @@ export function meta() {
 export default function Contact() {
   return (
     <section className="bg-bg py-10 sm:py-12 lg:py-12 xl:py-14">
-      {/* The Home hero band: compact Badge, mono tagline, then the lede. */}
+      {/* The Home hero band: compact Badge, mono line, then the lede. */}
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <Badge>Contact</Badge>
@@ -23,7 +23,7 @@ export default function Contact() {
             Let’s build something you can rely on.
           </h1>
           <p className="mt-3 sm:mt-4 font-mono text-sm tracking-[0.12em] text-muted">
-            {site.tagline}
+            Clear next steps, no obligation.
           </p>
           <p className="mx-auto mt-5 sm:mt-6 max-w-2xl text-lede text-muted">
             Tell us what you are looking to launch. A few useful details are

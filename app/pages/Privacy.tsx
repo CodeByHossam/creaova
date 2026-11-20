@@ -260,11 +260,9 @@ export default function Privacy() {
 
       <Container className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-3xl space-y-10">
-          {sections.map((section, index) => (
+          {sections.map((section) => (
             <section key={section.title} className="border-t border-line pt-7">
-              <p className="font-mono text-meta font-medium uppercase tracking-[0.12em] text-primary-text">
-                {String(index + 1).padStart(2, "0")}
-              </p>
+              <span aria-hidden="true" className="block size-1.5 rounded-full bg-primary" />
               <h2 className="mt-3 font-sans text-h3 font-semibold text-ink">
                 {section.title}
               </h2>
