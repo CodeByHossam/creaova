@@ -1,10 +1,11 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { Link } from "react-router";
 
 import { Button } from "~/components/Button";
 import { site } from "~/data/constants";
 import { env } from "~/data/env";
+import { services } from "~/data/services";
 
 /**
  * ContactForm — the site's single real form.
@@ -22,11 +23,21 @@ import { env } from "~/data/env";
  * `h-captcha-response`. Enable hCaptcha in the Web3Forms dashboard as well;
  * client-side widgets alone are not a security boundary.
  */
+type Web3FormsResponse = { success: boolean; message?: string };
+
+function isWeb3FormsResponse(value: unknown): value is Web3FormsResponse {
+  if (typeof value !== "object" || value === null) return false;
+  return typeof (value as { success?: unknown }).success === "boolean";
+}
+
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [captchaToken, setCaptchaToken] = useState<string>("");
   const captchaRef = useRef<HCaptcha>(null);
+  const abortRef = useRef<AbortController | null>(null);
+
+  useEffect(() => () => abortRef.current?.abort(), []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -47,7 +58,7 @@ export function ContactForm() {
     // hCaptcha must be completed before sending. The provider-side check is
     // still authoritative; this only avoids a pointless round trip.
     if (env.formCaptchaSiteKey && !captchaToken) {
-      setErrorMessage("Please complete the hCaptcha check, then send your enquiry again.");
+      setErrorMessage("Please complete the hCaptcha check, then send your brief again.");
       setStatus("error");
       return;
     }
@@ -62,9 +73,9 @@ export function ContactForm() {
     formData.append("access_key", env.formAccessKey);
     if (captchaToken) formData.set("h-captcha-response", captchaToken);
 
-    // The `subject` hidden input in the form sets the notification subject.
-    // Kept as a note in case the hidden input is ever removed:
-    // formData.append("subject", "New Creaova project enquiry");
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
 
     try {
       const response = await fetch(env.formEndpoint, {
@@ -72,14 +83,21 @@ export function ContactForm() {
         body: formData,
         headers: { Accept: "application/json" },
         referrerPolicy: "no-referrer",
+        signal: controller.signal,
       });
 
-      // Web3Forms returns JSON with { success: boolean, message: string }.
-      // A 200 status alone isn't enough — validate `success` in the body.
-      const data = await response.json().catch(() => null);
+      let data: unknown;
+      try {
+        data = await response.json();
+      } catch (cause) {
+        throw new Error("Web3Forms returned a non-JSON response.", { cause });
+      }
 
-      if (!response.ok || !data || data.success !== true) {
-        throw new Error(data?.message || "Submission failed. Please try again.");
+      if (!isWeb3FormsResponse(data)) {
+        throw new Error("Web3Forms returned an unexpected response shape.");
+      }
+      if (!response.ok || data.success !== true) {
+        throw new Error(data.message || `Web3Forms rejected the submission (${response.status}).`);
       }
 
       form.reset();
@@ -87,26 +105,25 @@ export function ContactForm() {
       setCaptchaToken("");
       setStatus("success");
     } catch (err) {
-      // Name the user-visible outcome ("your enquiry wasn't sent") without
-      // exposing provider wording, which can be an internal code or a key
-      // problem the visitor cannot act on. The real error stays in dev logs.
+      if (controller.signal.aborted) return;
+
+      // Keep provider wording out of the UI: it can expose an internal code or
+      // a configuration problem the visitor cannot act on. The real context
+      // stays in the development log.
       if (import.meta.env.DEV) {
-        console.error("[ContactForm] submission failed:", err);
+        console.error("[ContactForm] submission failed", err);
       }
       captchaRef.current?.resetCaptcha();
       setCaptchaToken("");
-      setErrorMessage("Your enquiry couldn't be sent. Please try again.");
+      setErrorMessage("Your brief couldn't be sent. Please try again.");
       setStatus("error");
+    } finally {
+      if (abortRef.current === controller) abortRef.current = null;
     }
   }
 
   return (
-    <form
-      onSubmit={submit}
-      aria-labelledby="contact-form-heading"
-      className="space-y-6"
-      noValidate
-    >
+    <form onSubmit={submit} aria-labelledby="contact-form-heading" className="space-y-6" noValidate>
       <h2 id="contact-form-heading" className="sr-only">
         Project enquiry form
       </h2>
@@ -116,18 +133,19 @@ export function ContactForm() {
       {/* Honeypot: hidden field named `botcheck` is a Web3Forms-recognized spam trap.
           If a bot fills it, the submission is rejected silently. We ALSO keep our
           own `company` hidden field as a second trap (harmless, just extra coverage). */}
-      <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+      <input
+        type="checkbox"
+        name="botcheck"
+        className="hidden"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+      />
 
       <div className="grid gap-6 sm:grid-cols-2">
         <label className="space-y-2 text-sm font-medium">
           Name
-          <input
-            required
-            name="name"
-            autoComplete="name"
-            maxLength={100}
-            className="form-input"
-          />
+          <input required name="name" autoComplete="name" maxLength={100} className="form-input" />
         </label>
         <label className="space-y-2 text-sm font-medium">
           Email
@@ -144,22 +162,21 @@ export function ContactForm() {
 
       <div className="grid gap-6 sm:grid-cols-2">
         <label className="space-y-2 text-sm font-medium">
-          Service needed
-          <select required name="service" defaultValue="" className="form-input">
-            <option value="" disabled>Select a service</option>
-            <option>Web design</option>
-            <option>Web development</option>
-            <option>Mobile app development</option>
+          What do you need? <span className="font-normal text-muted">(best guess is fine)</span>
+          <select name="service" defaultValue="" className="form-input">
+            <option value="">Not sure yet</option>
+            {services.map((service) => (
+              <option key={service.id}>{service.title}</option>
+            ))}
           </select>
         </label>
         <label className="space-y-2 text-sm font-medium">
-          Budget <span className="font-normal text-muted">(optional)</span>
-          <select name="budget" defaultValue="" className="form-input">
+          What stage are you at? <span className="font-normal text-muted">(optional)</span>
+          <select name="stage" defaultValue="" className="form-input">
             <option value="">Not sure yet</option>
-            <option>Under AED 5,000</option>
-            <option>AED 5,000–10,000</option>
-            <option>AED 10,000–25,000</option>
-            <option>AED 25,000+</option>
+            <option>Just an idea</option>
+            <option>Scope is clear</option>
+            <option>Ready to start</option>
           </select>
         </label>
       </div>
@@ -177,7 +194,8 @@ export function ContactForm() {
           placeholder="What are you trying to make, improve, or launch?"
         />
         <span id="project-details-hint" className="block text-xs leading-5 text-muted">
-          A few sentences is plenty — please write at least 20 characters.
+          A few sentences is plenty. What are you trying to launch or fix? Please write at least 20
+          characters.
         </span>
       </label>
 
@@ -202,43 +220,23 @@ export function ContactForm() {
           onExpire={() => setCaptchaToken("")}
           onError={() => setCaptchaToken("")}
         />
-        <p className="text-xs leading-5 text-muted">
-          This form uses hCaptcha to block spam. See{" "}
-          <a
-            className="underline"
-            href="https://www.hcaptcha.com/privacy"
-            target="_blank"
-            rel="noreferrer"
-          >
-            hCaptcha&apos;s privacy policy
-          </a>{" "}
-          and{" "}
-          <a
-            className="underline"
-            href="https://www.hcaptcha.com/terms"
-            target="_blank"
-            rel="noreferrer"
-          >
-            terms
-          </a>
-          .
-        </p>
       </div>
 
       <div className="flex flex-wrap items-center gap-5">
         <Button type="submit" disabled={status === "sending"} loading={status === "sending"}>
-          {status === "sending" ? "Sending enquiry…" : "Send enquiry"}
+          {status === "sending" ? "Sending brief…" : "Send my brief"}
         </Button>
 
         {status === "success" && (
           <p className="text-sm text-success" role="status">
-            Thanks — your enquiry has been submitted. We&apos;ll be in touch soon.
+            Thanks — we&apos;ve got it. We&apos;ll reply during business hours (Sun–Thu, 9am–6pm
+            GST).
           </p>
         )}
 
         {status === "error" && (
           <p className="max-w-md text-sm text-error" role="alert">
-            {errorMessage || "Your enquiry couldn't be sent."} Reach us directly at{" "}
+            {errorMessage || "Your brief couldn't be sent."} Reach us directly at{" "}
             <a className="underline" href={`mailto:${site.contact.email}`}>
               {site.contact.email}
             </a>
@@ -247,9 +245,26 @@ export function ContactForm() {
         )}
       </div>
 
+      <p className="font-mono text-meta uppercase tracking-[0.12em] text-muted">
+        One short form. No obligation. A real reply, not a sales sequence.
+      </p>
+
       <p className="text-xs leading-5 text-muted">
-        We use the details you submit only to respond to your enquiry and manage
-        our conversation. Read our{" "}
+        Spam protection by{" "}
+        <a
+          className="underline"
+          href="https://www.hcaptcha.com/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          hCaptcha
+        </a>
+        .
+      </p>
+
+      <p className="text-xs leading-5 text-muted">
+        We use the details you submit only to respond to your enquiry and manage our conversation.
+        Read our{" "}
         <Link className="underline" to="/privacy">
           privacy policy
         </Link>

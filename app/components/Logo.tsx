@@ -6,9 +6,8 @@ import { site } from "~/data/constants";
  *
  * The artwork is the pair of files the brand supplied:
  * `app/assets/logo/logo.png` (the lockup) and `app/assets/icon/icon.png` (the
- * mark on its own, for the app icons and the browser tab).
- * `scripts/prepare-logo.ps1` derives every web raster from them, so there is
- * exactly one place the artwork is defined.
+ * mark on its own, for the app icons and the browser tab). The shipped rasters
+ * in `public/` are derived from that artwork.
  *
  * Three things this component is responsible for:
  *
@@ -39,7 +38,6 @@ function variantSource(variant: LogoVariant): string {
 export function Logo({
   variant = "color",
   alt = "",
-  priority = false,
   className = "h-6",
 }: {
   /**
@@ -50,8 +48,6 @@ export function Logo({
    */
   variant?: LogoVariant;
   alt?: string;
-  /** Above-the-fold only: opts out of lazy loading and raises fetch priority. */
-  priority?: boolean;
   className?: string;
 }) {
   return (
@@ -61,8 +57,7 @@ export function Logo({
       width={site.logo.width}
       height={site.logo.height}
       decoding="async"
-      loading={priority ? "eager" : "lazy"}
-      fetchPriority={priority ? "high" : "auto"}
+      loading="eager"
       className={`w-auto ${className}`}
     />
   );

@@ -1,4 +1,10 @@
-export type ProjectType = "Web project" | "App project";
+import {
+  getClientProjectBySlug,
+  type ClientProject,
+  type ClientProjectKind,
+} from "./clientProjects";
+
+export type ProjectType = "Web project" | "App project" | "API project";
 
 export type Project = {
   slug: string;
@@ -13,8 +19,41 @@ export type Project = {
   isConcept: true;
 };
 
-export const projects: Project[] = [
-  { slug: "mentora", title: "Mentora Learning", type: "Web project", category: "EdTech / Platform", description: "A learning management platform with course delivery, live Zoom sessions, Stripe and PayPal payments, instructor payouts, and role-based dashboards.", tags: ["EdTech", "LMS", "Payments"], year: "2026", accent: "#EFD9C2", image: "/images/projects-images/mentora/mentora-home.png", isConcept: true },
-  { slug: "dental-clinic", title: "Dental Clinic", type: "Web project", category: "Healthcare / Operations", description: "A full-stack clinic management platform spanning appointments, patient records, treatment plans, billing, inventory, and analytics with granular role-based access.", tags: ["Healthcare", "Clinic", "Dashboard"], year: "2026", accent: "#FBE3CC", image: "/images/projects-images/dental-clinic/dental-clinic-home.png", isConcept: true },
-  { slug: "little-rainbow-nursery", title: "Little Rainbow Nursery", type: "Web project", category: "Education / Nursery", description: "A warm, playful nursery website with programme sections, a gallery, parent testimonials, and a clear enquiry journey for families.", tags: ["Education", "Website", "Brand"], year: "2026", accent: "#E8C9AC", image: "/images/projects-images/little-rainbow-nursery/little-rainbow-home.png", isConcept: true },
-]; 
+const KIND_TO_TYPE: Record<ClientProjectKind, ProjectType> = {
+  Web_app: "Web project",
+  Website: "Web project",
+  API: "API project",
+  Game: "App project",
+  Mobile_app: "App project",
+};
+
+/** The three concepts shown in Home's "Selected work" area. */
+const HOME_PROJECT_SLUGS = ["mentora", "dental-clinic", "little-rainbow-nursery"] as const;
+
+/** Real concept build used only to balance the tablet grids. */
+const TABLET_PROJECT_SLUG = "work-note";
+
+/** Adapt the canonical portfolio record to the lighter Home card view model. */
+export function toProject(project: ClientProject): Project {
+  return {
+    slug: project.slug,
+    title: project.title,
+    type: KIND_TO_TYPE[project.kind],
+    category: project.category,
+    description: project.description,
+    tags: project.stack,
+    year: project.year,
+    accent: project.accent,
+    image: project.image ?? "",
+    isConcept: true,
+  };
+}
+
+export const projects: Project[] = HOME_PROJECT_SLUGS.map((slug) =>
+  toProject(getClientProjectBySlug(slug)),
+);
+
+/** The same canonical record is shared by both tablet-only card slots. */
+export const tabletOnlyProject: ClientProject = getClientProjectBySlug(TABLET_PROJECT_SLUG);
+
+export const tabletHomeProject: Project = toProject(tabletOnlyProject);

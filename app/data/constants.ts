@@ -2,49 +2,28 @@
  * Site-wide configuration — the single source of truth for identity, navigation,
  * footer structure and contact details.
  *
- * Reference: plans/MULTIPAGE_UI_PLAN.md §3.2, §15b
- *
- * ⚠️  DEMO DATA. Every value below is deliberately non-routable:
- *
- *   - `.example.com` / `example.com` are reserved by RFC 2606 and can never
- *     resolve or receive mail.
- *   - Phone and WhatsApp are a visible template (`5X XXX XXXX`) with their
- *     `href` set to `null`. A plausible-looking invented UAE mobile number is
- *     the one thing demo data must never contain: it may belong to a real
- *     person. Components render these as plain text while `href` is null, so a
- *     placeholder can never dial or open a chat.
- *
- * Replacing these before launch is a RELEASE BLOCKER (§16).
- *
- * ── HOW TO PATCH IN THE REAL DATA ─────────────────────────────────────────
- * Everything that varies per business lives in the two blocks below:
- *
- *   1. `contact`  — email, phone, WhatsApp, hours, address.
- *   2. `socialLinks` — the real profile URLs.
- *
  * The canonical origin lives in `.env` as `VITE_SITE_URL` and reaches
  * `site.url` through `env.siteUrl`; `npm run sync:site-url` propagates it into
- * the static files in `public/` that cannot read env vars (sitemap, robots,
- * email signature).
+ * the static files in `public/` that cannot read env vars (sitemap, robots).
  *
- * Nothing else in the app hard-codes a contact detail: the footer, mobile
- * drawer, contact page, JSON-LD and Open Graph tags all read from here.
+ * Everything that varies per business lives in the `contact` and `socialLinks`
+ * blocks below. Nothing else in the app hard-codes a contact detail: the
+ * footer, mobile drawer, contact page and JSON-LD all read from here.
  */
 
 import { env } from "./env";
 
 /**
- * Cache-busting version for the brand raster URLs.
+ * Cache-busting version for shipped rasters and fonts.
  *
- * Browsers cache favicons and app icons per origin and never re-fetch them on
- * a normal reload - a replaced artwork file keeps serving the old image until
- * the user hard-refreshes, which is exactly the "the icon did not change"
- * bug. Every brand raster URL therefore carries `?v=<version>`.
+ * Browsers cache icons and fonts per origin and never re-fetch them on a
+ * normal reload, so a replaced file would keep serving the old bytes. Every
+ * versioned URL carries `?v=<version>`.
  *
- * Bump this whenever `scripts/prepare-logo.ps1` regenerates the artwork.
- * Keep it in sync with the `?v=` in `scripts/email-signature.template.html`.
+ * Keep this in step with `assetVersion` in `config/site.json`, which drives
+ * the generated static pages and the CSS font URLs.
  */
-export const ASSET_VERSION = "2026-10-22";
+export const ASSET_VERSION = "2026-11-21";
 
 export type NavItem = {
   label: string;
@@ -54,13 +33,7 @@ export type NavItem = {
 };
 
 /** Primary-nav glyphs — ids live next to the destinations they belong to. */
-export type NavIconId =
-  | "home"
-  | "services"
-  | "portfolio"
-  | "process"
-  | "about"
-  | "contact";
+export type NavIconId = "home" | "services" | "portfolio" | "about" | "contact" | "careers";
 
 /**
  * The brand mark that belongs to a social profile.
@@ -127,11 +100,9 @@ export type Site = {
   legalName: string;
   /** Canonical origin, no trailing slash. */
   url: string;
-  /** True while any demo value below is still in place. */
-  isPlaceholder: boolean;
   /**
    * Cache-busting version for the brand raster URLs - see `ASSET_VERSION`.
-   * Bump it when `scripts/prepare-logo.ps1` regenerates the artwork.
+   * Bump it whenever shipped raster or font artwork changes.
    */
   assetVersion: string;
   nav: NavItem[];
@@ -152,12 +123,10 @@ export type Site = {
     inverseSrc: string;
     /**
      * Intrinsic pixels. These exist to reserve layout space and prevent CLS.
-     * They must match the real file — regenerate with scripts/prepare-logo.ps1
-     * if the artwork changes.
+     * They must match the real file if the artwork changes.
      */
     width: number;
     height: number;
-    alt: string;
   };
   contact: {
     email: string;
@@ -189,12 +158,12 @@ export type Site = {
 /**
  * Turn one raw international number into the four values the UI needs.
  *
- * Passing `null` keeps the demo state: the visible `5X XXX XXXX` template is
- * shown and both hrefs stay `null`, so a placeholder can never dial a phone or
- * open a chat with a stranger. Passing a real number produces a `tel:` link
- * and a `wa.me` link that both point at the same number.
+ * Passing `null` keeps the unresolved state: the visible `5X XXX XXXX`
+ * template is shown and both hrefs stay `null`, so a placeholder can never
+ * dial a phone or open a chat with a stranger. Passing a real number produces
+ * a `tel:` link and a `wa.me` link that both point at the same number.
  *
- * `display` is how the number is written for humans ("+971 52 525 982"); it
+ * `display` is how the number is written for humans; it
  * defaults to the raw value. The hrefs are always built from the digits, so
  * the two can never disagree about which number is being dialled.
  */
@@ -225,12 +194,14 @@ export function phoneDetails(
   };
 }
 
+const CONTACT_PHONE = "+97152525982";
+const CONTACT_PHONE_DISPLAY = "+971 52 525 982";
+
 const contact: Site["contact"] = {
   email: "creaova.co@gmail.com",
-  // One number produces all four values. Swap `null` for the real number
-  // (e.g. "+971501234567") and the display text, the `tel:` link and the
-  // `wa.me` link all update together — they can no longer drift apart.
-  ...phoneDetails("+97152525982", "+971 52 525 982"),
+  // One source produces the display text, `tel:` link and `wa.me` link, so
+  // the channels cannot drift apart when the number changes.
+  ...phoneDetails(CONTACT_PHONE, CONTACT_PHONE_DISPLAY),
   hours: "Sun–Thu, 9am–6pm (GST)",
   address: {
     region: "United Arab Emirates",
@@ -240,7 +211,7 @@ const contact: Site["contact"] = {
 export const socialLinks: SocialLink[] = [
   { label: "Instagram", href: "https://www.instagram.com/creaova.co/", icon: "instagram" },
   // Profiles not supplied yet — `href: null` keeps them off the link list
-  // until the real URLs are confirmed. See `stillHasDemoData` below.
+  // until the real URLs are confirmed.
   { label: "LinkedIn", href: null, icon: "linkedin" },
   { label: "Behance", href: null, icon: "behance" },
 ];
@@ -273,7 +244,7 @@ export const contactChannels: ContactChannel[] = [
   },
   {
     id: "hours",
-    label: "Hours",
+    label: "Office hours",
     value: contact.hours,
     href: null,
   },
@@ -285,59 +256,39 @@ export const contactChannels: ContactChannel[] = [
   },
 ];
 
-/**
- * True while any demo value is still in place.
- *
- * Derived instead of hand-set on purpose: the flag flips to false only once
- * every placeholder is genuinely gone, so it can never drift out of date and
- * leave the launch checklist (§16) reading "done" when it is not.
- */
-function stillHasDemoData(): boolean {
-  return (
-    contact.email.endsWith("@example.com") ||
-    contact.phoneHref === null ||
-    contact.whatsappHref === null ||
-    socialLinks.some((link) => link.href === null)
-  );
-}
-
 export const site: Site = {
   name: "Creaova",
   legalName: "Creaova Digital Solutions",
   // Canonical origin, from .env → VITE_SITE_URL. Never hard-code it here.
   url: env.siteUrl,
-  isPlaceholder: stillHasDemoData(),
   assetVersion: ASSET_VERSION,
 
   nav: [
     { label: "Home", to: "/#home", icon: "home" },
     { label: "Services", to: "/services#all-services", icon: "services" },
     { label: "Portfolio", to: "/portfolio#projects", icon: "portfolio" },
-    { label: "Our approach", to: "/services#process", icon: "process" },
     { label: "About", to: "/about", icon: "about" },
     { label: "Contact", to: "/contact", icon: "contact" },
+    { label: "Careers", to: "/careers", icon: "careers" },
   ],
 
   socialLinks,
 
   logo: {
-    // Prepared by scripts/prepare-logo.ps1 from app/assets/logo/logo.png (the
-    // supplied artwork). The lockup ships with the "CREAOVA" wordmark baked
-    // into the image - never as live text - 420x96 for the web, 841x192 for
-    // print. The `?v=` on every path busts the browser's image cache when the
-    // artwork is regenerated; see ASSET_VERSION above.
+    // The supplied lockup ships with the "CREAOVA" wordmark baked into the
+    // image - never as live text - at 420x96. The `?v=` on every path busts
+    // the browser's image cache when the artwork changes.
     src: `/logo.png?v=${ASSET_VERSION}`,
     inverseSrc: `/logo-inverse.png?v=${ASSET_VERSION}`,
     width: 420,
     height: 96,
-    alt: "Creaova",
   },
 
   contact,
 
   footer: {
     brandLine:
-      "An established digital studio in the UAE. We design and build secure, high-performing websites and apps — and stay with you as a partner after launch.",
+      "A UAE studio that takes a project from first conversation to after launch — with one team, visible decisions, and no disappearing act.",
     location: "United Arab Emirates",
 
     // Three quick-access groups, kept deliberately short (§3.2). Every footer
@@ -377,11 +328,8 @@ export const site: Site = {
   },
 };
 
-/** The primary header call to action, used by both Navbar and MobileNav. */
-export const primaryCta: NavItem = { label: "Start a project", to: "/contact" };
-
-/** Quiet header substitute — same destination, a softer invitation than the hero button. */
-export const navCta: NavItem = { label: "Inquiries", to: "/contact" };
+/** The primary call to action in the hero. The header stays text-only. */
+export const primaryCta: NavItem = { label: "Get a clear scope", to: "/contact" };
 
 /**
  * Absolute URL for a route, built from the canonical origin in `.env`

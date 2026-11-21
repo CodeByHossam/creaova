@@ -2,14 +2,16 @@ import { Badge } from "~/components/Badge";
 import { Container } from "~/components/Container";
 import { ContactForm } from "~/components/ContactForm";
 import { ContactIcon, SocialIcon } from "~/components/ContactIcon";
-import { absoluteUrl, contactChannels, site } from "~/data/constants";
+import { contactChannels, site } from "~/data/constants";
+import { pageMeta } from "~/data/pageMeta";
 
 export function meta() {
-  return [
-    { title: "Contact | Creaova Digital Solutions" },
-    { name: "description", content: "Start a conversation with Creaova about your next digital product — clear next steps, no obligation." },
-    { tagName: "link", rel: "canonical", href: absoluteUrl("/contact") },
-  ];
+  return pageMeta({
+    path: "/contact",
+    title: "Contact | Creaova Digital Solutions",
+    description:
+      "Tell Creaova what you're building. Get clear next steps, a written scope and an honest answer on fit — no obligation.",
+  });
 }
 
 export default function Contact() {
@@ -20,15 +22,14 @@ export default function Contact() {
         <div className="mx-auto max-w-3xl text-center">
           <Badge>Contact</Badge>
           <h1 className="mt-5 sm:mt-6 text-display font-semibold text-ink">
-            Let’s build something you can rely on.
+            Tell us what you&apos;re building. We&apos;ll tell you what it takes.
           </h1>
           <p className="mt-3 sm:mt-4 font-mono text-sm tracking-[0.12em] text-muted">
             Clear next steps, no obligation.
           </p>
           <p className="mx-auto mt-5 sm:mt-6 max-w-2xl text-lede text-muted">
-            Tell us what you are looking to launch. A few useful details are
-            enough to start — we will reply with clear next steps and no
-            obligation.
+            A few sentences is enough. We&apos;ll reply with the questions that matter and a
+            sensible next step — not a sales sequence.
           </p>
         </div>
 
@@ -40,6 +41,15 @@ export default function Contact() {
           {/* `lg:pt-10` matches the form's `sm:p-10`, so the first channel row
               starts on the same line as the first form field. */}
           <aside className="grid content-start gap-7 border-t border-line pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-10">
+            <div className="rounded-card border border-line bg-surface p-5">
+              <p className="font-mono text-meta font-medium uppercase tracking-[0.18em] text-primary-text">
+                Before any work begins
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-muted">
+                You approve the scope and price in a written proposal first. No surprise invoice, no
+                work started on an assumption.
+              </p>
+            </div>
             <ul className="grid content-start gap-7">
               {contactChannels.map((channel) => (
                 <li key={channel.id} className="flex items-start gap-3">
@@ -87,7 +97,7 @@ export default function Contact() {
                           <a
                             href={social.href}
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             className="mt-1 inline-flex min-h-11 items-center text-sm font-medium text-ink underline underline-offset-4 transition-colors duration-200 ease-out hover:text-primary-text"
                           >
                             {social.label}
@@ -103,6 +113,5 @@ export default function Contact() {
         </div>
       </Container>
     </section>
-
   );
 }

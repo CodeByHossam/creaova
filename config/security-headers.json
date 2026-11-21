@@ -1,0 +1,103 @@
+{
+  "csp": {
+    "inlineHashesPlaceholder": "{{INLINE_HASHES}}",
+    "directives": [
+      { "name": "default-src", "sources": ["'self'"] },
+      {
+        "name": "script-src",
+        "sources": ["'self'", "{{INLINE_HASHES}}", "https://hcaptcha.com", "https://*.hcaptcha.com"]
+      },
+      {
+        "name": "style-src",
+        "sources": ["'self'", "'unsafe-inline'", "https://hcaptcha.com", "https://*.hcaptcha.com"]
+      },
+      {
+        "name": "img-src",
+        "sources": ["'self'", "data:", "https://hcaptcha.com", "https://*.hcaptcha.com"]
+      },
+      { "name": "font-src", "sources": ["'self'"] },
+      {
+        "name": "connect-src",
+        "sources": [
+          "'self'",
+          "https://api.web3forms.com",
+          "https://hcaptcha.com",
+          "https://*.hcaptcha.com"
+        ]
+      },
+      {
+        "name": "frame-src",
+        "sources": ["https://hcaptcha.com", "https://*.hcaptcha.com"]
+      },
+      { "name": "media-src", "sources": ["'self'"] },
+      { "name": "worker-src", "sources": ["'self'", "blob:"] },
+      { "name": "manifest-src", "sources": ["'self'"] },
+      { "name": "form-action", "sources": ["'self'", "https://api.web3forms.com"] },
+      { "name": "base-uri", "sources": ["'self'"] },
+      { "name": "object-src", "sources": ["'none'"] },
+      { "name": "upgrade-insecure-requests", "sources": [] },
+      {
+        "name": "frame-ancestors",
+        "sources": ["'none'"],
+        "headerOnly": true
+      }
+    ]
+  },
+  "headerRules": [
+    {
+      "path": "/*",
+      "headers": [
+        { "name": "X-Frame-Options", "value": "DENY" },
+        { "name": "X-Content-Type-Options", "value": "nosniff" },
+        { "name": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        {
+          "name": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()"
+        },
+        { "name": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        { "name": "X-Permitted-Cross-Domain-Policies", "value": "none" },
+        { "name": "Strict-Transport-Security", "value": "max-age=31536000" },
+        { "name": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "path": "/site.webmanifest",
+      "headers": [
+        { "name": "Content-Type", "value": "application/manifest+json" },
+        { "name": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
+      "path": "/assets/*",
+      "headers": [{ "name": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "path": "/fonts/*",
+      "headers": [{ "name": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "path": "/images/*",
+      "headers": [{ "name": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "path": "/icons.svg*",
+      "headers": [{ "name": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "path": "/favicon.png*",
+      "headers": [{ "name": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "path": "/apple-touch-icon.png*",
+      "headers": [{ "name": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "path": "/icon-*.png*",
+      "headers": [{ "name": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "path": "/logo*.png*",
+      "headers": [{ "name": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    }
+  ]
+}

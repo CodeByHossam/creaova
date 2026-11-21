@@ -1,0 +1,14 @@
+{
+  "name": "Creaova",
+  "legalName": "Creaova Digital Solutions",
+  "socialName": "Creaova Digital Solutions [ CDS ]",
+  "themeColor": "#241000",
+  "assetVersion": "2026-11-21",
+  "ogImage": "/images/og-image.png",
+  "legalEffectiveDate": "23 October 2026",
+  "notFound": {
+    "title": "Page not found | Creaova Digital Solutions",
+    "description": "The page you were looking for could not be found. Head back to the Creaova Digital Solutions homepage.",
+    "robots": "noindex, follow"
+  }
+}

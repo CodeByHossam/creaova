@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
-import { Menu, Send, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
-import { Button } from "~/components/Button";
+import { DESKTOP_MEDIA_QUERY } from "~/data/breakpoints";
 import { Container } from "~/components/Container";
 import { ContactIcon } from "~/components/ContactIcon";
 import { Logo } from "~/components/Logo";
 import { NavIcon } from "~/components/NavIcon";
-import { contactChannels, navCta, site } from "~/data/constants";
+import { contactChannels, site } from "~/data/constants";
 import { useHydratedLocationHash } from "~/hooks/useHydratedLocationHash";
 import { getActiveNavHref } from "~/utils/navigation";
 
 /**
  * The mobile navigation drawer.
  *
- * Reference: plans/MULTIPAGE_UI_PLAN.md §3.2, §9
+ * Mobile counterpart of the shared six-link desktop navigation.
  *
  * Built on the native `<dialog>` element rather than a hand-rolled overlay. That
  * buys four things for free that are otherwise easy to get subtly wrong:
@@ -54,21 +54,27 @@ export function MobileNav() {
     };
   }, [open]);
 
-  // Never leave a modal open behind a hidden trigger.
+  // Never leave a modal open behind a hidden trigger. The listener exists only
+  // while the drawer is open; closed routes pay nothing for it. Opening is
+  // blocked on desktop at the trigger, so the effect never needs to set state
+  // synchronously.
   useEffect(() => {
-    const query = window.matchMedia("(min-width: 1024px)");
+    if (!open) return;
+    const query = window.matchMedia(DESKTOP_MEDIA_QUERY);
     const onChange = (event: MediaQueryListEvent) => {
       if (event.matches) setOpen(false);
     };
     query.addEventListener("change", onChange);
     return () => query.removeEventListener("change", onChange);
-  }, []);
+  }, [open]);
 
   return (
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          if (!window.matchMedia(DESKTOP_MEDIA_QUERY).matches) setOpen(true);
+        }}
         aria-expanded={open}
         aria-controls="mobile-nav"
         aria-label="Open menu"
@@ -80,12 +86,17 @@ export function MobileNav() {
       <dialog
         id="mobile-nav"
         ref={dialogRef}
+        aria-label="Mobile navigation"
         onClose={() => setOpen(false)}
         className="nav-drawer fixed inset-0 m-0 h-full max-h-none w-full max-w-none overflow-y-auto bg-bg p-0 text-ink lg:hidden"
       >
         <div className="flex min-h-full flex-col">
           <Container className="flex h-16 shrink-0 items-center justify-between border-b border-line">
-            <Link to="/" aria-label="Creaova home" className="flex min-h-11 min-w-11 items-center gap-3">
+            <Link
+              to="/"
+              aria-label="Creaova home"
+              className="flex min-h-11 min-w-11 items-center gap-3"
+            >
               <Logo className="h-6" />
             </Link>
             <button
@@ -108,11 +119,7 @@ export function MobileNav() {
                         NavLink's pathname-only rule marks two /services items. */}
                     <Link
                       to={item.to}
-                      aria-current={
-                        item.to === activeNavHref
-                          ? "page"
-                          : undefined
-                      }
+                      aria-current={item.to === activeNavHref ? "page" : undefined}
                       onClick={() => setOpen(false)}
                       className={[
                         "flex min-h-14 items-center justify-between gap-4 py-4 font-display text-h3 transition-colors duration-200 ease-out",
@@ -135,23 +142,9 @@ export function MobileNav() {
               </ul>
             </nav>
 
-            <div className="mt-8">
-              <Button
-                to={navCta.to}
-                size="lg"
-                className="w-full"
-                onClick={() => setOpen(false)}
-              >
-                <Send aria-hidden="true" className="size-4 shrink-0" />
-                {navCta.label}
-              </Button>
-            </div>
-
             <div className="mt-auto space-y-4 pt-10">
               {contactChannels
-                .filter((channel) =>
-                  ["email", "phone", "whatsapp"].includes(channel.id),
-                )
+                .filter((channel) => ["email", "phone", "whatsapp"].includes(channel.id))
                 .map((channel) => (
                   <div key={channel.id} className="flex items-start gap-3">
                     {/* Same 36px chip as Contact and Footer; 32px was a lone outlier. */}

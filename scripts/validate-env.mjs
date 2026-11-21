@@ -14,7 +14,14 @@ import { readEnv } from "./env.mjs";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const ZERO_UUID = "00000000-0000-0000-0000-000000000000";
-const PLACEHOLDER_HOSTS = new Set(["example.com", "example.org", "example.net", "localhost", "127.0.0.1", "0.0.0.0"]);
+const PLACEHOLDER_HOSTS = new Set([
+  "example.com",
+  "example.org",
+  "example.net",
+  "localhost",
+  "127.0.0.1",
+  "0.0.0.0",
+]);
 
 const errors = [];
 const warnings = [];
@@ -88,7 +95,10 @@ if (!accessKey) {
 }
 
 const captchaSiteKey = readEnv("VITE_FORM_CAPTCHA_SITEKEY");
-if (captchaSiteKey && (!UUID_RE.test(captchaSiteKey) || captchaSiteKey.toLowerCase() === ZERO_UUID)) {
+if (
+  captchaSiteKey &&
+  (!UUID_RE.test(captchaSiteKey) || captchaSiteKey.toLowerCase() === ZERO_UUID)
+) {
   fail("VITE_FORM_CAPTCHA_SITEKEY is not a valid hCaptcha site key.");
 }
 
@@ -99,7 +109,9 @@ if (warnings.length) {
 if (errors.length) {
   console.error("[validate-env] Build blocked. Fix these configuration problems:");
   for (const error of errors) console.error(`  - ${error}`);
-  console.error("[validate-env] Add real values to .env locally or to the host's environment settings.");
+  console.error(
+    "[validate-env] Add real values to .env locally or to the host's environment settings.",
+  );
   process.exit(1);
 }
 

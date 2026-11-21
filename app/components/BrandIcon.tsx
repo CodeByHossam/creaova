@@ -17,13 +17,7 @@ type BrandIconProps = SVGProps<SVGSVGElement>;
 
 function BrandGlyph({ children, ...props }: BrandIconProps & { children: ReactNode }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-      focusable="false"
-      {...props}
-    >
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" {...props}>
       {children}
     </svg>
   );

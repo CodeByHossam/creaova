@@ -10,16 +10,10 @@ import type { ReactNode } from "react";
  *          orange accent stays as the dot's fill, never as text here.
  * The dot is always orange fill, never text.
  */
-export function Badge({
-  children,
-  dark = false,
-}: {
-  children: ReactNode;
-  dark?: boolean;
-}) {
+export function Badge({ children, dark = false }: { children: ReactNode; dark?: boolean }) {
   return (
     <span
-      className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 font-mono text-meta font-medium uppercase tracking-[0.18em] ${
+      className={`inline-flex items-center gap-2 rounded-full border px-4 py-1 font-mono text-[11px] font-medium uppercase tracking-wide sm:text-meta ${
         dark
           ? "border-on-dark/20 bg-on-dark/10 text-on-dark"
           : "border-line bg-surface-subtle text-ink"

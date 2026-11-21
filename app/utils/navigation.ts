@@ -25,11 +25,7 @@ function isPathActive(itemPath: string, pathname: string) {
  * hash item for that path is its page-level destination. That last rule keeps
  * /services on "Services" rather than marking both Services and Our approach.
  */
-export function getActiveNavHref(
-  items: NavItem[],
-  pathname: string,
-  hash: string,
-) {
+export function getActiveNavHref(items: NavItem[], pathname: string, hash: string) {
   const currentHash = hash ? (hash.startsWith("#") ? hash : `#${hash}`) : "";
   const candidates = items
     .map((item) => ({ item, target: parseNavTarget(item.to) }))
@@ -38,9 +34,7 @@ export function getActiveNavHref(
   if (candidates.length === 0) return undefined;
 
   if (currentHash) {
-    const exactHashItem = candidates.find(
-      ({ target }) => target.hash === currentHash,
-    );
+    const exactHashItem = candidates.find(({ target }) => target.hash === currentHash);
     if (exactHashItem) return exactHashItem.item.to;
   }
 

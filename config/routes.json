@@ -1,0 +1,72 @@
+[
+  {
+    "path": "/",
+    "kind": "index",
+    "file": "pages/Home.tsx",
+    "sitemap": true,
+    "changefreq": "weekly",
+    "priority": "1.0"
+  },
+  {
+    "path": "/services",
+    "kind": "route",
+    "file": "pages/Services.tsx",
+    "sitemap": true,
+    "changefreq": "monthly",
+    "priority": "0.9"
+  },
+  {
+    "path": "/portfolio",
+    "kind": "route",
+    "file": "pages/Portfolio.tsx",
+    "sitemap": true,
+    "changefreq": "monthly",
+    "priority": "0.8"
+  },
+  {
+    "path": "/about",
+    "kind": "route",
+    "file": "pages/About.tsx",
+    "sitemap": true,
+    "changefreq": "monthly",
+    "priority": "0.7"
+  },
+  {
+    "path": "/careers",
+    "kind": "route",
+    "file": "pages/Careers.tsx",
+    "sitemap": true,
+    "changefreq": "monthly",
+    "priority": "0.7"
+  },
+  {
+    "path": "/contact",
+    "kind": "route",
+    "file": "pages/Contact.tsx",
+    "sitemap": true,
+    "changefreq": "monthly",
+    "priority": "0.9"
+  },
+  {
+    "path": "/privacy",
+    "kind": "route",
+    "file": "pages/Privacy.tsx",
+    "sitemap": true,
+    "changefreq": "yearly",
+    "priority": "0.3"
+  },
+  {
+    "path": "/terms",
+    "kind": "route",
+    "file": "pages/Terms.tsx",
+    "sitemap": true,
+    "changefreq": "yearly",
+    "priority": "0.3"
+  },
+  {
+    "path": "*",
+    "kind": "route",
+    "file": "pages/NotFound.tsx",
+    "sitemap": false
+  }
+]

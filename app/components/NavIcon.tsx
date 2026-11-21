@@ -1,4 +1,4 @@
-import { Briefcase, House, Layers, Mail, Route, UserRound } from "lucide-react";
+import { Briefcase, House, Layers, Mail, UserRound } from "lucide-react";
 
 import type { NavIconId } from "~/data/constants";
 
@@ -7,20 +7,13 @@ import type { NavIconId } from "~/data/constants";
  *
  * The ids live in `data/constants.ts` beside the destinations, so a nav item
  * can never end up with a label but no icon. The vocabulary follows the locked
- * Mockup 01 reference where it defines one: briefcase = work/portfolio,
- * layers = services, route = process, user = about. Home and Contact use the
- * standard house and mail marks.
+ * Mockup 01 reference: house = home, layers = services, briefcase = portfolio
+ * and careers, user = about, mail = contact.
  *
  * The icons are decorative — `aria-hidden` — because the link text already
  * names the destination.
  */
-export function NavIcon({
-  id,
-  className,
-}: {
-  id?: NavIconId;
-  className?: string;
-}) {
+export function NavIcon({ id, className }: { id?: NavIconId; className?: string }) {
   const props = { "aria-hidden": true, className, strokeWidth: 1.75 } as const;
 
   switch (id) {
@@ -30,12 +23,12 @@ export function NavIcon({
       return <Layers {...props} />;
     case "portfolio":
       return <Briefcase {...props} />;
-    case "process":
-      return <Route {...props} />;
     case "about":
       return <UserRound {...props} />;
     case "contact":
       return <Mail {...props} />;
+    case "careers":
+      return <Briefcase {...props} />;
     default:
       return null;
   }

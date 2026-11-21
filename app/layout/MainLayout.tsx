@@ -27,23 +27,24 @@ export default function MainLayout() {
       const target = document.getElementById(id);
       if (!target) return;
 
-      const padding =
-        parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+      const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
       const top = window.scrollY + target.getBoundingClientRect().top - padding;
       window.scrollTo({
         top,
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "auto"
-          : "smooth",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
       });
     });
 
     return () => cancelAnimationFrame(frame);
   }, [pathname, hash]);
 
-  return <>
-    <Navbar />
-    <main id="main"><Outlet /></main>
-    <Footer />
-  </>;
+  return (
+    <>
+      <Navbar />
+      <main id="main">
+        <Outlet />
+      </main>
+      <Footer />
+    </>
+  );
 }

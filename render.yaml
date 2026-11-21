@@ -1,10 +1,12 @@
 # Render Blueprint for the Creaova static site.
 #
-# If the existing service is already managed in the Render Dashboard, apply
-# these settings there (or link this Blueprint) before relying on them. The
-# page-level CSP hashes are generated at build time by scripts/apply-security.mjs;
-# this file supplies the header-only controls, including frame-ancestors, which
-# cannot be delivered in a <meta> tag.
+# The header block below is generated from config/security-headers.json via
+# `npm run sync:host-config` after a build. It is a host-ready copy of the same
+# manifest that produces build/client/_headers; do not edit it by hand.
+#
+# The owner is moving to official web hosting. The generated _headers file is
+# kept in the build output for hosts that read it; apply the same header block
+# on the new server and verify it with a post-deploy header check.
 services:
   - type: web
     name: creaova
@@ -23,42 +25,53 @@ services:
       - key: VITE_FORM_CAPTCHA_SITEKEY
         value: "50b2fe65-b00b-4b9e-ad62-3ba471098be2"
     headers:
-      - path: /*
+      # BEGIN GENERATED HEADERS
+      - path: "/*"
         name: Content-Security-Policy
-        value: "frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests"
-      - path: /*
-        name: X-Frame-Options
+        value: "default-src 'self'; script-src 'self' 'sha256-UQ4VorGoy7+KIwIz1cJK0q1K3HcY08i7ZCvEUK9l/R4=' 'sha256-n1D9cZXw4ZNSiUR+6/8u4KC6Mx7KCFb9ScJA8U0UdhI=' 'sha256-eWa6DMZRMTkb7k2BX579qgK/VGeDqc4D+SQPSUKmNtE=' 'sha256-8zkB2/GfY9StyOwJasan/P4LXJWMm5TKbe1g5ipoCwQ=' 'sha256-7mu4H06fwDCjmnxxr/xNHyuQC6pLTHr4M2E4jXw5WZs=' 'sha256-duhaxWNI+6QAukUMmlYrkl97X+e0pxobkwS+TpY5/CQ=' 'sha256-QAlSewaQLi/NPCznjAZSyvQ72heD0VdxmNDDkZeCxgc=' 'sha256-RBZNiG3Ztb26Xi/69+VRecU4BPhrfxcvspLXMRrrCNE=' 'sha256-p7GE78bbMHDrE4IWzpiMSttAsTpUu7wwi5/wvnH54Os=' 'sha256-NDbUiac+fImqGT3Vwv0NWZeWOuQmr7YrtiS9ln12oLc=' 'sha256-a1Q0PCAliK0CF4SMxSjNSFnelEz/Lbgg9ejcVpPlm1A=' 'sha256-Fp1OlWl/4G+Vuq3x4yszYCXi39qHWI7/hmHZN4VtoGI=' 'sha256-TjMyTilvo9pFDXdeMV7qiffzgsKDSSFaMOFTZ2BRdmo=' 'sha256-+k4vTqjFIxIoFgupkNFyT3828JLOBW4wxVT3QIiGtCw=' 'sha256-zZ4umtf2PoY3bQ1krW27w5VokHDmRyj+BlkLK+dDsbo=' 'sha256-58+XuPwtLSaJInjAlbEk/bkmrNkx61VOWW8mWACiOrU=' 'sha256-X+PV4o5mNco/Pvq+pI48kE+2DEZFB7C85wagfp0G5Bc=' 'sha256-acBslDxydXax81lnJNLsfUiZZ5GDGZqZjLZL7+xqSyc=' https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data: https://hcaptcha.com https://*.hcaptcha.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com; frame-src https://hcaptcha.com https://*.hcaptcha.com; media-src 'self'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self' https://api.web3forms.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests; frame-ancestors 'none'"
+        name: "X-Frame-Options"
         value: "DENY"
-      - path: /*
-        name: X-Content-Type-Options
+        name: "X-Content-Type-Options"
         value: "nosniff"
-      - path: /*
-        name: Referrer-Policy
+        name: "Referrer-Policy"
         value: "strict-origin-when-cross-origin"
-      - path: /*
-        name: Permissions-Policy
+        name: "Permissions-Policy"
         value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()"
-      - path: /*
-        name: Cross-Origin-Opener-Policy
+        name: "Cross-Origin-Opener-Policy"
         value: "same-origin"
-      - path: /*
-        name: X-Permitted-Cross-Domain-Policies
+        name: "X-Permitted-Cross-Domain-Policies"
         value: "none"
-      - path: /*
-        name: Strict-Transport-Security
+        name: "Strict-Transport-Security"
         value: "max-age=31536000"
-      - path: /*
-        name: Cache-Control
+        name: "Cache-Control"
         value: "public, max-age=0, must-revalidate"
-      - path: /site.webmanifest
-        name: Content-Type
+      - path: "/site.webmanifest"
+        name: "Content-Type"
         value: "application/manifest+json"
-      - path: /assets/*
-        name: Cache-Control
+        name: "Cache-Control"
+        value: "public, max-age=3600"
+      - path: "/assets/*"
+        name: "Cache-Control"
         value: "public, max-age=31536000, immutable"
-      - path: /fonts/*
-        name: Cache-Control
+      - path: "/fonts/*"
+        name: "Cache-Control"
         value: "public, max-age=31536000, immutable"
-      - path: /images/*
-        name: Cache-Control
+      - path: "/images/*"
+        name: "Cache-Control"
         value: "public, max-age=31536000, immutable"
+      - path: "/icons.svg*"
+        name: "Cache-Control"
+        value: "public, max-age=31536000, immutable"
+      - path: "/favicon.png*"
+        name: "Cache-Control"
+        value: "public, max-age=31536000, immutable"
+      - path: "/apple-touch-icon.png*"
+        name: "Cache-Control"
+        value: "public, max-age=31536000, immutable"
+      - path: "/icon-*.png*"
+        name: "Cache-Control"
+        value: "public, max-age=31536000, immutable"
+      - path: "/logo*.png*"
+        name: "Cache-Control"
+        value: "public, max-age=31536000, immutable"
+      # END GENERATED HEADERS

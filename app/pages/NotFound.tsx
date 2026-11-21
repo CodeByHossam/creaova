@@ -1,10 +1,12 @@
 import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
+import siteConfig from "../../config/site.json";
+import { pageMeta } from "~/data/pageMeta";
 
 /**
  * 404 — the catch-all route (`route("*", ...)` in app/routes.ts).
  *
- * Reference: plans/MULTIPAGE_UI_PLAN.md §6.7
+ * Mirrors the title and description used by the generated static 404.
  *
  * "One line, one link home, links to Services/Portfolio/Contact. Never a blank
  * or default page." So: one clear statement, the homepage as the single
@@ -15,16 +17,11 @@ import { Container } from "~/components/Container";
  */
 
 export function meta() {
-  return [
-    { title: "Page not found | Creaova" },
-    {
-      name: "description",
-      content:
-        "That page could not be found. Browse Creaova's services, portfolio, or get in touch about a project.",
-    },
-    // A 404 must never be indexed, and must not be treated as a soft duplicate.
-    { name: "robots", content: "noindex, follow" },
-  ];
+  return pageMeta({
+    title: siteConfig.notFound.title,
+    description: siteConfig.notFound.description,
+    robots: siteConfig.notFound.robots,
+  });
 }
 
 export default function NotFound() {
@@ -32,13 +29,13 @@ export default function NotFound() {
     <Container className="flex min-h-[calc(100vh-4rem)] flex-col justify-center py-20 lg:min-h-[calc(100vh-5rem)] lg:py-28">
       <p className="font-mono text-meta uppercase tracking-[0.18em] text-primary-text">404</p>
 
-      <h1 className="mt-6 max-w-[var(--measure)] text-display font-semibold text-ink">
+      <h1 className="mt-6 max-w-(--measure) text-display font-semibold text-ink">
         We couldn’t find that page.
       </h1>
 
-      <p className="mt-7 max-w-[var(--measure)] text-lede text-muted">
-        The link may be out of date, or the page may have moved. Everything else
-        is still where you left it.
+      <p className="mt-7 max-w-(--measure) text-lede text-muted">
+        The link may be out of date, or the page may have moved. Everything else is still where you
+        left it.
       </p>
 
       <div className="mt-10 flex flex-wrap gap-3">

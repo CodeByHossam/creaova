@@ -1,192 +1,120 @@
-/* Creaova typography — "Editorial Studio" concept (plans/UI_UX_ENHANCEMENT_PLAN.md):
+/* Creaova typography — approved Mockup 01 direction (doc/DESIGN_SYSTEM.md):
    Roboto Slab (slab serif display) for h1/h2, Roboto for interface + body text,
    JetBrains Mono for meta/telemetry.
 
    The WOFF2 files are self-hosted under /fonts so a page view does not disclose
-   the visitor's IP address to Google. Licences are shipped alongside the fonts
-   in /fonts/licenses. */
+   the visitor's IP address to Google. Licences ship alongside the active files
+   in /fonts/licenses. One variable file per family/subset replaces the old
+   duplicate per-weight files. */
 @import "tailwindcss";
 
-/* latin-ext */
+/* Versioned URLs let immutable font caching stay safe when artwork or subsets
+   change. Keep this value in step with `assetVersion` in config/site.json. */
 @font-face {
   font-family: "JetBrains Mono";
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url("/fonts/jetbrains-mono-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url("/fonts/jetbrains-mono-latin-ext.woff2?v=2026-11-21") format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
 }
 
-/* latin */
 @font-face {
   font-family: "JetBrains Mono";
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url("/fonts/jetbrains-mono-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url("/fonts/jetbrains-mono-latin.woff2?v=2026-11-21") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-matched fallback faces reduce layout shift during font swap. */
+@font-face {
+  font-family: "Roboto Fallback";
+  src: local("Arial");
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22.43%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Roboto Slab Fallback";
+  src: local("Georgia");
+  size-adjust: 95%;
+  ascent-override: 92%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/roboto-latin-ext.woff2?v=2026-11-21") format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/roboto-latin.woff2?v=2026-11-21") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Roboto Slab";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/robotoslab-latin-ext.woff2?v=2026-11-21") format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Roboto Slab";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/robotoslab-latin.woff2?v=2026-11-21") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* ===========================================================================
    Creaova design tokens — "Editorial Studio" concept
    The single source of truth for colour, type, layout and motion.
-   Reference: plans/UI_UX_ENHANCEMENT_PLAN.md (Phase 0)
+   Reference: doc/DESIGN_SYSTEM.md
 
    RULES
    1. Components must reference a token, never a raw hex value.
    2. Colour roles:
-      - --color-primary       #FD6E00 accent used as FILL only (buttons, chips).
-                              Always paired with --color-on-primary (#241000, 6.45:1).
+      - --color-primary       #FD6E00 accent used as FILL only (chips, dots,
+                              arrows). Always paired with a dark foreground.
+      - --color-cta-fill      #D25F00 — the primary action fill (5.05:1 with
+                              --color-cta-label #140800).
       - --color-primary-text  the ONLY orange allowed as text on light surfaces
                               (#A94A00 — 5.4:1 on #FFF8F2, passes WCAG AA).
       - Never orange text on canvas with #FD6E00 (2.7:1 — fails AA).
    3. No coloured glow. Separation comes from hairlines and space.
    =========================================================================== */
-
-/* latin-ext */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/roboto-400-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/roboto-400-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/roboto-500-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/roboto-500-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("/fonts/roboto-600-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("/fonts/roboto-600-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/roboto-700-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/roboto-700-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: "Roboto Slab";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/robotoslab-400-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: "Roboto Slab";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/robotoslab-400-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: "Roboto Slab";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/robotoslab-500-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: "Roboto Slab";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/robotoslab-500-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: "Roboto Slab";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("/fonts/robotoslab-600-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: "Roboto Slab";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("/fonts/robotoslab-600-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: "Roboto Slab";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/robotoslab-700-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: "Roboto Slab";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/robotoslab-700-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
 
 @theme static {
   /* --- Mockup 01 monochromatic - one orange hue family ------------------ */
@@ -204,6 +132,10 @@
   --color-primary: #fd6e00;
   --color-primary-hover: #a94a00;
   --color-on-primary: #241000;
+  /* Primary CTA fill — the approved hero orange, a touch deeper than --primary.
+     Paired with the deeper espresso label for 5.05:1; hover inverts to canvas. */
+  --color-cta-fill: #d25f00;
+  --color-cta-label: #140800;
   --color-primary-text: #a94a00;
   /* hover for orange TEXT on light surfaces: the palette's darker warm
      tone (#7A5230, ~7:1 on canvas), distinct from the fill hover above */
@@ -224,16 +156,26 @@
   --color-error: #b91c1c;
 
   /* --- Type families ---------------------------------------------------- */
-  --font-heading: "Roboto Slab", Georgia, "Times New Roman", serif;
-  --font-subheading: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-body: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-label: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-meta: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: "Roboto Slab", "Roboto Slab Fallback", Georgia, "Times New Roman", serif;
+  --font-subheading:
+    "Roboto", "Roboto Fallback", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-body:
+    "Roboto", "Roboto Fallback", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-label:
+    "Roboto", "Roboto Fallback", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-meta:
+    "Roboto", "Roboto Fallback", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* Existing utility aliases kept for component compatibility. */
-  --font-display: "Roboto Slab", Georgia, "Times New Roman", serif;
-  --font-sans: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Roboto Slab", "Roboto Slab Fallback", Georgia, "Times New Roman", serif;
+  --font-sans:
+    "Roboto", "Roboto Fallback", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 
   /* --- Type scale (5 steps; tight beats sprawling) ----------------------- */
   /* Serif display: less negative tracking than a grotesk — serifs need air. */
@@ -295,6 +237,20 @@
       line-height: 1.1;
     }
   }
+
+  /* Tablet-only: centre the final card of an odd-count 2-column grid so the
+     empty cell is shared instead of stranded on one side. Layout only — no
+     extra cards and no content change. --odd-card-gap is HALF the grid's
+     column gap, so the centred card matches its siblings exactly. */
+  .tablet-center-odd {
+    @media (min-width: 40rem) and (max-width: 63.999rem) {
+      & > :last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: calc(50% - var(--odd-card-gap, 0.75rem));
+      }
+    }
+  }
 }
 
 @layer base {
@@ -305,7 +261,10 @@
   }
 
   /* Keep the last line of headings and prose from stranding a single word. */
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     text-wrap: balance;
   }
 
@@ -418,7 +377,6 @@
       scroll-behavior: auto !important;
     }
   }
-
 }
 
 @layer components {
@@ -440,7 +398,9 @@
     padding: 0.75rem 0.875rem;
     color: var(--color-ink);
     font: inherit;
-    transition: border-color 150ms ease, outline-color 150ms ease;
+    transition:
+      border-color 150ms ease,
+      outline-color 150ms ease;
   }
 
   /* The portfolio's category filter stays one swipeable row on phones.
@@ -489,11 +449,16 @@
       transform: translateY(0);
     }
   }
+
+  /* The page's one authored entrance: the hero settles once on arrival, then
+     every later change is a restrained hover or focus response. */
+  .hero-enter {
+    animation: reference-fade-up 450ms var(--ease-soft) both;
+  }
 }
 
-
-
 @media (prefers-reduced-motion: reduce) {
+  .hero-enter,
   #services article,
   #services a,
   #work article,
@@ -503,4 +468,3 @@
     animation: none;
   }
 }
-

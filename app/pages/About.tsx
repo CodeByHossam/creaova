@@ -1,31 +1,55 @@
+import { DESKTOP_BREAKPOINT } from "~/data/breakpoints";
 import { Badge } from "~/components/Badge";
 import { Button } from "~/components/Button";
 import { Container } from "~/components/Container";
 import { CTABand } from "~/components/CTABand";
+import { FAQ } from "~/components/FAQ";
+import { FitPanel } from "~/components/FitPanel";
 import { ProcessCard } from "~/components/ProcessCard";
 import { SectionHeading } from "~/components/SectionHeading";
 import { TextLink } from "~/components/TextLink";
-import { absoluteUrl, primaryCta } from "~/data/constants";
+import { primaryCta } from "~/data/constants";
+import { pageMeta } from "~/data/pageMeta";
 import { projects } from "~/data/projects";
+import { responsiveImageProps } from "~/utils/image";
 
 export function meta() {
-  return [
-    { title: "About | Creaova Digital Solutions" },
-    { name: "description", content: "Meet Creaova, an established UAE digital studio pairing strategy, design and engineering with a clear process and support after launch." },
-    { tagName: "link", rel: "canonical", href: absoluteUrl("/about") },
-  ];
+  return pageMeta({
+    path: "/about",
+    title: "About | Creaova Digital Solutions",
+    description:
+      "Meet Creaova, a UAE studio for teams that need the work done properly — and kept working. Strategy, design, engineering and support after launch.",
+  });
 }
 
 const principles = [
-  ["Clarity over noise.", "A beautiful interface is useful when people understand what to do next, without having to think about it at all."],
-  ["Quality over shortcuts.", "Professional, well-structured code keeps the work secure, fast, and maintainable long after launch."],
-  ["Partnership over theatre.", "We stay close after go-live, supporting the work and planning the next useful step with you as the business grows."],
+  [
+    "Clarity over noise.",
+    "A beautiful interface is useful when people understand what to do next, without having to think about it at all.",
+  ],
+  [
+    "Quality over shortcuts.",
+    "Professional, well-structured code keeps the work secure, fast, and maintainable long after launch.",
+  ],
+  [
+    "Partnership over theatre.",
+    "We stay close after go-live, supporting the work and planning the next useful step with you as the business grows.",
+  ],
 ] as const;
 
 const workingModel = [
-  ["Listen first", "We ask the questions that clarify the business, the audience, and the outcome you need before any work begins."],
-  ["Make decisions visible", "You see the work take shape step by step, with clear priorities and a direction you can review and approve."],
-  ["Stay with you after launch", "Follow-up does not end at go-live: we remain the team you can call for support and the next improvement."],
+  [
+    "Listen first",
+    "We ask the questions that clarify the business, the audience, and the outcome you need before any work begins.",
+  ],
+  [
+    "Make decisions visible",
+    "You see the work take shape step by step, with clear priorities and a direction you can review and approve.",
+  ],
+  [
+    "Stay with you after launch",
+    "Follow-up does not end at go-live: we remain the team you can call for support and the next improvement.",
+  ],
 ] as const;
 
 export default function About() {
@@ -37,22 +61,20 @@ export default function About() {
           <div className="mx-auto max-w-4xl text-center">
             <Badge>About Creaova</Badge>
             <h1 className="mt-5 sm:mt-6 text-display font-semibold text-ink">
-              We build digital experiences that earn trust and make ambitious
-              businesses easier to choose.
+              A UAE studio for teams that need the work done properly — and kept working.
             </h1>
             <p className="mt-3 sm:mt-4 font-mono text-sm tracking-[0.12em] text-muted">
-              Strategy, interface design and engineering.
+              Small enough to stay close. Structured enough to deliver.
             </p>
-            <p className="mx-auto mt-5 sm:mt-6 max-w-[var(--measure)] text-lede text-muted">
+            <p className="mx-auto mt-5 sm:mt-6 max-w-(--measure) text-lede text-muted">
               Creaova Digital Solutions{" "}
-              <span className="font-mono tracking-[0.18em] text-primary-text">[CDS]</span>{" "}
-              is an established digital studio in the UAE. We pair strategy,
-              interface design and engineering to deliver secure, high-performing
-              products, and stay with you as a partner after launch.
+              <span className="font-mono tracking-[0.18em] text-primary-text">[CDS]</span> pairs
+              strategy, design and engineering, then stays with you after launch. You speak to the
+              people doing the work.
             </p>
             <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
               <Button to={primaryCta.to} variant="primary" size="lg">
-                Discuss a project
+                Talk to the team directly
               </Button>
               <TextLink
                 to="/portfolio#projects"
@@ -65,14 +87,15 @@ export default function About() {
             <figure className="mx-auto mt-10 w-full max-w-3xl sm:mt-12 lg:mt-14">
               <div className="relative aspect-video overflow-hidden rounded-hero border border-line bg-surface">
                 <img
-                  src={projects[0].image}
+                  {...responsiveImageProps(projects[0].image, {
+                    eager: true,
+                    sizes: `(min-width: ${DESKTOP_BREAKPOINT}px) 768px, 100vw`,
+                  })}
                   alt={`Preview of the ${projects[0].title} concept interface`}
-                  loading="eager"
-                  decoding="async"
                   className="size-full object-cover object-top"
                 />
-                <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-md border border-line bg-surface-subtle px-2.5 py-1 font-mono text-meta font-medium uppercase leading-none tracking-[0.12em] text-primary-text">
-                  <span aria-hidden="true" className="size-1.5 rounded-full bg-primary" />
+                <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-md border border-line bg-surface-subtle px-1.5 py-0.5 font-mono text-[0.5rem] font-medium uppercase leading-none tracking-[0.12em] text-primary-text">
+                  <span aria-hidden="true" className="size-1 rounded-full bg-primary" />
                   Concept
                 </span>
               </div>
@@ -85,7 +108,7 @@ export default function About() {
       </section>
 
       {/* --------------------------- 01 Principles ------------------------- */}
-      <section className="border-t border-line bg-bg py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28">
+      <section className="border border-line bg-bg py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28">
         <Container>
           {/* The three sections share one two-column spine: heading left,
               content right. The lede gives the left rail its own weight so it
@@ -102,12 +125,10 @@ export default function About() {
                   mono lede was too slight against three titled body rows. */}
               <div className="mt-6 sm:mt-8">
                 <p className="font-display text-2xl leading-snug text-ink">
-                  Three commitments shape the work, from first conversation to
-                  support after launch.
+                  Three commitments shape the work, from first conversation to support after launch.
                 </p>
-                <p className="mt-4 max-w-[var(--measure)] text-sm leading-relaxed text-muted">
-                  They keep decisions clear, the build resilient, and the
-                  handover calm.
+                <p className="mt-4 max-w-(--measure) text-sm leading-relaxed text-muted">
+                  They keep decisions clear, the build resilient, and the handover calm.
                 </p>
               </div>
               {/* Keep the index with the intro. Bottom-aligning it left a
@@ -118,15 +139,10 @@ export default function About() {
             </div>
             <div className="border-t border-line">
               {principles.map(([title, text]) => (
-                <article
-                  key={title}
-                  className="grid gap-2 border-b border-line py-4 sm:py-5"
-                >
+                <article key={title} className="grid gap-2 border-b border-line py-4 sm:py-5">
                   <div>
-                    <h3 className="font-sans text-h3 font-semibold text-ink">
-                      {title}
-                    </h3>
-                    <p className="mt-2 max-w-[var(--measure)] text-sm leading-relaxed text-muted">
+                    <h3 className="font-sans text-h3 font-semibold text-ink">{title}</h3>
+                    <p className="mt-2 max-w-(--measure) text-sm leading-relaxed text-muted">
                       {text}
                     </p>
                   </div>
@@ -147,18 +163,19 @@ export default function About() {
               eyebrow="Our working model"
               title="Small enough to stay close. Structured enough to move."
             />
-            <p className="max-w-[var(--measure)] text-lede text-muted lg:pb-1">
-              A clear sequence, with decisions you can see and approve at every
-              step.
+            <p className="max-w-(--measure) text-lede text-muted lg:pb-1">
+              A clear sequence, with decisions you can see and approve at every step.
             </p>
           </div>
-          <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4 md:mt-12 lg:grid-cols-3 lg:gap-5">
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4 md:mt-12 lg:grid-cols-3 lg:gap-5 tablet-center-odd [--odd-card-gap:0.5rem]">
             {workingModel.map(([title, text]) => (
               <ProcessCard key={title} title={title} text={text} />
             ))}
           </div>
         </Container>
       </section>
+
+      <FitPanel />
 
       {/* --------------------------- 03 Point of view ---------------------- */}
       <section className="border-t border-line bg-surface-subtle py-14 sm:py-20 md:py-24 lg:py-28 xl:py-32">
@@ -175,16 +192,14 @@ export default function About() {
                 title="No inflated claims. Just careful making and clear next steps."
               />
               <div className="mt-8 space-y-6 text-lede text-muted sm:mt-10">
-                <p className="max-w-[var(--measure)]">
-                  We keep the process direct, the collaboration thoughtful, and the
-                  output honest. Your satisfaction with the result is the measure
-                  that matters.
+                <p className="max-w-(--measure)">
+                  We keep the process direct, the collaboration thoughtful, and the output honest.
+                  Your satisfaction with the result is the measure that matters.
                 </p>
-                <p className="max-w-[var(--measure)]">
-                  From the first conversation to delivery, we work as a partner:
-                  understanding your requirements step by step, making the decisions
-                  visible, and delivering secure, search-friendly work that is ready
-                  to grow.
+                <p className="max-w-(--measure)">
+                  From the first conversation to delivery, we work as a partner: understanding your
+                  requirements step by step, making the decisions visible, and delivering secure,
+                  search-friendly work that is ready to grow.
                 </p>
               </div>
             </div>
@@ -200,8 +215,7 @@ export default function About() {
                 “
               </span>
               <blockquote className="mt-2 font-display text-h2 font-medium leading-snug text-on-dark">
-                Every decision should make the experience more coherent for the
-                people using it.
+                You should never have to chase the people who built your site.
               </blockquote>
               <figcaption className="mt-8 border-t border-dark-line pt-5 font-mono text-meta uppercase tracking-[0.18em] text-on-dark-muted">
                 Our point of view — Creaova
@@ -211,6 +225,7 @@ export default function About() {
         </Container>
       </section>
 
+      <FAQ />
       <CTABand />
     </>
   );

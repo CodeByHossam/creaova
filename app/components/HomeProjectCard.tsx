@@ -1,10 +1,18 @@
 import { Link } from "react-router";
 
 import type { Project } from "~/data/projects";
+import { responsiveImageProps } from "~/utils/image";
 
-export function HomeProjectCard({ project }: { project: Project }) {
+export function HomeProjectCard({
+  project,
+  className = "",
+}: {
+  project: Project;
+  /** Extra list-item classes, e.g. the tablet-only visibility override. */
+  className?: string;
+}) {
   return (
-    <li className="h-full">
+    <li className={`h-full ${className}`}>
       <article className="h-full">
         <Link
           to="/portfolio"
@@ -13,10 +21,8 @@ export function HomeProjectCard({ project }: { project: Project }) {
           <div className="relative aspect-video overflow-hidden rounded-lg">
             {project.image ? (
               <img
-                src={project.image}
+                {...responsiveImageProps(project.image)}
                 alt={`Preview of the ${project.title} concept`}
-                loading="lazy"
-                decoding="async"
                 className="absolute inset-0 size-full rounded-lg object-cover transition-[filter] duration-500 ease-out group-hover:brightness-105 group-focus-within:brightness-105"
               />
             ) : null}
@@ -26,11 +32,9 @@ export function HomeProjectCard({ project }: { project: Project }) {
           </div>
 
           <div className="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-1">
-            <h3 className="font-sans text-h3 font-medium text-ink">
-              {project.title}
-            </h3>
-            <span className="inline-flex shrink-0 items-center gap-1.5 self-center rounded-md border border-line bg-surface-subtle px-2 py-0.5 font-mono text-xs font-medium uppercase leading-none tracking-[0.12em] text-primary-text">
-              <span aria-hidden="true" className="size-1.5 rounded-full bg-primary" />
+            <h3 className="font-sans text-h3 font-medium text-ink">{project.title}</h3>
+            <span className="inline-flex shrink-0 items-center gap-1 self-center rounded-md border border-line bg-surface-subtle px-1.5 py-0.5 font-mono text-[0.5rem] font-medium uppercase leading-none tracking-[0.12em] text-primary-text">
+              <span aria-hidden="true" className="size-1 rounded-full bg-primary" />
               Concept
             </span>
           </div>
@@ -41,9 +45,7 @@ export function HomeProjectCard({ project }: { project: Project }) {
             </span>
             <span>{project.year}</span>
           </p>
-          <p className="mt-3 text-sm leading-relaxed text-muted">
-            {project.description}
-          </p>
+          <p className="mt-3 text-sm leading-relaxed text-muted">{project.description}</p>
         </Link>
       </article>
     </li>

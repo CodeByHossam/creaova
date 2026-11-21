@@ -1,11 +1,6 @@
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 
-import {
-  BehanceIcon,
-  InstagramIcon,
-  LinkedInIcon,
-  WhatsAppIcon,
-} from "~/components/BrandIcon";
+import { BehanceIcon, InstagramIcon, LinkedInIcon, WhatsAppIcon } from "~/components/BrandIcon";
 import type { ContactIconId, SocialIconId } from "~/data/constants";
 
 /**
@@ -19,13 +14,7 @@ import type { ContactIconId, SocialIconId } from "~/data/constants";
  * The icons are decorative — `aria-hidden` — because the label next to them
  * already says what the row is.
  */
-export function ContactIcon({
-  id,
-  className,
-}: {
-  id: ContactIconId;
-  className?: string;
-}) {
+export function ContactIcon({ id, className }: { id: ContactIconId; className?: string }) {
   switch (id) {
     case "email":
       return <Mail className={className} aria-hidden="true" strokeWidth={1.75} />;
@@ -40,13 +29,7 @@ export function ContactIcon({
   }
 }
 
-export function SocialIcon({
-  id,
-  className,
-}: {
-  id: SocialIconId;
-  className?: string;
-}) {
+export function SocialIcon({ id, className }: { id: SocialIconId; className?: string }) {
   switch (id) {
     case "instagram":
       return <InstagramIcon className={className} />;

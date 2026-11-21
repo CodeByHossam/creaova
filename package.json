@@ -7,13 +7,27 @@
   "scripts": {
     "dev": "react-router dev",
     "validate:env": "node scripts/validate-env.mjs",
+    "generate:icons": "node scripts/generate-icon-sprite.mjs",
+    "generate:static": "node scripts/generate-static-pages.mjs",
+    "patch:spa-fallback": "node scripts/generate-static-pages.mjs --spa",
     "sync:site-url": "node scripts/sync-site-url.mjs",
-    "prebuild": "npm run validate:env && npm run sync:site-url",
+    "sync:host-config": "node scripts/sync-host-config.mjs",
+    "check:host-config": "node scripts/sync-host-config.mjs --check",
+    "inject:css": "node scripts/inject-static-css.mjs",
+    "security:apply": "node scripts/apply-security.mjs",
+    "compress:assets": "node scripts/compress-assets.mjs",
+    "prebuild": "npm run validate:env && npm run generate:icons && npm run sync:site-url && npm run generate:static",
     "build": "react-router build",
-    "postbuild": "node scripts/inject-static-css.mjs && node scripts/apply-security.mjs",
+    "postbuild": "npm run inject:css && npm run patch:spa-fallback && npm run security:apply && npm run sync:host-config && npm run compress:assets",
     "preview": "vite preview --outDir build/client",
     "typegen": "react-router typegen",
-    "typecheck": "react-router typegen && tsc --noEmit"
+    "typecheck": "react-router typegen && tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^2.2.0",
@@ -25,14 +39,22 @@
     "react-router": "8.4.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
     "@react-router/dev": "8.4.0",
     "@tailwindcss/vite": "^4.0.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "eslint": "^9.39.5",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^16.5.0",
+    "prettier": "^3.10.1",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.6.0",
-    "vite": "^8.0.0"
+    "typescript-eslint": "^8.73.0",
+    "vite": "^8.0.0",
+    "vitest": "^4.1.12"
   },
   "engines": {
     "node": ">=22.22"

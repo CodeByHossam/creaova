@@ -17,9 +17,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const clientDir = join(root, "build", "client");
 const assetsDir = join(clientDir, "assets");
 
-const cssAssets = (await readdir(assetsDir))
-  .filter((name) => /^root-.*\.css$/.test(name))
-  .sort();
+const cssAssets = (await readdir(assetsDir)).filter((name) => /^root-.*\.css$/.test(name)).sort();
 
 if (cssAssets.length !== 1) {
   throw new Error(

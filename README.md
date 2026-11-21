@@ -1,5 +1,7 @@
 # Creaova Digital Solutions
 
+> **Superseded developer reference:** this file is retained for historical context only. It still contains older names, routes and deployment assumptions. The current authority is the [`doc/`](./doc/) folder, starting with [`doc/README.md`](./doc/README.md), with final pre-production decisions recorded in [`doc/PRE_PRODUCTION_REVIEW.md`](./doc/PRE_PRODUCTION_REVIEW.md). Do not use this file to override current source or the `doc/` reference.
+
 Creaova is a premium, multi-page marketing website for a UAE-based digital studio. The site presents Creaova’s web, mobile, product design, and digital experience capabilities through a calm black, white, and orange visual system.
 
 The project is designed to be clear, fast, accessible, and easy to extend as real business content becomes available.
@@ -87,16 +89,16 @@ creaova/
 
 ## Routes
 
-| Route | Purpose |
-| --- | --- |
-| `/` | Homepage and primary value proposition |
-| `/services` | Service disciplines and delivery process |
+| Route        | Purpose                                      |
+| ------------ | -------------------------------------------- |
+| `/`          | Homepage and primary value proposition       |
+| `/services`  | Service disciplines and delivery process     |
 | `/portfolio` | Selected concept work and project directions |
-| `/about` | Studio principles and working model |
-| `/contact` | Project enquiry form and contact details |
-| `/privacy` | Privacy policy draft for review |
-| `/terms` | Terms of service draft for review |
-| `*` | Custom not-found page |
+| `/about`     | Studio principles and working model          |
+| `/contact`   | Project enquiry form and contact details     |
+| `/privacy`   | Privacy policy draft for review              |
+| `/terms`     | Terms of service draft for review            |
+| `*`          | Custom not-found page                        |
 
 All routes use the shared layout defined in `app/layout/MainLayout.tsx`.
 
@@ -125,10 +127,10 @@ Copy-Item .env.example .env
 
 Available variables include:
 
-| Variable | Purpose |
-| --- | --- |
-| `VITE_SITE_URL` | Canonical website origin |
-| `VITE_FORM_PROVIDER` | Contact form provider name |
+| Variable             | Purpose                         |
+| -------------------- | ------------------------------- |
+| `VITE_SITE_URL`      | Canonical website origin        |
+| `VITE_FORM_PROVIDER` | Contact form provider name      |
 | `VITE_FORM_ENDPOINT` | Public form submission endpoint |
 
 The repository currently contains reserved demo values such as `example.com`, placeholder contact details, and generic social URLs. Replace these before launch. The privacy and terms pages are also drafts and require review against the final business, hosting, form, analytics, and legal setup.
@@ -139,18 +141,18 @@ Never place private API keys or server secrets in `VITE_` variables; Vite expose
 
 The brand ships two supplied source images:
 
-| Source | What it is | Used for |
-| --- | --- | --- |
+| Source                     | What it is                                                          | Used for                                                       |
+| -------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------- |
 | `app/assets/logo/logo.png` | The horizontal lockup - the orange mark plus the "CREAOVA" wordmark | The site logo (header, drawer, footer) and the email signature |
-| `app/assets/icon/icon.png` | The mark on its own | The browser tab icon and the app icons only |
+| `app/assets/icon/icon.png` | The mark on its own                                                 | The browser tab icon and the app icons only                    |
 
-`scripts/prepare-logo.ps1` derives every shippable raster from them with pure .NET (`System.Drawing`) — no headless browser, no SVG. It writes `public/logo.png` (420×96 colour lockup), `logo-master.png` (841×192), `logo-dark.png` and `logo-inverse.png` (flat ink and flat white), plus `favicon.png` (64, the mark on a **transparent** background), `apple-touch-icon.png` (180) and `icon-192.png` / `icon-512.png` (the mark on the ink canvas).
+The shippable rasters are kept under `public/` and versioned through `ASSET_VERSION` in `app/data/constants.ts`. Regenerate the artwork before changing those URLs.
 
-Both sources are painted on opaque white, so the script turns that white into a real alpha channel and scales the artwork while it is still opaque.
+Both sources are painted on opaque white, so the shipped artwork uses a real alpha channel and has already been scaled for display.
 
 The wordmark is **artwork, not live DOM text** — it is typed in a geometric sans that is not in the site's font stack, so rendering it as text would show two different brands, and two "CREAOVA"s on screen. The brand name is carried by the link label around the image instead.
 
-Every brand raster URL carries a `?v=<version>` query (`ASSET_VERSION` in `app/data/constants.ts`). Browsers cache favicons and app icons per origin and never re-fetch them on a normal reload, so without the query a regenerated artwork keeps serving the old image. **Bump `ASSET_VERSION` whenever `scripts/prepare-logo.ps1` regenerates the artwork** — and keep `scripts/email-signature.template.html` and `public/site.webmanifest` in step with it.
+Every brand raster URL carries a `?v=<version>` query (`ASSET_VERSION` in `app/data/constants.ts`). Browsers cache favicons and app icons per origin and never re-fetch them on a normal reload, so without the query a regenerated artwork keeps serving the old image. **Bump `ASSET_VERSION` whenever the artwork changes**, and keep `public/site.webmanifest` in step with it.
 
 If the artwork changes, update the intrinsic dimensions in `app/data/constants.ts` and verify the header, mobile navigation, footer and browser tab at all responsive breakpoints.
 

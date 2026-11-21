@@ -7,10 +7,8 @@
  *      page and injects a page-specific CSP <meta> tag. That lets the static
  *      build enforce a strict script policy without weakening it to
  *      'unsafe-inline' and without a per-request server nonce.
- *   2. Emits a `_headers` file with the full header set (including
- *      `frame-ancestors`, which browsers ignore in <meta>) for hosts that read
- *      `_headers` (Cloudflare Pages, Netlify, etc.). Render uses the equivalent
- *      header rules in render.yaml.
+ *   2. Emits `_headers` and `host-config.json` from `config/security-headers.json`
+ *      so every host gets the same policy. `frame-ancestors` is header-only.
  *   3. Fails the build if a known third-party asset host or an unsigned inline
  *      script slips back in.
  *
@@ -18,15 +16,18 @@
  */
 
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, extname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const clientDir = join(root, "build", "client");
+const manifest = JSON.parse(readFileSync(join(root, "config", "security-headers.json"), "utf8"));
 
 const TEXT_EXTENSIONS = new Set([".html", ".css", ".js", ".json", ".xml", ".txt", ".webmanifest"]);
 const FORBIDDEN_HOSTS = ["fonts.googleapis.com", "fonts.gstatic.com", "images.unsplash.com"];
+const HASH_PLACEHOLDER = manifest.csp.inlineHashesPlaceholder;
 
 async function walk(dir) {
   const out = [];
@@ -43,38 +44,25 @@ function sha256(content) {
 }
 
 function escapeAttribute(value) {
-  return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
-function csp(hashes, includeFrameAncestors) {
-  const hashList = Array.from(hashes ?? []);
-  const scriptSources = [
-    "'self'",
-    ...hashList.map((hash) => `'sha256-${hash}'`),
-    "https://hcaptcha.com",
-    "https://*.hcaptcha.com",
-  ];
+function csp(hashes, { headerOnly }) {
+  const hashSources = Array.from(hashes, (hash) => `'sha256-${hash}'`).join(" ");
 
-  const directives = [
-    "default-src 'self'",
-    `script-src ${scriptSources.join(" ")}`,
-    "style-src 'self' 'unsafe-inline' https://hcaptcha.com https://*.hcaptcha.com",
-    "img-src 'self' data: https://hcaptcha.com https://*.hcaptcha.com",
-    "font-src 'self'",
-    "connect-src 'self' https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com",
-    "frame-src https://hcaptcha.com https://*.hcaptcha.com",
-    "media-src 'self'",
-    "worker-src 'self' blob:",
-    "manifest-src 'self'",
-    "form-action 'self' https://api.web3forms.com",
-    "base-uri 'self'",
-    "object-src 'none'",
-    "upgrade-insecure-requests",
-  ];
-
-  if (includeFrameAncestors) directives.push("frame-ancestors 'none'");
-
-  return directives.join("; ");
+  return manifest.csp.directives
+    .filter((directive) => headerOnly || !directive.headerOnly)
+    .map((directive) => {
+      const sources = directive.sources
+        .map((source) => (source === HASH_PLACEHOLDER ? hashSources : source))
+        .filter(Boolean);
+      return sources.length === 0 ? directive.name : `${directive.name} ${sources.join(" ")}`;
+    })
+    .join("; ");
 }
 
 function extractInlineScriptHashes(html) {
@@ -82,14 +70,26 @@ function extractInlineScriptHashes(html) {
   const scriptRe = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
 
   for (const match of html.matchAll(scriptRe)) {
-    const attributes = match[1];
-    const body = match[2];
-    if (/\bsrc\s*=/i.test(attributes)) continue;
-    if (!body.trim()) continue;
-    hashes.add(sha256(body));
+    if (/\bsrc\s*=/i.test(match[1])) continue;
+    if (!match[2].trim()) continue;
+    hashes.add(sha256(match[2]));
   }
 
   return hashes;
+}
+
+function renderHeadersFile(headerCsp) {
+  const blocks = [];
+
+  for (const rule of manifest.headerRules) {
+    const headers = [...rule.headers];
+    if (rule.path === "/*") {
+      headers.unshift({ name: "Content-Security-Policy", value: headerCsp });
+    }
+    blocks.push([rule.path, ...headers.map(({ name, value }) => `  ${name}: ${value}`)].join("\n"));
+  }
+
+  return `${blocks.join("\n\n")}\n`;
 }
 
 const files = await walk(clientDir);
@@ -107,7 +107,9 @@ for (const file of htmlFiles) {
   const hashes = extractInlineScriptHashes(original);
   for (const hash of hashes) allHashes.add(hash);
 
-  const meta = `<meta http-equiv="Content-Security-Policy" content="${escapeAttribute(csp(hashes, false))}" />`;
+  const meta = `<meta http-equiv="Content-Security-Policy" content="${escapeAttribute(
+    csp(hashes, { headerOnly: false }),
+  )}" />`;
   let hardened = original.replace(
     /<meta\b[^>]*http-equiv=["']Content-Security-Policy["'][^>]*>\s*/gi,
     "",
@@ -140,47 +142,14 @@ for (const file of files) {
   }
 }
 
-const headers = [
-  "/*",
-  `  Content-Security-Policy: ${csp(allHashes, true)}`,
-  "  X-Frame-Options: DENY",
-  "  X-Content-Type-Options: nosniff",
-  "  Referrer-Policy: strict-origin-when-cross-origin",
-  "  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()",
-  "  Cross-Origin-Opener-Policy: same-origin",
-  "  X-Permitted-Cross-Domain-Policies: none",
-  "  Strict-Transport-Security: max-age=31536000",
-  "  Cache-Control: public, max-age=0, must-revalidate",
-  "",
-  "/site.webmanifest",
-  "  Content-Type: application/manifest+json",
-  "  Cache-Control: public, max-age=3600",
-  "",
-  "/assets/*",
-  "  Cache-Control: public, max-age=31536000, immutable",
-  "",
-  "/fonts/*",
-  "  Cache-Control: public, max-age=31536000, immutable",
-  "",
-  "/images/*",
-  "  Cache-Control: public, max-age=31536000, immutable",
-  "",
-  "/favicon.png*",
-  "  Cache-Control: public, max-age=31536000, immutable",
-  "",
-  "/apple-touch-icon.png*",
-  "  Cache-Control: public, max-age=31536000, immutable",
-  "",
-  "/icon-*.png*",
-  "  Cache-Control: public, max-age=31536000, immutable",
-  "",
-  "/logo*.png*",
-  "  Cache-Control: public, max-age=31536000, immutable",
-  "",
-].join("\n");
-
-await writeFile(join(clientDir, "_headers"), headers, "utf8");
+const headerCsp = csp(allHashes, { headerOnly: true });
+await writeFile(join(clientDir, "_headers"), renderHeadersFile(headerCsp), "utf8");
+await writeFile(
+  join(clientDir, "host-config.json"),
+  `${JSON.stringify({ csp: headerCsp, headerRules: manifest.headerRules }, null, 2)}\n`,
+  "utf8",
+);
 
 console.log(
-  `[apply-security] hardened ${injected} page(s) with ${allHashes.size} inline-script hash(es); wrote _headers.`,
+  `[apply-security] hardened ${injected} page(s) with ${allHashes.size} inline-script hash(es); wrote _headers and host-config.json.`,
 );

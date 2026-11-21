@@ -1,5 +1,7 @@
-import { ArrowUpRight } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "react-router";
+
+import { SpriteIcon } from "~/components/SpriteIcon";
 
 export function DisciplineCard({
   Icon,
@@ -10,7 +12,7 @@ export function DisciplineCard({
   to = "/services",
   actionLabel = "Explore",
 }: {
-  Icon: any;
+  Icon: LucideIcon;
   label: string;
   title: string;
   text: string;
@@ -28,14 +30,12 @@ export function DisciplineCard({
         {label}
       </span>
 
-      <h3 className="mt-2 font-sans text-h3 font-semibold text-ink">
-        {title}
-      </h3>
+      <h3 className="mt-2 font-sans text-h3 font-semibold text-ink">{title}</h3>
 
       <p className="mt-2 text-sm leading-relaxed text-muted">{text}</p>
 
       <div className="mt-auto pt-5">
-        <span className="inline-block max-w-full rounded-md border border-line bg-surface-subtle px-2 py-1 font-mono text-meta text-ink">
+        <span className="inline-block max-w-full font-mono text-[0.6875rem] uppercase leading-none tracking-[0.12em] text-muted">
           {tag}
         </span>
 
@@ -44,8 +44,8 @@ export function DisciplineCard({
           className="group/link mt-4 flex min-h-11 items-center justify-between border-t border-line pt-3 text-sm font-semibold text-ink transition-all duration-200 ease-out hover:text-primary-text focus-visible:text-primary-text active:translate-y-px"
         >
           {actionLabel}
-          <ArrowUpRight
-            aria-hidden="true"
+          <SpriteIcon
+            name="arrow-up-right"
             className="size-4 shrink-0 transition-transform duration-200 ease-out group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-focus/link:-translate-y-0.5 group-focus/link:translate-x-0.5"
           />
         </Link>

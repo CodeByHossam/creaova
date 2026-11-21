@@ -1,0 +1,12 @@
+ai-base/
+build/
+.react-router/
+coverage/
+node_modules/
+package-lock.json
+public/fonts/
+public/images/
+public/icons.svg
+public/404.html
+public/robots.txt
+public/sitemap.xml

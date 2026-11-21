@@ -1,22 +1,18 @@
-import { Container } from "~/components/Container";
-import { absoluteUrl, site } from "~/data/constants";
+import { LegalPage, type LegalSection } from "~/components/LegalPage";
+import { site } from "~/data/constants";
+import { pageMeta } from "~/data/pageMeta";
 
 export function meta() {
-  return [
-    { title: "Terms of Service | Creaova" },
-    {
-      name: "description",
-      content: "Terms of use for the Creaova Digital Solutions website.",
-    },
-    { tagName: "link", rel: "canonical", href: absoluteUrl("/terms") },
-  ];
+  return pageMeta({
+    path: "/terms",
+    title: "Terms of Service | Creaova",
+    description: "Terms of use for the Creaova Digital Solutions website.",
+  });
 }
-
-type Section = { title: string; body: string[] };
 
 const email = site.contact.email;
 
-const sections: Section[] = [
+const sections: LegalSection[] = [
   {
     title: "Acceptance of terms",
     body: [
@@ -83,42 +79,11 @@ const sections: Section[] = [
 
 export default function Terms() {
   return (
-    <>
-      {/* Same ink band + light ground rhythm as Privacy and the Home sections. */}
-      <section className="bg-ink">
-        <Container className="py-10 sm:py-12 lg:py-14">
-          <div className="max-w-3xl">
-            <p className="font-mono text-meta font-medium uppercase tracking-[0.18em] text-on-dark-muted">
-              Legal · Terms
-            </p>
-            <h1 className="mt-5 sm:mt-6 text-display font-semibold text-on-dark">
-              Terms of service
-            </h1>
-            <p className="mt-5 sm:mt-6 max-w-2xl text-lede text-on-dark-muted">
-              These terms govern your use of the Creaova Digital Solutions website.
-            </p>
-            <p className="mt-3 text-sm text-on-dark-muted">Effective 23 October 2026.</p>
-          </div>
-        </Container>
-      </section>
-
-      <Container className="py-12 sm:py-16 lg:py-20">
-        <div className="max-w-3xl space-y-10">
-          {sections.map((section) => (
-            <section key={section.title} className="border-t border-line pt-7">
-              <span aria-hidden="true" className="block size-1.5 rounded-full bg-primary" />
-              <h2 className="mt-3 font-sans text-h3 font-semibold text-ink">
-                {section.title}
-              </h2>
-              <div className="mt-2 space-y-3 text-sm leading-relaxed text-muted">
-                {section.body.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
-      </Container>
-    </>
+    <LegalPage
+      eyebrow="Legal · Terms"
+      title="Terms of service"
+      lede="These terms govern your use of the Creaova Digital Solutions website."
+      sections={sections}
+    />
   );
 }

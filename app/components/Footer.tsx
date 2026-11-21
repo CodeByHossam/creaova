@@ -1,16 +1,10 @@
-
 import type { ReactNode } from "react";
 import { Link } from "react-router";
 
 import { Container } from "~/components/Container";
 import { ContactIcon, SocialIcon } from "~/components/ContactIcon";
 import { Logo } from "~/components/Logo";
-import type {
-  ContactChannel,
-  ContactIconId,
-  FooterLink,
-  SocialLink,
-} from "~/data/constants";
+import type { ContactChannel, ContactIconId, FooterLink, SocialLink } from "~/data/constants";
 import { contactChannels, site } from "~/data/constants";
 
 const linkClass =
@@ -19,17 +13,16 @@ const linkClass =
 const iconClass =
   "inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-dark-line text-primary";
 
-const labelClass =
-  "block font-mono text-xs uppercase tracking-[0.12em] text-on-dark-muted";
+const labelClass = "block font-mono text-xs uppercase tracking-[0.12em] text-on-dark-muted";
 
 const valueClass =
   "mt-1 inline-flex min-h-11 items-center break-words text-sm text-on-dark-muted transition-colors duration-200 hover:text-primary";
 
 function FooterHeading({ children }: { children: ReactNode }) {
   return (
-    <h3 className="font-mono text-meta font-medium uppercase tracking-[0.18em] text-primary">
+    <h2 className="font-mono text-meta font-medium uppercase tracking-[0.18em] text-primary">
       {children}
-    </h3>
+    </h2>
   );
 }
 
@@ -75,9 +68,7 @@ function ContactCell({ channel }: { channel: ContactChannel }) {
             {channel.value}
           </a>
         ) : (
-          <span className="mt-1 block break-words text-sm text-on-dark-muted">
-            {channel.value}
-          </span>
+          <span className="mt-1 block break-words text-sm text-on-dark-muted">{channel.value}</span>
         )}
       </div>
     </li>
@@ -95,29 +86,18 @@ function SocialCell({ social }: { social: SocialLink }) {
         <span className={labelClass}>Follow</span>
 
         {social.href ? (
-          <a
-            href={social.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={valueClass}
-          >
+          <a href={social.href} target="_blank" rel="noopener noreferrer" className={valueClass}>
             {social.label}
           </a>
         ) : (
-          <span className="mt-1 block break-words text-sm text-on-dark-muted">
-            {social.label}
-          </span>
+          <span className="mt-1 block break-words text-sm text-on-dark-muted">{social.label}</span>
         )}
       </div>
     </li>
   );
 }
 
-function FooterLinkGroup({
-  column,
-}: {
-  column: (typeof site.footer.columns)[number];
-}) {
+function FooterLinkGroup({ column }: { column: (typeof site.footer.columns)[number] }) {
   return (
     <div className="min-w-0 mx-4">
       <FooterHeading>{column.title}</FooterHeading>
@@ -149,14 +129,9 @@ export function Footer() {
     >
       <Container>
         <div className="grid grid-cols-1 gap-y-10 md:grid-cols-3 md:gap-x-10">
-
           {/* Row 1: Brand */}
           <div className="space-y-4 md:col-span-2">
-            <Link
-              to="/"
-              aria-label="Creaova home"
-              className="inline-flex min-h-11 items-center"
-            >
+            <Link to="/" aria-label="Creaova home" className="inline-flex min-h-11 items-center">
               <Logo variant="white" className="h-6" />
             </Link>
 
@@ -208,6 +183,16 @@ export function Footer() {
             ))}
           </nav>
 
+          {/* Final low-commitment route for visitors not ready to enquire. */}
+          <div className="border-t border-dark-line pt-8 md:col-span-3">
+            <Link
+              to="/services#process"
+              className="inline-flex min-h-11 items-center gap-2 font-mono text-meta uppercase tracking-[0.18em] text-on-dark-muted transition-colors duration-200 hover:text-primary"
+            >
+              Not ready to talk? Start with our process →
+            </Link>
+          </div>
+
           {/* Copyright and legal links */}
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-t border-dark-line pt-8 text-center text-xs md:col-span-3">
             <p>
@@ -224,7 +209,6 @@ export function Footer() {
               </ul>
             </nav>
           </div>
-
         </div>
       </Container>
     </footer>

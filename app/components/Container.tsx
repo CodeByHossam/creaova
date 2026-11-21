@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 /**
  * The single horizontal rhythm for the whole site.
  *
- * Reference: plans/MULTIPAGE_UI_PLAN.md §5.3
+ * Shared page-width and gutter rules for every route.
  *
  * Every full-width band wraps its content in this, so the left edge of the
  * navbar, the page body and the footer line up exactly. Gutters are 20px on
@@ -18,8 +18,6 @@ export function Container({
   className?: string;
 }) {
   return (
-    <div className={`mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>
-      {children}
-    </div>
+    <div className={`mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>
   );
 }

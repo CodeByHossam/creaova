@@ -12,7 +12,8 @@ const base =
   "group inline-flex items-center transition-all duration-200 ease-out active:translate-y-px active:opacity-80";
 
 const tones = {
-  light: "text-ink hover:text-primary-text focus-visible:text-primary-text active:text-primary-text",
+  light:
+    "text-ink hover:text-primary-text focus-visible:text-primary-text active:text-primary-text",
   dark: "text-on-dark-muted hover:text-on-dark focus-visible:text-on-dark active:text-on-dark",
 };
 

@@ -1,7 +1,7 @@
 /**
  * Skip link — the first tab stop on every page.
  *
- * Reference: plans/MULTIPAGE_UI_PLAN.md §9
+ * Keyboard users can bypass the repeated navigation.
  *
  * It is `sr-only` until focused, at which point it becomes a real, visible
  * button in the top-left corner. Without this, a keyboard user has to tab
